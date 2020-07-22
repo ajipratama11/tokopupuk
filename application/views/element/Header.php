@@ -98,9 +98,9 @@
                   <img src="<?php echo base_url('assets/images/admin.png'); ?>" alt="profile image">
                 </div>
                 <div class="text-wrapper">
-                  <p class="profile-name"><?php echo $this->session->userdata("namaadmin"); ?></p>
+                  <p class="profile-name">Alifia</p>
                   <div>
-                    <small class="designation text-muted">id: <?php echo $this->session->userdata("iduseradmin"); ?></small>
+                    <small class="designation text-muted">id: 100002</small>
                     <span class="status-indicator online"></span>
                   </div>
                 </div>
@@ -128,7 +128,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/O_produk'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Barang'); ?>">
               <i class="menu-icon mdi mdi-food"></i>
               <span class="menu-title">Produk</span>
             </a>
@@ -138,13 +138,7 @@
               <i class="menu-icon mdi mdi-shopping"></i>
               <span class="menu-title">Kategori</span>
             </a>
-          </li>
-           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/A_testimoni'); ?>">
-              <i class="menu-icon mdi mdi-file-document"></i>
-              <span class="menu-title">Testimonial</span>
-            </a>
-          </li>
+       
        <!--    <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('Owner_controller/A_bukti'); ?>">
               <i class="menu-icon mdi mdi-file-document"></i>
@@ -165,10 +159,4 @@
             </a>
           </li>
          
-           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/A_voucher'); ?>">
-              <i class="menu-icon mdi mdi-file-document"></i>
-              <span class="menu-title">Voucher</span>
-            </a>
-          </li>
       </nav>
