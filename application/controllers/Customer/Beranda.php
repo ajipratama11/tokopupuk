@@ -12,6 +12,10 @@ class Beranda extends CI_Controller
 
     public function index()
     {
-        $this->load->view('Customer/v_beranda');
+        $this->db->join('kategori_barang', 'kategori_barang.id_kategori=barang.id_kategori_barang');
+        $this->db->order_by('id_barang', 'DESC');
+        $this->db->limit(6);
+        $data['produk'] = $this->db->get('barang')->result();
+        $this->load->view('Customer/v_beranda', $data);
     }
 }

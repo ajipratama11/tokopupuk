@@ -1,3 +1,4 @@
+<div class="bg_load"> <img class="loader_animation" src="<?= base_url() ?>assets/customer/images/loaders/loader_1.png" alt="#" /> </div>
 <header id="default_header" class="header_style_1">
     <!-- header top -->
     <div class="header_top">
@@ -26,7 +27,8 @@
                         </div>
                     </div>
                     <div class="float-right">
-                        <div class="make_appo"> <a class="btn white_btn" href="make_appointment.html">Make Appointment</a> </div>
+                        <div class="make_appo"> <a class="btn white_btn" href="<?= base_url() ?>Customer/Shop/keranjang"><span>
+                                    <i class="fa  fa-shopping-cart" style="width: 20px; height:50px;"></i></span>Keranjang</a> </div>
                     </div>
                 </div>
             </div>
@@ -47,21 +49,21 @@
                     <div class="menu_side">
                         <div id="navbar_menu">
                             <ul class="first-ul">
-                                <li> <a class="active" href="it_home.html">Beranda</a>
+                                <li> <a class="active" href="<?= base_url() ?>Customer/Beranda">Beranda</a>
                                 </li>
-                                <li> <a href="it_shop.html">Jenis Pupuk</a>
+                                <li> <a href="it_shop.html">Kategori Pupuk</a>
                                     <ul>
-                                        <li><a href="it_shop.html">Shop List</a></li>
-                                        <li><a href="it_shop_detail.html">Shop Detail</a></li>
-                                        <li><a href="it_cart.html">Shopping Cart</a></li>
-                                        <li><a href="it_checkout.html">Checkout</a></li>
+                                        <?php
+                                        $data = $this->db->get('kategori_barang')->result();
+                                        foreach ($data as $d) { ?>
+                                            <li><a href="it_shop.html"><?= $d->nama_kategori_brg ?></a></li>
+                                        <?php } ?>
+
                                     </ul>
-                                <li> <a href="it_shop.html">Pembelian</a>
+                                <li> <a href="<?= base_url() ?>Customer/Shop/">Pembelian</a>
                                     <ul>
-                                        <li><a href="it_shop.html">Shop List</a></li>
-                                        <li><a href="it_shop_detail.html">Shop Detail</a></li>
-                                        <li><a href="it_cart.html">Shopping Cart</a></li>
-                                        <li><a href="it_checkout.html">Checkout</a></li>
+                                        <li><a href="<?= base_url() ?>Customer/Shop/keranjang">Keranjang</a></li>
+                                        <li><a href="<?= base_url() ?>Customer/Shop/checkout">Checkout</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="it_about.html">Tentang Kami</a></li>

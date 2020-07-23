@@ -20,6 +20,17 @@
 <script src="<?= base_url() ?>assets/customer/revolution/js/extensions/revolution.extension.parallax.min.js"></script>
 <script src="<?= base_url() ?>assets/customer/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
 <script src="<?= base_url() ?>assets/customer/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script src='js/hizoom.js'></script>
+<script>
+    $('.hi1').hiZoom({
+        width: 300,
+        position: 'right'
+    });
+    $('.hi2').hiZoom({
+        width: 400,
+        position: 'right'
+    });
+</script>
 <!-- map js -->
 <script>
     // This example adds a marker to indicate the position of Bondi Beach in Sydney,

@@ -4,7 +4,7 @@
 
 <body id="default_theme" class="it_service">
     <!-- loader -->
-    <div class="bg_load"> <img class="loader_animation" src="<?= base_url() ?>assets/customer/images/loaders/loader_1.png" alt="#" /> </div>
+
     <!-- end loader -->
     <!-- header -->
     <?php $this->load->view('Customer/v_header') ?>
@@ -201,114 +201,26 @@
                 </div>
             </div>
             <div class="row" style="background-color: white; padding:50px;">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
-                    <div class="product_list">
-                        <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/pupuk.png" alt=""> </div>
-                        <div class="product_detail_btm">
-                            <div class="center">
-                                <h4><a href="it_shop_detail.html">Pupuk Urea</a></h4>
-                            </div>
+                <?php foreach ($produk as $p) { ?>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
+                        <div class="product_list">
+                            <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/pupuk.png" alt=""> </div>
+                            <div class="product_detail_btm">
+                                <div class="center">
+                                    <h4><a href="<?= base_url('Customer/Produk/detail_produk/' . $p->id_barang) ?>"><?= $p->nama_barang ?></a></h4>
+                                </div>
 
-                            <div class="product_price">
-                                <p><span class="new_price">Rp25.000</span></p>
+                                <div class="product_price">
+                                    <p><span class="new_price">Rp. <?= number_format($p->harga_barang, 0, ',', '.') ?></span></p>
 
-                            </div>
-                            <div style="margin-left: 20px;margin-right: 20px;margin-top:10px;">
-                                <p style="text-align: center;"><span style="margin-right: 100px;">Stok</span><span>Kategori</span></p>
+                                </div>
+                                <div style="margin-left: 20px;margin-right: 20px;margin-top:10px;">
+                                    <p style="text-align: center; font-size:12px;"><span style="margin-right: 100px;"><?= $p->stok_barang ?></span><span><?= $p->nama_kategori_brg ?></span></p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
-                    <div class="product_list">
-                        <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/produk.png" alt=""> </div>
-                        <div class="product_detail_btm">
-                            <div class="center">
-                                <h4><a href="it_shop_detail.html">Pupuk Urea</a></h4>
-                            </div>
-
-                            <div class="product_price">
-                                <p><span class="new_price">Rp25.000</span></p>
-
-                            </div>
-                            <div style="margin-left: 20px;margin-right: 20px;margin-top:10px;">
-                                <p style="text-align: center;"><span style="margin-right: 100px;">Stok</span><span>Kategori</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
-                    <div class="product_list">
-                        <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/pupuk.png" alt=""> </div>
-                        <div class="product_detail_btm">
-                            <div class="center">
-                                <h4><a href="it_shop_detail.html">Pupuk Urea</a></h4>
-                            </div>
-
-                            <div class="product_price">
-                                <p><span class="new_price">Rp25.000</span></p>
-
-                            </div>
-                            <div style="margin-left: 20px;margin-right: 20px;margin-top:10px;">
-                                <p style="text-align: center;"><span style="margin-right: 100px;">Stok</span><span>Kategori</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
-                    <div class="product_list">
-                        <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/produk.png" alt=""> </div>
-                        <div class="product_detail_btm">
-                            <div class="center">
-                                <h4><a href="it_shop_detail.html">Pupuk Urea</a></h4>
-                            </div>
-
-                            <div class="product_price">
-                                <p><span class="new_price">Rp25.000</span></p>
-
-                            </div>
-                            <div style="margin-left: 20px;margin-right: 20px;margin-top:10px;">
-                                <p style="text-align: center;"><span style="margin-right: 100px;">Stok</span><span>Kategori</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
-                    <div class="product_list">
-                        <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/pupuk.png" alt=""> </div>
-                        <div class="product_detail_btm">
-                            <div class="center">
-                                <h4><a href="it_shop_detail.html">Pupuk Urea</a></h4>
-                            </div>
-
-                            <div class="product_price">
-                                <p><span class="new_price">Rp25.000</span></p>
-
-                            </div>
-                            <div style="margin-left: 20px;margin-right: 20px;margin-top:10px;">
-                                <p style="text-align: center;"><span style="margin-right: 100px;">Stok</span><span>Kategori</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
-                    <div class="product_list">
-                        <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/produk.png" alt=""> </div>
-                        <div class="product_detail_btm">
-                            <div class="center">
-                                <h4><a href="it_shop_detail.html">Pupuk Urea</a></h4>
-                            </div>
-
-                            <div class="product_price">
-                                <p><span class="new_price">Rp25.000</span></p>
-
-                            </div>
-                            <div style="margin-left: 20px;margin-right: 20px;margin-top:10px;">
-                                <p style="text-align: center;"><span style="margin-right: 100px;">Stok</span><span>Kategori</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
             <br>
             <p><a class="btn main_bt" style="float: right;" href="#">Semua Produk</a></p>
