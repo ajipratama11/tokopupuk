@@ -13,10 +13,12 @@
                       <p class="mb-0 text-right">Total Pendapatan</p>
                       <div class="fluid-container">
                         
-                       
-                        <h4 class="font-weight-medium text-right mb-0">Rp 3000000
+                      <?php foreach ($total as $a) { ?>
+                        <h4 class="font-weight-medium text-right mb-0">Rp <?php
+                          $format_indonesia = number_format ($a->totalMasuk, 0, ',', '.');
+                          echo $format_indonesia;?>
                         </h4>
-                       
+                        <?php } ?>
                       </div>
                     </div>
                   </div>
@@ -36,7 +38,7 @@
                     <div class="float-right">
                       <p class="mb-0 text-right">Total pesanan</p>
                       <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">10</h3>
+                        <h3 class="font-weight-medium text-right mb-0"><?= $pemesanan ?></h3>
                       </div>
                     </div>
                   </div>
@@ -55,9 +57,9 @@
                       <i class="mdi mdi-account-location text-info icon-lg"></i>
                     </div>
                     <div class="float-right">
-                      <p class="mb-0 text-right">Kostumer</p>
+                      <p class="mb-0 text-right">Costumer</p>
                       <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">20</h3>
+                        <h3 class="font-weight-medium text-right mb-0"><?= $customer ?></h3>
                       </div>
                     </div>
                   </div>
@@ -77,7 +79,7 @@
                     <div class="float-right">
                       <p class="mb-0 text-right">Jumlah Admin</p>
                       <div class="fluid-container">
-                        <h3 class="font-weight-medium text-right mb-0">5</h3>
+                        <h3 class="font-weight-medium text-right mb-0"><?= $admin; ?></h3>
                       </div>
                     </div>
                   </div>

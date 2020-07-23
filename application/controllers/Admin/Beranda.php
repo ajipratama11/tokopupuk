@@ -5,7 +5,7 @@ class Beranda extends CI_Controller{
 	function __construct(){
 		parent::__construct();		
 		$this->load->model('Owner_models/MO_transaksi');
-		$this->load->model('Admin_models/MA_transaksi');
+		$this->load->model('M_transaksi');
 		$this->load->model('M_faq');
 		$this->load->helper(array('url'));
 		if($this->session->userdata('status') != "admin"){
@@ -17,8 +17,13 @@ class Beranda extends CI_Controller{
 	}
 
 	public function index(){
-		$this->load->view('element/Header');
-		$this->load->view('Admin/Beranda');
+		$data['total'] = $this->M_transaksi->totalPemasukan();
+		$data['pemesanan'] = $this->db->query("SELECT * FROM pemesanan")->num_rows();
+		$data['customer'] = $this->db->query("SELECT * FROM customer ")->num_rows();
+		$data['admin'] = $this->db->query("SELECT * FROM admin")->num_rows();
+		$data['pesan'] = $this->M_transaksi->tampil_pesan2();
+		$this->load->view('element/Header', $data);
+		$this->load->view('Admin/Beranda', $data);
 		$this->load->view('element/Footer');
 	}
 
