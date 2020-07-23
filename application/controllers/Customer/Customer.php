@@ -13,12 +13,17 @@ class Customer extends CI_Controller
     public function index()
     {
 
+        $this->load->view('Customer/v_login');
+    }
+
+    public function register()
+    {
         $this->load->view('Customer/v_daftar');
     }
 
     public function verify($token = null)
     {
-        $this->db->where('token', $token);
+        // $this->db->where('token', $token);
         $data = $this->db->get('customer')->row();
         if ($data > 0) {
             redirect('Customer/Beranda');
@@ -35,18 +40,58 @@ class Customer extends CI_Controller
         $this->email = $post["email"];
         $this->username = $post["username"];
         $this->password = $post["password"];
-        $token = $this->token = md5(time() . $post["nama"]);
         $data = $this->db->insert('customer', $this);
         if ($data) {
-            $to = $post["email"];
-            $subject = "Email Verification Toko Pupuk";
-            $message = "<a href='http://localhost/tokopupuk/Customer/Customer/verify/ $token'> Register </a>";
-            $headers = "MINE-Version: 1.0" . "\r\n";
-            $headers .= 'From: Fahrizal Azi <fahrizalazi1@gmail.com>' . "\r\n";
-            $headers .= "Content-type:text/html;charest=UTF-8" . "\r\n";
+            $this->session->set_flashdata(
+                'daftar',
+                '<div class="alert alert-success" >
+                    <p> Yeay, pendaftaran berhasil!!!</p>
+                </div>'
+            );
+        }
+        redirect('Customer/Customer/index');
 
-            mail($to, $subject, $message, $headers);
-            echo "Verif Dikirim ke Email";
+        // $token = $this->token = md5(time() . $post["nama"]);
+        // $data = $this->db->insert('customer', $this);
+        // if ($data) {
+        //     $to = $post["email"];
+        //     $subject = "Email Verification Toko Pupuk";
+        //     $message = "<a href='http://localhost/tokopupuk/Customer/Customer/verify/ $token'> Register </a>";
+        //     $headers = "MINE-Version: 1.0" . "\r\n";
+        //     $headers .= 'From: Fahrizal Azi <fahrizalazi1@gmail.com>' . "\r\n";
+        //     $headers .= "Content-type:text/html;charest=UTF-8" . "\r\n";
+
+        //     mail($to, $subject, $message, $headers);
+        //     echo "Verif Dikirim ke Email";
+        // }
+    }
+
+    public function cek_login()
+    {
+        $post = $this->input->post();
+        $u = $this->username = $post["username"];
+        $p = $this->password = $post["password"];
+
+        $this->db->where('username', $u);
+        $this->db->where('password', $p);
+        $data = $this->db->get('customer')->row_array();
+
+        if ($data > 0) {
+            $data_session = array(
+                'id_customer' => $data['id_cus'],
+                'nama' => $data['nama'],
+                'status' => "login"
+            );
+            $this->session->set_userdata($data_session);
+            redirect('Customer/Beranda/');
+        } else {
+            $this->session->set_flashdata(
+                'gagal',
+                '<div class="alert alert-danger" >
+                    <p> Aduh, username atau password salah!!!</p>
+                </div>'
+            );
+            redirect('Customer/Customer/index');
         }
     }
 }

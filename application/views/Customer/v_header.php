@@ -56,7 +56,7 @@
                                         <?php
                                         $data = $this->db->get('kategori_barang')->result();
                                         foreach ($data as $d) { ?>
-                                            <li><a href="it_shop.html"><?= $d->nama_kategori_brg ?></a></li>
+                                            <li><a href="<?= base_url("Customer/Produk/kategori/$d->id_kategori") ?>"><?= $d->nama_kategori_brg ?></a></li>
                                         <?php } ?>
 
                                     </ul>
@@ -66,11 +66,10 @@
                                         <li><a href="<?= base_url() ?>Customer/Shop/checkout">Checkout</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="it_about.html">Tentang Kami</a></li>
-                                <li> <a href="it_contact.html">Kontak</a>
+                                <li> <a href="it_contact.html">Akun</a>
                                     <ul>
-                                        <li><a href="it_contact.html">Contact Page 1</a></li>
-                                        <li><a href="it_contact_2.html">Contact Page 2</a></li>
+                                        <li><a href="it_contact.html"><?= $this->session->userdata('nama') ?></a></li>
+                                        <li><a href="it_contact_2.html">Pesanan</a></li>
                                     </ul>
                                 </li>
                             </ul>

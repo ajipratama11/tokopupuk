@@ -94,7 +94,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><button class="button">Checkout</button></td>
+                                    <td><a class="button center" href="<?= base_url() ?>Customer/Shop/checkout" style="color: white;">Checkout</a></td>
                                 </tr>
                             </tbody>
                         </table>
