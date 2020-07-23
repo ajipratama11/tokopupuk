@@ -8,12 +8,12 @@ class Beranda extends CI_Controller{
 		$this->load->model('Admin_models/MA_transaksi');
 		$this->load->model('M_faq');
 		$this->load->helper(array('url'));
-		// if($this->session->userdata('status') != "admin"){
-		// 	echo "<script>
-        //         alert('Anda harus login terlebih dahulu');
-        //         window.location.href = '".base_url('Owner_controller/A_login')."';
-        //     </script>";//Url tujuan
-		// }
+		if($this->session->userdata('status') != "admin"){
+			echo "<script>
+                alert('Anda harus login terlebih dahulu');
+                window.location.href = '".base_url('Admin/Login')."';
+            </script>";//Url tujuan
+		}
 	}
 
 	public function index(){

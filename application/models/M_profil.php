@@ -1,12 +1,12 @@
 <?php 
  
 class M_profil extends CI_Model{
-	function user($iduser){
-		$query = $this->db->query("SELECT * FROM user WHERE id_user='$iduser'");
+	function admin(){
+		$query = $this->db->query("SELECT * FROM admin");
 		return $query->result();
 	}
-	function kostumer($iduser){
-		$query = $this->db->query("SELECT * FROM kostumer WHERE id_kostumer='$iduser'");
+	function customer(){
+		$query = $this->db->query("SELECT * FROM customer");
 		return $query->result();
 	}
 	function update_user($iduser,$nama,$email,$pass,$telp,$alamat,$kodepos,$level){

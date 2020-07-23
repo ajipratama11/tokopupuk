@@ -47,36 +47,17 @@
           </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-          
           <li class="nav-item dropdown d-none d-xl-inline-block">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <span class="profile-text">Hai, <?php echo $this->session->userdata("namaadmin"); ?>!</span>
+              <span class="profile-text">Hai, <?php echo $this->session->userdata("username"); ?>!</span>
               <img class="img-xs rounded-circle" src="<?php echo base_url('assets/images/admin.png'); ?>" alt="Profile image">
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
               <a class="dropdown-item p-0">
                 <div class="d-flex border-bottom">
-                 <!--  <div class="py-3 px-4 d-flex align-items-center justify-content-center">
-                    <i class="mdi mdi-bookmark-plus-outline mr-0 text-gray"></i>
-                  </div>
-                  <div class="py-3 px-4 d-flex align-items-center justify-content-center border-left border-right">
-                    <i class="mdi mdi-account-outline mr-0 text-gray"></i>
-                  </div>
-                  <div class="py-3 px-4 d-flex align-items-center justify-content-center">
-                    <i class="mdi mdi-alarm-check mr-0 text-gray"></i>
-                  </div> -->
                 </div>
               </a>
-              <!-- <a class="dropdown-item mt-2" href="">
-                Kelola akun
-              </a> -->
-              <!-- <a class="dropdown-item">
-                Change Password
-              </a>
-              <a class="dropdown-item">
-                Check Inbox
-              </a> -->
-              <a class="dropdown-item" href="<?php echo base_url('Owner_controller/A_logout') ?>">
+              <a class="dropdown-item" href="<?php echo base_url('Admin/Logout') ?>">
                 Keluar
               </a>
             </div>
@@ -98,31 +79,29 @@
                   <img src="<?php echo base_url('assets/images/admin.png'); ?>" alt="profile image">
                 </div>
                 <div class="text-wrapper">
-                  <p class="profile-name">Alifia</p>
+                  <p class="profile-name"><?php echo $this->session->userdata("username"); ?></p>
                   <div>
-                    <small class="designation text-muted">id: 100002</small>
+                    <small class="designation text-muted">Admin </small>
                     <span class="status-indicator online"></span>
                   </div>
                 </div>
               </div>
-              
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/Beranda'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Beranda'); ?>">
               <i class="menu-icon mdi mdi-television"></i>
               <span class="menu-title">Dashboard</span>
             </a>
           </li>
-        
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/O_user'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Admin'); ?>">
               <i class="menu-icon mdi mdi-account-card-details"></i>
               <span class="menu-title">Admin</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/A_user'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Customer'); ?>">
               <i class="menu-icon mdi mdi-account"></i>
               <span class="menu-title">Customer</span>
             </a>
@@ -134,29 +113,24 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/A_kategori'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Barang/kategori'); ?>">
               <i class="menu-icon mdi mdi-shopping"></i>
               <span class="menu-title">Kategori</span>
             </a>
-       
-       <!--    <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/A_bukti'); ?>">
-              <i class="menu-icon mdi mdi-file-document"></i>
-              <span class="menu-title">Bukti pembayaran</span>
+            <a class="nav-link" href="<?php echo base_url('Admin/Barang/suplier'); ?>">
+              <i class="menu-icon mdi mdi-shopping"></i>
+              <span class="menu-title">Suplier</span>
             </a>
-          </li> -->
-
             <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/O_laporan'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Laporan'); ?>">
               <i class="menu-icon mdi mdi-receipt"></i>
               <span class="menu-title">Laporan</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Owner_controller/Beranda/faq'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/faq'); ?>">
               <i class="menu-icon mdi mdi-inbox"></i>
               <span class="menu-title">Faq</span>
             </a>
           </li>
-         
       </nav>

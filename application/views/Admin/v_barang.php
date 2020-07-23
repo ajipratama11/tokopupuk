@@ -55,8 +55,8 @@
         <!-- Modal content -->
         <div class="modal-content">
           <span class="close">&times;</span>
-          <form action="<?php echo base_url('Owner_controller/Beranda/tambahstok') ?>" method="post">
-            <input type="text" name="id_produk" placeholder="#Id Produk" required="required">
+          <form action="<?php echo base_url('Admin/Barang/tambahstok') ?>" method="post">
+            <input type="text" name="id_barang" placeholder="#Id Barang" required="required">
             <input type="number" min="1" name="tambahstok" placeholder="Jumlah stok" required="required">
           <button class="btn btn-primary">Tambah</button>
           </form>
@@ -66,9 +66,7 @@
                     <table class="table table-bordered">
                       <thead>
                         <tr>
-                           <th>
-                            
-                          </th>     
+                           
                           <th>
                             Aksi
                           </th> 
@@ -94,13 +92,45 @@
                           </th>
                            
                           <th>
-                            Keterangan
+                            Suplier
                           </th>  
                                            
                         </tr>
                       </thead>
                       <tbody>
-                      	
+                      <?php foreach($barang as $b){?>
+                        <tr>
+                          <td>    
+                            <a href="<?php echo base_url('Admin/Barang/update_barang/'.$b->id_barang); ?>"><i class="menu-icon mdi mdi-pencil-box"></i> Edit</a><br><br>
+                            <a onclick="return confirm_alert(this);" href="<?php echo base_url('Admin/Barang/hapus_barang/'.$b->id_barang); ?>"><i class="menu-icon mdi mdi-delete"></i> Hapus</a>
+                          </td>
+                          <td class="font-weight-medium">
+                          	<a target="_blank" href="<?php echo base_url('./assets/images/'.$b->gambar); ?>"><img src="<?php echo base_url('./assets/images/'.$b->gambar); ?>"></a>
+                          </td>
+                          <td>
+                          	<?php echo $b->id_barang; ?>
+                          </td>
+                          <td>
+                          	<?php echo $b->nama_barang; ?>
+                          </td>
+                          <td>
+                            <?php echo $b->stok_barang; ?>
+                          </td>
+                          <td>
+                          	<?php echo $b->nama_kategori_brg; ?>
+                          </td>
+                          </td>
+                          
+                          <td>
+                          	Rp <?php $format_indonesia = number_format ($b->harga_barang, 0, ',', '.');
+                          echo $format_indonesia; ?>
+                          </td>
+                          <td>
+                          	<?php echo $b->nama_suplier; ?>
+                          </td>
+                         
+                        </tr>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>
