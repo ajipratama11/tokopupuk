@@ -63,29 +63,37 @@
 				</div> 
 				<div class="form-group col-md-6">
 					Tanggal Masuk:
-					<input type="date"  name="panjang" min="1" class="form-control" required="required" >
+					<input type="date"  name="tgl_masuk_barang" min="1" class="form-control" required="required" >
 				</div>
 				<div class="form-group col-md-6">
 					Upload gambar  :<br><br>
-					<input type="file" name="filefoto"  required="required" placeholder="Upload gambar" style="padding-right:1px;">
+					<input type="file" name="gambar"  required="required" placeholder="Upload gambar" style="padding-right:1px;">
                 </div> 
+				<?php foreach($kategori as $a){?> 
+				<input type="hidden" name="id_kategori" value="<?php echo $a->id_kategori; ?>">
+				<?php } ?>
 				<div class="form-group col-md-6">
-					Kategori:
+					Kategori :
 					<select name="kategori" class="form-control">
-						<option>sas</option>
-						<option>sas</option>
+						<?php foreach($kategori as $av){?>
+						<?php echo "<option>".$a->nama_kategori_brg."</option>"; ?>
+						<?php } ?>
 					</select>
-				</div>        
+				</div>      
+				<?php foreach($suplier as $ac){?> 
+				<input type="hidden" name="id_suplier" value="<?php echo $ac->id_suplier; ?>">
+				<?php } ?>
 				<div class="form-group col-md-6">
-					Suplier:
-					<select name="kategori" class="form-control">
-						<option>sas</option>
-						<option>sas</option>
+					Suplier :
+					<select name="suplier" class="form-control">
+						<?php foreach($suplier as $ab){?>
+						<?php echo "<option>".$ab->nama_suplier."</option>"; ?>
+						<?php } ?>
 					</select>
-				</div>        
+				</div>         
 				<div class="form-group col-md-12">
 					<input type="submit" name="submit" class="btn btn-primary" value="Submit">
-					<a href="<?php echo base_url('Produk'); ?>"><button type="button" value="batal" class="btn btn-primary">Batal</button></a>
+					<a href="<?php echo base_url('Barang'); ?>"><button type="button" value="batal" class="btn btn-primary">Batal</button></a>
 				</div>
 			<?php form_close(); ?>
 		</div>

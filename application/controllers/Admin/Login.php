@@ -7,46 +7,44 @@ class Login extends CI_Controller{
 		parent::__construct();		
 		$this->load->model('M_login');
 		$this->load->helper(array('url'));
-		// if($this->session->userdata('status') == "admin"){
-		// 	echo "<script>
-        //         alert('Anda sudah login');
-        //         window.location.href = '".base_url('Owner_controller/Beranda')."';
-        //     </script>";//Url tujuan
-		// }
-	}
-	function index(){
-		$this->load->view('Owner_view/VA_login');
-	}
-	function aksi_login(){
-		$username = $this->input->post('email');
-		$password = $this->input->post('password');
-		foreach($this->M_login->iduser($username) as $row){
-			$iduser=$row->id_user;
-			$namauser = $row->nama_user;
-		}
-		$where = array(
-			'email' => $username,
-			'password' => $password
-			);
-		$cek = $this->M_login->cek_login("user",$where)->num_rows();
-		if($cek > 0){
-			$data_session = array(
-				'emailadmin' => $username,
-				'iduseradmin' => $iduser,
-				'namaadmin' => $namauser,
-				'status' => 'admin',
-				);
- 
-			$this->session->set_userdata($data_session);
-			$this->M_login->hapusanorderlama();
- 
-			redirect('Owner_controller/Beranda');
-		}else{
+		if($this->session->userdata('status') == "admin"){
 			echo "<script>
-                alert('Username dan password salah');
-                window.location.href = '".base_url('Owner_controller/A_login')."';
+                alert('Anda sudah login');
+                window.location.href = '".base_url('Admin/Beranda')."';
             </script>";//Url tujuan
 		}
 	}
+	function index(){
+		$this->load->view('Admin/v_login');
+	}
+	function aksi_login(){
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		foreach($this->M_login->iduser($username) as $row){
+			$iduser=$row->id_admin;
+			$username = $row->username;
+		}
+		$where = array(
+			'username' => $username,
+			'password' => $password
+			);
+		$cek = $this->M_login->cek_login("admin",$where)->num_rows();
+		if($cek > 0){
+			$data_session = array(
+				'username' => $username,
+				'iduseradmin' => $iduser,
+				'status' => 'admin',
+				);
+			$this->session->set_userdata($data_session);
+ 
+			redirect('Admin/Beranda');
+		}else{
+			echo "<script>
+                alert('Username dan password salah');
+                window.location.href = '".base_url('Admin/Login')."';
+            </script>";//Url tujuan
+		}
+	}
+
 } 
 ?>
