@@ -1,11 +1,36 @@
+<!-- section -->
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="full">
+                    <div class="contact_us_section">
+                        <div class="call_icon"> <img src="<?= base_url() ?>assets/customer/images/it_service/phone_icon.png" alt="#" /> </div>
+                        <div class="inner_cont">
+                            <h2>Ada yang ingin ditanyakan?</h2>
+                            <p>Hubungi beberapa sosial media kami</p>
+                        </div>
+                        <div class="button_Section_cont"> <a class="btn dark_gray_bt" href="it_contact.html">Kontak Kami</a> </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end section -->
+<!-- section -->
+<div class="section padding_layout_1" style="padding: 50px 0;">
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+</div>
 <!-- End Model search bar -->
 <!-- footer -->
 <footer class="footer_style_2">
     <div class="container-fuild">
         <div class="row">
-            <div class="map_section">
-                <div id="map"></div>
-            </div>
             <div class="footer_blog">
                 <div class="row">
                     <div class="col-md-6">
@@ -51,14 +76,6 @@
                             Manhattan, New York<br>
                             <span style="font-size:18px;"><a href="tel:+9876543210">+987 654 3210</a></span></p>
                         <div class="footer_mail-section">
-                            <form>
-                                <fieldset>
-                                    <div class="field">
-                                        <input placeholder="Email" type="text">
-                                        <button class="button_custom"><i class="fa fa-envelope" aria-hidden="true"></i></button>
-                                    </div>
-                                </fieldset>
-                            </form>
                         </div>
                     </div>
                 </div>

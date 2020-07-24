@@ -51,7 +51,7 @@
                             <ul class="first-ul">
                                 <li> <a class="active" href="<?= base_url() ?>Customer/Beranda">Beranda</a>
                                 </li>
-                                <li> <a href="it_shop.html">Kategori Pupuk</a>
+                                <li> <a>Kategori Pupuk</a>
                                     <ul>
                                         <?php
                                         $data = $this->db->get('kategori_barang')->result();
@@ -60,25 +60,38 @@
                                         <?php } ?>
 
                                     </ul>
-                                <li> <a href="<?= base_url() ?>Customer/Shop/">Pembelian</a>
+                                <li> <a>Pembelian</a>
                                     <ul>
                                         <li><a href="<?= base_url() ?>Customer/Shop/keranjang">Keranjang</a></li>
                                         <li><a href="<?= base_url() ?>Customer/Shop/checkout">Checkout</a></li>
+                                        <li><a href="<?= base_url() ?>Customer/Shop/pesanan">Pesanan</a></li>
                                     </ul>
                                 </li>
-                                <li> <a href="it_contact.html">Akun</a>
+                                <li> <a href="<?= base_url() ?>Customer/Customer/profil">Akun</a>
                                     <ul>
-                                        <li><a href="it_contact.html"><?= $this->session->userdata('nama') ?></a></li>
-                                        <li><a href="it_contact_2.html">Pesanan</a></li>
+                                        <li>
+                                            <?php
+                                            $id = $this->session->userdata('id_customer');
+                                            $nama = $this->session->userdata('nama');
+                                            if ($id == null) { ?>
+                                                <a href="<?= base_url('Customer/Customer/') ?>">
+                                                    Login dulu ya!
+                                                </a>
+                                            <?php } else { ?>
+                                                <a href="<?= base_url('Customer/Customer/logout/') ?>">
+                                                    Logout
+                                                </a>
+                                            <?php } ?>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
-                        <div class="search_icon">
+                        <!-- <div class="search_icon">
                             <ul>
                                 <li><a href="#" data-toggle="modal" data-target="#search_bar"><i class="fa fa-search" aria-hidden="true"></i></a></li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- menu end -->
                 </div>

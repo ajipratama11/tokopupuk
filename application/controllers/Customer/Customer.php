@@ -94,4 +94,17 @@ class Customer extends CI_Controller
             redirect('Customer/Customer/index');
         }
     }
+    function logout()
+    {
+        $this->session->sess_destroy();
+
+        redirect('Customer/Customer');
+    }
+    public function profil()
+    {
+        $id = $this->session->userdata('id_customer');
+        $this->db->where('id_cus', $id);
+        $data['user'] = $this->db->get('customer')->row();
+        $this->load->view('Customer/v_profil', $data);
+    }
 }

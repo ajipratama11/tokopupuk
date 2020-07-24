@@ -45,6 +45,7 @@
                 <form class="login100-form validate-form" method="post" action="<?= base_url() ?>Customer/Customer/cek_login">
                     <?php echo $this->session->flashdata('daftar'); ?>
                     <?php echo $this->session->flashdata('gagal'); ?>
+                    <?php echo $this->session->flashdata('login'); ?>
                     <div class="wrap-input100 validate-input m-b-26" data-validate="Username is required">
                         <span class="label-input100">Username</span>
                         <input class="input100" type="text" name="username" placeholder="Enter username">

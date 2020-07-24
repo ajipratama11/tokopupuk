@@ -37,4 +37,12 @@ class Produk extends CI_Controller
         $data['nama'] = $this->db->get('kategori_barang')->row();
         $this->load->view('Customer/v_shop', $data);
     }
+    public function hapus_produk($id_pemesanan = null)
+    {
+        $id = $this->session->userdata('id_customer');
+        $this->db->where('id_cus', $id);
+        $this->db->where('id_pemesanan', $id_pemesanan);
+        $this->db->delete('pemesanan');
+        redirect('Customer/Shop/keranjang');
+    }
 }

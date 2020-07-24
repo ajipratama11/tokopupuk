@@ -18,13 +18,25 @@ class Shop extends CI_Controller
     }
     public function keranjang()
     {
-
+        $id_cus = $this->session->userdata('id_customer');
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+        $this->db->where('id_cus', $id_cus);
+        $this->db->where('status', "Belum Checkout");
         $data['keranjang'] = $this->db->get('pemesanan')->result();
 
         $this->db->select('SUM(sub_total) as total');
+        $this->db->where('status', "Belum Checkout");
+        $this->db->where('id_cus', $id_cus);
         $data['total'] = $this->db->get('pemesanan')->row();
         $this->load->view('Customer/v_keranjang', $data);
+    }
+
+    public function pesanan()
+    {
+        $id_cus = $this->session->userdata('id_customer');
+        $this->db->where('id_cus', $id_cus);
+        $data['trans'] = $this->db->get('konfirmasi_pemesanan')->result();
+        $this->load->view('Customer/v_pesanan', $data);
     }
     public function checkout()
     {
@@ -34,9 +46,10 @@ class Shop extends CI_Controller
         $id_cus = $this->session->userdata('id_customer');
         $this->db->select('SUM(sub_total) as total');
         $this->db->where('id_cus', $id_cus);
+        $this->db->where('status', "Belum Checkout");
         $data['total'] = $this->db->get('pemesanan')->row();
 
-        
+
         $this->db->where('id_cus', $id_cus);
         $this->db->get('pemesanan');
 
@@ -48,9 +61,16 @@ class Shop extends CI_Controller
     {
         $status = $this->session->userdata('status');
         if (!$status) {
+            $this->session->set_flashdata(
+                'login',
+                '<div class="alert alert-success" >
+                    <p> Sory, login dulu yaaa!!!</p>
+                </div>'
+            );
             $this->session->unset_userdata('username');
-            redirect('../../');
+            redirect('Customer/Customer');
         } else {
+
 
             $post = $this->input->post();
             $id_cus = $this->id_cus = $post["id_cus"];
@@ -60,6 +80,8 @@ class Shop extends CI_Controller
             $this->tgl_pemesanan = $post["tgl_pemesanan"];
             $this->status = "Belum Checkout";
 
+
+            $this->db->where('status', "Belum Checkout");
             $this->db->where('id_cus', $id_cus);
             $this->db->where('id_barang', $id_barang);
             $cek = $this->db->get('pemesanan')->row_array();
@@ -79,16 +101,28 @@ class Shop extends CI_Controller
 
     public function bayar()
     {
+
+
+        $id = $this->session->userdata('id_customer');
         $post = $this->input->post();
-        $this->id_cus = $post["id_cus"];
+        $id_cus = $this->id_cus = $post["id_cus"];
         $this->tanggal_checkout = $post["tanggal_checkout"];
         $this->bank = $post["bank"];
+        $id_trans = $this->id_trans = md5(time() . $id);
         $this->alamat_pengiriman = $post["alamat_pengiriman"];
         $this->status_pembayaran = "Belum Dikonfirmasi";
+        $this->total_bayar = $post["total_bayar"];
         $this->bukti_transfer = $this->_uploadImage();
         $data = $this->db->insert('konfirmasi_pemesanan', $this);
         if ($data) {
-            redirect('Customer/Beranda');
+
+            $this->db->set('status', "Sudah Checkout");
+            $this->db->set('id_trans', $id_trans);
+            $this->db->where('id_cus', $id_cus);
+            $this->db->where('status', "Belum Checkout");
+            $this->db->update('pemesanan');
+
+            redirect('Customer/Shop/checkout');
         }
     }
 
@@ -109,5 +143,25 @@ class Shop extends CI_Controller
         } else {
             return $this->upload->data('file_name');
         }
+    }
+
+    public function update_cart()
+    {
+        $id_cus = $this->session->userdata('id_customer');
+        $post = $this->input->post();
+        $id_pemesanan = $post["id_pemesanan"];
+        $result = array();
+
+        foreach ($id_pemesanan as $key => $val) {
+
+            $result[] = array(
+                "id_pemesanan" => $id_pemesanan[$key],
+                "jumlah_barang"  => $_POST['jumlah_barang'][$key],
+                "sub_total"  => $_POST['jumlah_barang'][$key] * $_POST['harga_barang'][$key]
+
+            );
+        }
+        $this->db->update_batch('pemesanan', $result, 'id_pemesanan');
+        redirect('Customer/Shop/keranjang');
     }
 }

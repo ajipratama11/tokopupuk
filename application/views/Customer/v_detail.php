@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="side_bar">
-                        <div class="side_bar_blog">
+                        <!-- <div class="side_bar_blog">
                             <h4>SEARCH</h4>
                             <div class="side_bar_search">
                                 <div class="input-group stylish-input-group">
@@ -114,7 +114,7 @@
                                         <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
                                     </span> </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="side_bar_blog">
                             <h4>Kategori Pupuk</h4>
                             <div class="categary">
