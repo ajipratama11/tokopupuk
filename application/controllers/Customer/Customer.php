@@ -82,6 +82,9 @@ class Customer extends CI_Controller
                 'nama' => $data['nama'],
                 'status' => "login"
             );
+
+            // $this->db->query('DELETE FROM konfirmasi_pemesanan where status WHERE DATEDIFF(CURDATE(), tanggal_checkout) > 7');
+
             $this->session->set_userdata($data_session);
             redirect('Customer/Beranda/');
         } else {

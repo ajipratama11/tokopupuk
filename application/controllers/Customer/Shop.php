@@ -33,6 +33,7 @@ class Shop extends CI_Controller
 
     public function pesanan()
     {
+
         $id_cus = $this->session->userdata('id_customer');
         $this->db->where('id_cus', $id_cus);
         $data['trans'] = $this->db->get('konfirmasi_pemesanan')->result();
@@ -110,9 +111,9 @@ class Shop extends CI_Controller
         $this->bank = $post["bank"];
         $id_trans = $this->id_trans = md5(time() . $id);
         $this->alamat_pengiriman = $post["alamat_pengiriman"];
-        $this->status_pembayaran = "Belum Dikonfirmasi";
+        $this->status_pembayaran = "Belum Bayar";
         $this->total_bayar = $post["total_bayar"];
-        $this->bukti_transfer = $this->_uploadImage();
+        $this->bukti_transfer = "Belum Bayar";
         $data = $this->db->insert('konfirmasi_pemesanan', $this);
         if ($data) {
 
@@ -122,9 +123,25 @@ class Shop extends CI_Controller
             $this->db->where('status', "Belum Checkout");
             $this->db->update('pemesanan');
 
-            redirect('Customer/Shop/checkout');
+            redirect('Customer/Shop/pesanan');
         }
     }
+    public function update_pembayaran()
+    {
+        $post = $this->input->post();
+        $id_cus = $this->id_cus = $post["id_cus"];
+        $id_trans = $this->id_trans = $post["id_trans"];
+        $this->status_pembayaran = "Belum Dikonfirmasi";
+        $this->bukti_transfer = $this->_uploadImage();
+
+        $this->db->where('id_cus', $id_cus);
+        $this->db->where('id_trans', $id_trans);
+        $data = $this->db->update('konfirmasi_pemesanan', $this);
+        if ($data) {
+            redirect('Customer/Shop/pesanan');
+        }
+    }
+    //$this->_uploadImage()
 
     private function _uploadImage()
     {

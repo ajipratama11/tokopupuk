@@ -26,9 +26,27 @@
                             </ul>
                         </div>
                     </div>
+                    <?php
+                    $id_cus = $this->session->userdata('id_customer');
+                    if (!$id_cus) {
+                        $chart = "0";
+                    } else {
+                        $this->db->select('COUNT(id_barang) as total_barang');
+                        $this->db->where('id_cus', $id_cus);
+                        $this->db->where('status', "Belum Checkout");
+                        $jumlah = $this->db->get('pemesanan')->row_array();
+                        if ($jumlah > 0) {
+                            $chart = $jumlah['total_barang'];
+                        } else {
+                            $chart = "0";
+                        }
+                    }
+
+                    ?>
                     <div class="float-right">
                         <div class="make_appo"> <a class="btn white_btn" href="<?= base_url() ?>Customer/Shop/keranjang"><span>
-                                    <i class="fa  fa-shopping-cart" style="width: 20px; height:50px;"></i></span>Keranjang</a> </div>
+                                    <i class="fa  fa-shopping-cart" style="width: 20px; height:50px;"></i></span>Keranjang (<?= $chart ?>)</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,7 +80,6 @@
                                     </ul>
                                 <li> <a>Pembelian</a>
                                     <ul>
-                                        <li><a href="<?= base_url() ?>Customer/Shop/keranjang">Keranjang</a></li>
                                         <li><a href="<?= base_url() ?>Customer/Shop/checkout">Checkout</a></li>
                                         <li><a href="<?= base_url() ?>Customer/Shop/pesanan">Pesanan</a></li>
                                     </ul>
