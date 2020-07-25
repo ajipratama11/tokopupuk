@@ -82,7 +82,7 @@
 
                     <div class="flex-sb-m w-full p-b-30">
                         <div>
-                            <a href="#" class="txt1">
+                            <a href="<?= base_url()?>Customer/Customer" class="txt1">
                                 Sudah punya akun?
                             </a>
                         </div>

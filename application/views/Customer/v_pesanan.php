@@ -57,7 +57,15 @@
                                                 <p class="price_table">Rp.<?= number_format($t->total_bayar, 0, ',', '.')  ?></p>
                                             </td>
                                             <td class="col-sm-1 col-md-1 text-center">
-                                                <p class="price_table"><?= $t->status_pembayaran ?></p>
+                                                <?php
+                                                if ($t->status_pembayaran == "Belum Bayar") { ?>
+
+                                                    <p style="font-size: 12px;" class="price_table">Belum Bayar</p>
+                                                    <a style="font-size: 12px;color: red;" href="" type="button" data-toggle="modal" data-target="#modalBayar<?= $t->id_trans ?>">( Bayar? )</a>
+
+                                                <?php } else if ($t->status_pembayaran == "Belum Dikonfirmasi") { ?>
+                                                    <p style="font-size: 12px;" class="price_table"><?= $t->status_pembayaran ?></p>
+                                                <?php } ?>
                                             </td>
 
                                             <td class="col-sm-1 col-md-1"><button type="button" data-toggle="modal" data-target="#modalLihat<?= $t->id_trans ?>" class="bt_main"><i class="fa fa-edit"></i> Remove</button></td>
@@ -86,7 +94,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <table class="table">
+                        <table>
                             <thead>
                                 <tr>
                                     <th>Nama Pupuk</th>
@@ -104,7 +112,7 @@
                                 ?>
                                     <tr>
                                         <td class="col-sm-8 col-md-6">
-                                            <div class="media"> <a class="thumbnail pull-left" href="#"> <img class="media-object" src="<?= base_url('assets/customer/images/it_service/' . $c->gambar) ?>" alt="#"></a>
+                                            <div class="media">
                                                 <div class="media-body">
                                                     <h4 class="media-heading"><a href="#"><?= $c->nama_barang ?></a></h4>
                                                 </div>
@@ -123,13 +131,52 @@
                                 <?php } ?>
                             </tbody>
                         </table>
+
                     </div>
                     <div class="modal-footer">
+                        <p style="font-style: bold; color:red;"> Total : Rp.<?= number_format($k->total_bayar, 0, ',', '.')  ?></p>
                     </div>
                 </div>
             </div>
         </div>
     <?php } ?>
+
+    <?php foreach ($trans as $k) {
+    ?>
+        <div class="modal fade" id="modalBayar<?= $k->id_trans ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Pembayaran</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form method="post" action="<?= base_url() ?>Customer/Shop/update_pembayaran" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            <div>
+                                <p style="font-style: bold; color:red;"> Total : Rp.<?= number_format($k->total_bayar, 0, ',', '.')  ?></p>
+                            </div>
+                            <div class="form-field">
+                                <label>Upload Bukti Transfer</label>
+                                <input name="id_cus" value="<?= $k->id_cus ?>" type="hidden">
+                                <input name="id_trans" value="<?= $k->id_trans ?>" type="hidden">
+                                <input type="file" name="bukti_transfer" required="" type="text">
+                            </div>
+                            <div class="mt-3">
+                                <p style="font-style: bold; color:red;"> * Transaksi akan di batalkan jika selama 7 hari setelah checkout belum melakukan transaksi</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="button" type="submit">Kirim</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+
 
     <!-- footer -->
     <?php $this->load->view('Customer/v_footer') ?>
