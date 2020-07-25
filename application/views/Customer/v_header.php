@@ -28,7 +28,7 @@
                     </div>
                     <div class="float-right">
                         <div class="make_appo"> <a class="btn white_btn" href="<?= base_url() ?>Customer/Shop/keranjang"><span>
-                                    <i class="fa  fa-shopping-cart" style="width: 20px; height:50px;"></i></span>Keranjang</a> </div>
+                                    <i class="fa  fa-shopping-cart" style="width: 20px; height:50px;"></i></span> Keranjang</a> </div>
                     </div>
                 </div>
             </div>
