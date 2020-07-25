@@ -109,24 +109,55 @@
                       <thead>
                         <tr>
                           <th>
-                            Kode pesan
+                            ID Pemesan
                           </th>
                           <th>
-                            Nama pelanggan
+                            Nama Pemesan
                           </th>
                           <th>
-                            Total
+                            Total Bayar
                           </th>
                            <th>
                             Status
                           </th>
                           <th>
-                            
+                            Aksi
                           </th>
                         </tr>
                       </thead>
                       <tbody>
-                     
+                        <?php foreach($pesan as $a) { ?>
+
+                          <tr>
+                          <td class="font-weight-medium">
+                            <h4 style="padding-left: 7px;"><?php echo $a->id_pemesanan; ?></h4>
+                          </td>
+                          <td class="font-weight-medium">
+                            <h4 style="padding-left: 7px;"><?php echo $a->nama; ?>
+                            </h4>
+                          </td>
+                          <td>
+                            <h4>Rp <?php $format_indonesia = number_format ($a->sub_total, 0, ',', '.');
+                          echo $format_indonesia; ?></h4>
+                          </td>
+                          <td>
+                    
+                              <?php 
+                              if ($a->status_pembayaran=='Belum Bayar') {
+                                echo '<a  data-toggle="modal" data-target="#modalLihat'.$a->id_trans.'"><button type="button" class="btn">'.$a->status_pembayaran.'</button></a>';
+                                
+                              }else if ($a->status_pembayaran=='batal') {
+                                echo '<button type="button" class="btn btn-danger">'.$a->status_pembayaran.'</button>';
+                              }else{
+                                echo '<button type="button" class="btn btn-success">'.$a->status_pembayaran.'</button>';
+                              }
+                              ?>
+                          </td>
+                          <td>
+                            <a href="<?= base_url('Admin/Beranda/detailtransaksi/'.$a->id_pemesanan); ?>" type="button" class="btn btn-warning">Detail Transaksi</a>
+                          </td>
+                          </tr>
+                        <?php } ?>
                       </tbody>
                     </table>
                   </div>
@@ -137,6 +168,57 @@
 
          
         </div>
+        <?php foreach ($trans as $k) {
+    ?>
+        <div class="modal fade" id="modalLihat<?= $k->id_trans ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Barang Pesanan</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tanggal Checkout</th>
+                                    <th>Total Bayar</th>
+                                    <th>Bank</th>
+                                    <th >Bukti Transfer</th>
+                                    <th >Alamat Pengiriman</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               <tr>
+                                 <td><?= $k->tanggal_checkout ?></td>
+                                 <td><?= $k->total_bayar ?></td>
+                                 <td><?= $k->bank ?></td>
+                                 <td><?= $k->bukti_transfer ?></td>
+                                 <td><?= $k->alamat_pengiriman ?></td>
+                               </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                    <?php 
+                              if ($a->status_pembayaran=='Belum Bayar') {
+                                echo '<a onclick="return confirm_alert(this);" href="'.base_url('Admin/Beranda/status/'.$a->id_pemesanan).'"><button type="button" class="btn">'.$a->status_pembayaran.'</button></a>';
+                                
+                              }else if ($a->status_pembayaran=='batal') {
+                                echo '<button type="button" class="btn btn-danger">'.$a->status_pembayaran.'</button>';
+                              }else{
+                                echo '<button type="button" class="btn btn-success">'.$a->status_pembayaran.'</button>';
+                              }
+                              ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
         <!-- content-wrapper ends -->
         <script type="text/javascript">
     

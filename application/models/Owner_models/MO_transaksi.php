@@ -27,6 +27,7 @@ class MO_transaksi extends CI_Model{
 	function updatestatus($idpesan,$status){
 		$query = $this->db->query("UPDATE `pesan` SET `status`='$status' WHERE id_pesan='$idpesan'");
 	}
+	
 
 	 function user($iduser){
 	 	$query = $this->db->query("SELECT * FROM kostumer WHERE id_kostumer='$iduser'");

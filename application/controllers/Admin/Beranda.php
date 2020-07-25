@@ -21,11 +21,21 @@ class Beranda extends CI_Controller{
 		$data['pemesanan'] = $this->db->query("SELECT * FROM pemesanan")->num_rows();
 		$data['customer'] = $this->db->query("SELECT * FROM customer ")->num_rows();
 		$data['admin'] = $this->db->query("SELECT * FROM admin")->num_rows();
+		$data['trans'] = $this->db->get('konfirmasi_pemesanan')->result();
 		$data['pesan'] = $this->M_transaksi->tampil_pesan2();
 		$this->load->view('element/Header', $data);
 		$this->load->view('Admin/Beranda', $data);
 		$this->load->view('element/Footer');
 	}
+
+	public function detailtransaksi(){
+		$idpesan = $this->uri->segment(4);
+		$data['pesan'] = $this->M_transaksi->tampil_pesan12($idpesan);
+		$this->load->view('element/Header', $data);
+		$this->load->view('Admin/v_detailtransaksi', $data);
+		$this->load->view('element/Footer');
+	}
+	
 
 	public function cari(){
 		$kodepesan=$this->input->post('cari');
@@ -61,10 +71,10 @@ class Beranda extends CI_Controller{
 
 	public function status(){
 		$idpesan = $this->uri->segment(4);
-		$status = 'Terbayar';
-		$this->MO_transaksi->updatestatus($idpesan,$status);
-		$this->MA_transaksi->updatestok($idpesan);
-		redirect('Owner_controller/Beranda');
+		$status = 'Sudah Bayar';
+		$this->M_transaksi->updatestatus($idpesan,$status);
+		$this->M_transaksi->updatestok($idpesan);
+		redirect('Admin/Beranda');
 	}
 
 	public function detail_transaksi(){
