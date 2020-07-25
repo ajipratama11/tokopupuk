@@ -13,6 +13,7 @@ class M_barang extends CI_Model{
 	public $gambar = "camera.jpg";
 	public $id_kategori_barang;
 	public $id_suplier;
+	public $keterangan;
 	function __construct()
     {
         parent::__construct();
@@ -66,8 +67,8 @@ class M_barang extends CI_Model{
 		return $query->result();
 	}
 
-	function tambah_barang($idbarang,$namabarang,$harga,$tglmasuk,$stok,$gambar,$idkat, $idsup){
-		$query = $this->db->query("INSERT INTO `barang`(`id_barang`, `nama_barang`, `harga_barang`, `tgl_masuk_barang`, `stok_barang`, `gambar`, `id_kategori_barang`, `id_suplier`) VALUES ('$idbarang','$namabarang','$harga','$tglmasuk','$stok','$gambar','$idkat','$idsup')");
+	function tambah_barang($idbarang,$namabarang,$harga,$tglmasuk,$stok,$gambar,$idkat, $idsup, $keterangan){
+		$query = $this->db->query("INSERT INTO `barang`(`id_barang`, `nama_barang`, `harga_barang`, `tgl_masuk_barang`, `stok_barang`, `gambar`, `id_kategori_barang`, `id_suplier`, `keterangan`) VALUES ('$idbarang','$namabarang','$harga','$tglmasuk','$stok','$gambar','$idkat','$idsup','$keterangan')");
 	}
 	function get_idbarang(){
           $this->db->select('RIGHT(barang.id_barang,4) as kode', FALSE);
@@ -176,6 +177,7 @@ class M_barang extends CI_Model{
 		}
 		$this->id_kategori_barang = $post['id_kategori_barang'];
 		$this->id_suplier = $post['id_suplier'];
+		$this->keterangan = $post['keterangan'];
         $this->db->update($this->_table, $this, array("id_barang" => $id_barang));
 	}
 

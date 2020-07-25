@@ -90,7 +90,11 @@
 						<?php echo "<option>".$ab->nama_suplier."</option>"; ?>
 						<?php } ?>
 					</select>
-				</div>         
+				</div>
+				<div class="form-group col-md-6">
+					Keterangan:
+					<input type="text"  name="keterangan" min="1" class="form-control" required="required" >
+				</div>  
 				<div class="form-group col-md-12">
 					<input type="submit" name="submit" class="btn btn-primary" value="Submit">
 					<a href="<?php echo base_url('Barang'); ?>"><button type="button" value="batal" class="btn btn-primary">Batal</button></a>
