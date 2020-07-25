@@ -72,7 +72,8 @@ class Barang extends CI_Controller
 		foreach ($this->M_barang->namasup($suplier) as $row) {
 			$idsup = $row->id_suplier;
 		}
-		$this->M_barang->tambah_barang($idbarang, $namabarang, $harga, $tglmasuk, $stok, $gambar, $idkat, $idsup);
+		$keterangan = $this->input->post('keterangan');
+		$this->M_barang->tambah_barang($idbarang, $namabarang, $harga, $tglmasuk, $stok, $gambar, $idkat, $idsup, $keterangan);
 		echo "<script>
 	                alert('Upload berhasil');
 	                window.location.href = '" . base_url('Admin/Barang') . "';

@@ -94,6 +94,9 @@
                           <th>
                             Suplier
                           </th>  
+                          <th>
+                            Keterangan
+                          </th>  
                                            
                         </tr>
                       </thead>
@@ -127,6 +130,9 @@
                           </td>
                           <td>
                           	<?php echo $b->nama_suplier; ?>
+                          </td>
+                          <td>
+                          	<?php echo $b->keterangan; ?>
                           </td>
                          
                         </tr>
