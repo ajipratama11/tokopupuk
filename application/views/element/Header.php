@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -24,7 +25,7 @@
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
         <a class="navbar-brand brand-logo" href="<?php echo base_url('Owner_controller/Beranda'); ?>">
-       <!--  <img style="width: 139px;height: 39px;" src="<?php echo base_url('assets/images/home/LOGOnew.png'); ?>" alt="logo" /> -->
+          <!--  <img style="width: 139px;height: 39px;" src="<?php echo base_url('assets/images/home/LOGOnew.png'); ?>" alt="logo" /> -->
         </a>
         <a class="navbar-brand brand-logo-mini" href="<?php echo base_url('Owner_controller/Beranda'); ?>">
           <img src="<?php echo base_url('assets/admin/images/logo-mini.svg'); ?>" alt="logo" />
@@ -107,7 +108,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Barang'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Barang/index'); ?>">
               <i class="menu-icon mdi mdi-food"></i>
               <span class="menu-title">Produk</span>
             </a>
@@ -117,14 +118,23 @@
               <i class="menu-icon mdi mdi-shopping"></i>
               <span class="menu-title">Kategori</span>
             </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('Admin/Barang/suplier'); ?>">
               <i class="menu-icon mdi mdi-shopping"></i>
               <span class="menu-title">Suplier</span>
             </a>
-            <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Laporan'); ?>">
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url(''); ?>">
               <i class="menu-icon mdi mdi-receipt"></i>
               <span class="menu-title">Laporan</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/'); ?>">
+              <i class="menu-icon mdi mdi-receipt"></i>
+              <span class="menu-title">Laporan Pengeluaran</span>
             </a>
           </li>
           <li class="nav-item">

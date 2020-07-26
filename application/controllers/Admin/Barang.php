@@ -10,13 +10,12 @@ class Barang extends CI_Controller
 		$this->load->model('M_komentar');
 		$this->load->library('upload');
 		$this->load->helper(array('url', 'form'));
-		if($this->session->userdata('status') != "admin"){
+		if ($this->session->userdata('status') != "admin") {
 			echo "<script>
 		        alert('Anda sudah login');
-		        window.location.href = '".base_url('Admin/Login')."';
-		    </script>";//Url tujuan
+		        window.location.href = '" . base_url('Admin/Login') . "';
+		    </script>"; //Url tujuan
 		}
-
 	}
 
 	public function index()
@@ -61,6 +60,7 @@ class Barang extends CI_Controller
 		$idbarang = $this->M_barang->get_idbarang();
 		$namabarang = $this->input->post('nama_barang');
 		$harga = $this->input->post('harga_barang');
+		$harga_beli = $this->input->post('harga_beli');
 		$tglmasuk = $this->input->post('tgl_masuk_barang');
 		$stok = $this->input->post('stok_barang');
 		$gambar = $this->_uploadImage();
@@ -73,12 +73,32 @@ class Barang extends CI_Controller
 			$idsup = $row->id_suplier;
 		}
 		$keterangan = $this->input->post('keterangan');
-		$this->M_barang->tambah_barang($idbarang, $namabarang, $harga, $tglmasuk, $stok, $gambar, $idkat, $idsup, $keterangan);
-		echo "<script>
+
+		$bayar = $stok * $harga_beli;
+
+		$id_admin = $this->session->userdata('iduseradmin');
+		$this->db->where('id_admin', $id_admin);
+		$adm = $this->db->get('admin')->row_array();
+
+		if ($bayar > $adm['kas']) {
+			$this->session->set_flashdata(
+				'gagal',
+				'<div class="alert alert-danger" >
+                    <p> Uang kas anda tidak cukup!!!</p>
+                </div>'
+			);
+			redirect('Admin/Barang/tambah_barang');
+		} else {
+
+			$this->db->set('kas', $adm['kas'] - $bayar);
+			$this->db->where('id_admin', $id_admin);
+			$adm = $this->db->update('admin');
+			$this->M_barang->tambah_barang($idbarang, $namabarang, $harga, $harga_beli, formatHariTanggal($tglmasuk), $stok, $gambar, $idkat, $idsup, $keterangan);
+			echo "<script>
 	                alert('Upload berhasil');
 	                window.location.href = '" . base_url('Admin/Barang') . "';
 	            </script>"; //Url tujuan
-
+		}
 	}
 
 
@@ -124,25 +144,25 @@ class Barang extends CI_Controller
 	public function tambahkategori()
 	{
 		$idkate = $this->M_barang->get_idkategori();
-		$nama_kate=$this->input->post('nama_kategori');
+		$nama_kate = $this->input->post('nama_kategori');
 		$cek = $this->db->query("SELECT * FROM kategori_barang WHERE nama_kategori_brg='$nama_kate'")->num_rows();
-		if ($cek >= 1){
+		if ($cek >= 1) {
 			echo "<script>
                 alert('Nama kategori sudah ada');
-                window.location.href = '".base_url('Admin/Barang/kategori')."';
-            </script>";//Url tujuan
-		}elseif ($cek == 0) {
-			$this->M_barang->tambah_kategori($idkate,$nama_kate);
+                window.location.href = '" . base_url('Admin/Barang/kategori') . "';
+            </script>"; //Url tujuan
+		} elseif ($cek == 0) {
+			$this->M_barang->tambah_kategori($idkate, $nama_kate);
 			echo "<script>
                 alert('Kategori berhasil ditambahkan');
-                window.location.href = '".base_url('Admin/Barang/kategori')."';
-            </script>";//Url tujuan
+                window.location.href = '" . base_url('Admin/Barang/kategori') . "';
+            </script>"; //Url tujuan
 		}
 		redirect('Admin/Barang/kategori');
 	}
 	public function hapuskategori()
 	{
-		$id_kategori= $this->uri->segment(4);
+		$id_kategori = $this->uri->segment(4);
 		$this->M_barang->hapus_kate($id_kategori);
 		redirect('Admin/Barang/kategori');
 	}
@@ -160,25 +180,25 @@ class Barang extends CI_Controller
 	public function tambahsuplier()
 	{
 		$id_suplier = $this->M_barang->get_idsuplier();
-		$nama_sup=$this->input->post('nama_suplier');
+		$nama_sup = $this->input->post('nama_suplier');
 		$cek = $this->db->query("SELECT * FROM suplier WHERE nama_suplier='$nama_sup'")->num_rows();
-		if ($cek >= 1){
+		if ($cek >= 1) {
 			echo "<script>
                 alert('Nama kategori sudah ada');
-                window.location.href = '".base_url('Admin/Barang/suplier')."';
-            </script>";//Url tujuan
-		}elseif ($cek == 0) {
-			$this->M_barang->tambah_suplier($id_suplier,$nama_sup);
+                window.location.href = '" . base_url('Admin/Barang/suplier') . "';
+            </script>"; //Url tujuan
+		} elseif ($cek == 0) {
+			$this->M_barang->tambah_suplier($id_suplier, $nama_sup);
 			echo "<script>
                 alert('Kategori berhasil ditambahkan');
-                window.location.href = '".base_url('Admin/Barang/suplier')."';
-            </script>";//Url tujuan
+                window.location.href = '" . base_url('Admin/Barang/suplier') . "';
+            </script>"; //Url tujuan
 		}
 		redirect('Admin/Barang/suplier');
 	}
 	public function hapussuplier()
 	{
-		$id_suplier= $this->uri->segment(4);
+		$id_suplier = $this->uri->segment(4);
 		$this->M_barang->hapus_sup($id_suplier);
 		redirect('Admin/Barang/suplier');
 	}

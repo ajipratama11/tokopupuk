@@ -18,4 +18,3 @@ class M_profil extends CI_Model{
 		return $query->result();
 	}
 }
-?>
