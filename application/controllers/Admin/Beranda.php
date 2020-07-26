@@ -32,17 +32,26 @@ class Beranda extends CI_Controller
 		$this->db->select('SUM(harga_beli*stok_barang) as total');
 		$data['pengeluaran'] = $this->db->get('barang')->row();
 		
+		$data['trans'] = $this->db->get('konfirmasi_pemesanan')->result();
 		$data['pesan'] = $this->M_transaksi->tampil_pesan2();
 		$this->load->view('element/Header', $data);
 		$this->load->view('Admin/Beranda', $data);
 		$this->load->view('element/Footer');
 	}
 
-	public function cari()
-	{
-		$kodepesan = $this->input->post('cari');
-		$cek = $this->db->query("SELECT * FROM pesan JOIN pengiriman ON pesan.pengiriman_id_kirim=pengiriman.id_kirim JOIN kostumer ON pesan.id_kostumer_id=kostumer.id_kostumer WHERE id_pesan='$kodepesan' ORDER BY id_pesan DESC")->num_rows();
-		if ($cek >= 1) {
+	public function detailtransaksi(){
+		$idpesan = $this->uri->segment(4);
+		$data['pesan'] = $this->M_transaksi->tampil_pesan12($idpesan);
+		$this->load->view('element/Header', $data);
+		$this->load->view('Admin/v_detailtransaksi', $data);
+		$this->load->view('element/Footer');
+	}
+	
+
+	public function cari(){
+		$kodepesan=$this->input->post('cari');
+		$cek=$this->db->query("SELECT * FROM pesan JOIN pengiriman ON pesan.pengiriman_id_kirim=pengiriman.id_kirim JOIN kostumer ON pesan.id_kostumer_id=kostumer.id_kostumer WHERE id_pesan='$kodepesan' ORDER BY id_pesan DESC")->num_rows();
+		if ($cek>=1) {
 			$data['total'] = $this->MO_transaksi->totalPemasukan();
 			$data['order'] = $this->db->query("SELECT * FROM pesan")->num_rows();
 			$data['user'] = $this->db->query("SELECT * FROM kostumer")->num_rows();
@@ -75,14 +84,20 @@ class Beranda extends CI_Controller
 	public function status()
 	{
 		$idpesan = $this->uri->segment(4);
-		$status = 'Terbayar';
-		$this->MO_transaksi->updatestatus($idpesan, $status);
-		$this->MA_transaksi->updatestok($idpesan);
-		redirect('Owner_controller/Beranda');
+		$status = 'Sudah Bayar';
+		$statuspesan='Proses Kirim';
+		$this->M_transaksi->updatestatus($idpesan,$status);
+		$this->M_transaksi->updatestatus2($idpesan,$statuspesan);
+		$this->M_transaksi->updatestok($idpesan);
+		redirect('Admin/Beranda');
 	}
-
-	public function detail_transaksi()
-	{
+	public function statusterkirim(){
+		$idpesan = $this->uri->segment(4);
+		$statuspesan='Terkirim';
+		$this->M_transaksi->updatestatus2($idpesan,$statuspesan);
+		redirect('Admin/Beranda');
+	}
+	public function detail_transaksi(){
 		$data['status'] = $this->input->post("status");
 		$idkirim = $this->uri->segment(4);
 		$iduser = $this->input->post("iduser");
