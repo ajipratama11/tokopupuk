@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col-xl-6 col-lg-12 col-md-12">
                             <div class="product_detail_feature_img hizoom hi2">
-                                <div class='hizoom hi2'> <img src="<?= base_url('assets/customer/images/it_service/' . $detail->gambar) ?>" alt="#" /> </div>
+                                <div class='hizoom hi2'> <img src="<?= base_url('./assets/images/' . $detail->gambar) ?>" alt=" #" /> </div>
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-12 col-md-12 product_detail_side detail_style1">

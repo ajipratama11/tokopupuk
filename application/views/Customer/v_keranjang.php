@@ -47,7 +47,7 @@
                                     <?php foreach ($keranjang as $k) { ?>
                                         <tr>
                                             <td class="col-sm-8 col-md-6">
-                                                <div class="media"> <a class="thumbnail pull-left" href="#"> <img class="media-object" src="<?= base_url('assets/customer/images/it_service/' . $k->gambar) ?>" alt="#"></a>
+                                                <div class="media"> <a class="thumbnail pull-left" href="#"> <img class="media-object" style="width: 125px;height: 150px;" src="<?= base_url('./assets/images/' . $k->gambar) ?>" alt="#"></a>
                                                     <div class="media-body">
                                                         <h4 class="media-heading"><a href="#"><?= $k->nama_barang ?></a></h4>
                                                         <span>Status: </span><span class="text-success"><?= $k->stok_barang ?> Stok</span>
