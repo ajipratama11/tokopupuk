@@ -33,7 +33,14 @@ class Beranda extends CI_Controller
 		$data['pengeluaran'] = $this->db->get('barang')->row();
 
 		$data['trans'] = $this->db->get('konfirmasi_pemesanan')->result();
-		$data['pesan'] = $this->M_transaksi->tampil_pesan2();
+		// $data['pesan'] = $this->M_transaksi->tampil_pesan2();
+
+
+		$this->db->join('pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
+		$this->db->join('customer', 'pemesanan.id_cus=customer.id_cus');
+		$this->db->group_by('konfirmasi_pemesanan.id_trans');
+		$data['pesan2'] = $this->db->get('konfirmasi_pemesanan')->result();
+
 		$this->load->view('element/Header', $data);
 		$this->load->view('Admin/Beranda', $data);
 		$this->load->view('element/Footer');
@@ -43,6 +50,14 @@ class Beranda extends CI_Controller
 	{
 		$idpesan = $this->uri->segment(4);
 		$data['pesan'] = $this->M_transaksi->tampil_pesan12($idpesan);
+
+		$this->db->join('customer', 'customer.id_cus=konfirmasi_pemesanan.id_cus');
+		$this->db->where('id_trans', $idpesan);
+		$data['pesan2'] = $this->db->get('konfirmasi_pemesanan')->row();
+
+		$this->db->where('id_trans', $idpesan);
+		$data['pesanan'] = $this->db->get('pemesanan')->result();
+
 		$this->load->view('element/Header', $data);
 		$this->load->view('Admin/v_detailtransaksi', $data);
 		$this->load->view('element/Footer');

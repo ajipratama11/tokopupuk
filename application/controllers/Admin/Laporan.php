@@ -29,6 +29,15 @@ class Laporan extends CI_Controller
 
         echo json_encode($data);
     }
+    public function penjualanList()
+    {
+        // POST data
+        $postData = $this->input->post();
+        // Get data
+        $data = $this->MA_Laporan->getPenjualan($postData);
+
+        echo json_encode($data);
+    }
     public function suplierList()
     {
         // POST data
@@ -69,5 +78,30 @@ class Laporan extends CI_Controller
         $data['total'] = $this->db->get('barang')->row();
 
         $this->load->view('Admin/v_lap_suplier', $data);
+    }
+    public function laporan_penjualan()
+    {
+        $post = $this->input->post();
+        $nama_suplier = $post['nama_suplier'];
+        $bulan = $post['bulan'];
+
+        $this->db->join('suplier', 'suplier.id_suplier=barang.id_suplier');
+        $this->db->where('nama_suplier', $nama_suplier);
+        $this->db->like('tgl_masuk_barang', $bulan, 'both');
+        $data['list'] = $this->db->get('pemesanan')->result();
+
+        $this->db->select('SUM(harga_beli*stok_barang) as total, nama_suplier');
+        $this->db->join('suplier', 'suplier.id_suplier=barang.id_suplier');
+        $this->db->where('nama_suplier', $nama_suplier);
+        $this->db->like('tgl_masuk_barang', $bulan, 'both');
+        $data['total'] = $this->db->get('barang')->row();
+
+        $this->load->view('Admin/v_lap_suplier', $data);
+    }
+    public function penjualan()
+    {
+        $this->load->view('element/Header');
+        $this->load->view('Admin/v_penjualan');
+        $this->load->view('element/Footer');
     }
 }

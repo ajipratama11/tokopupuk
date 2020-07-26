@@ -22,6 +22,7 @@
                 </div>
               </div>
             </div>
+            <a href="<?= base_url() ?>Admin/Laporan/penjualan" style="float: right; font-size:12px;">Lihat</a>
             <p class="text-muted mt-3 mb-0">
               <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Total pemasukan
             </p>
@@ -153,18 +154,18 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($pesan as $a) { ?>
+                  <?php foreach ($pesan2 as $a) { ?>
 
                     <tr>
                       <td class="font-weight-medium">
-                        <h4 style="padding-left: 7px;"><?php echo $a->id_pemesanan; ?></h4>
+                        <h4 style="padding-left: 7px; font-size:10px;"><?php echo $a->id_trans; ?></h4>
                       </td>
                       <td class="font-weight-medium">
                         <h4 style="padding-left: 7px;"><?php echo $a->nama; ?>
                         </h4>
                       </td>
                       <td>
-                        <h4>Rp <?php $format_indonesia = number_format($a->sub_total, 0, ',', '.');
+                        <h4>Rp <?php $format_indonesia = number_format($a->total_bayar, 0, ',', '.');
                                 echo $format_indonesia; ?></h4>
                       </td>
                       <td>
@@ -180,7 +181,7 @@
                         ?>
                       </td>
                       <td>
-                        <a href="<?= base_url('Admin/Beranda/detailtransaksi/' . $a->id_pemesanan); ?>" type="button" class="btn btn-warning">Detail Transaksi</a>
+                        <a href="<?= base_url('Admin/Beranda/detailtransaksi/' . $a->id_trans); ?>" type="button" class="btn btn-warning">Detail Transaksi</a>
                       </td>
                     </tr>
                   <?php } ?>

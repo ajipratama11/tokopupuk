@@ -14,61 +14,71 @@
               <div class="col-md-12">
                 <table class="table">
 
-                  <?php foreach ($pesan as $a) { ?>
-
-                    <tr>
-                      <th>Id pesanan</th>
-                      <td> <?= $a->id_pemesanan ?> </td>
-                    </tr>
-                    <tr>
-                      <th>Nama Pemesan</th>
-                      <td><?= $a->nama ?> </td>
-                    </tr>
-                    <tr>
-                      <th>Barang</th>
-                      <td><?= $a->nama_barang ?></td>
-                    </tr>
-                    <tr>
-                      <th>Jumlah Barang</th>
-                      <td><?= $a->jumlah_barang ?></td>
-                    </tr>
-                    <tr>
-                      <th>Jumlah Bayar</th>
-                      <td><?= $a->sub_total ?></td>
-                    </tr>
-                    <tr>
-                      <th>Tgl Pemesanan</th>
-                      <td><?= $a->tgl_pemesanan ?></td>
-                    </tr>
-                    <tr>
-                      <th>Status Pembayaran</th>
-                      <td><?= $a->status_pembayaran ?></td>
-                    </tr>
-
-                    <tr>
-                      <th>Alamat Kirim</th>
-                      <td><?= $a->alamat_pengiriman ?></td>
-                    </tr>
-                    <tr>
-                      <th>Gambar</th>
-                      <td><a target="_blank" href="<?php echo base_url('./assets/images/' . $a->gambar); ?>"><img style="width: 200px; height:200px;" src="<?php echo base_url('./upload/' . $a->gambar); ?>"></a></td>
-                    </tr>
+                  <tr>
+                    <th>Id trans</th>
+                    <td> <?= $pesan2->id_trans ?> </td>
+                  </tr>
+                  <tr>
+                    <th>Nama Pemesan</th>
+                    <td><?= $pesan2->nama ?> </td>
+                  </tr>
+                  <tr>
+                    <th>Alamat</th>
+                    <td><?= $pesan2->alamat_pengiriman ?></td>
+                  </tr>
+                  <tr>
+                    <th>Status Pembayaran</th>
+                    <td><?= $pesan2->status_pembayaran ?></td>
+                  </tr>
+                  <tr>
+                    <th>Gambar</th>
+                    <td><a target="_blank" href="<?php echo base_url('./assets/images/' . $pesan2->bukti_transfer); ?>"><img style="width: 200px; height:200px;" src="<?php echo base_url('./upload/' . $pesan2->bukti_transfer); ?>"></a></td>
+                  </tr>
 
 
                 </table>
 
-              <?php } ?>
 
 
 
 
 
+                <br><br>
 
-
-              <br><br>
-
-              <!-- content-wrapper ends -->
+                <!-- content-wrapper ends -->
               </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>
+                      #Id kategori
+                    </th>
+                    <th>
+                      Nama kategori
+                    </th>
+                    <th>
+
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($pesanan as $a) { ?>
+                    <tr>
+                      <td class="font-weight-medium">
+                        <?php echo $a->id_trans; ?>
+                      </td>
+                      <td>
+                        <?php echo $a->sub_total; ?>
+                      </td>
+                      <td>
+                        <center><a onclick="return confirm_alert(this);" href="<?php echo base_url('Admin/Barang/hapuskategori/' . $a->id_trans); ?>"><button type="button" class="btn btn-danger"><i class="menu-icon mdi mdi-delete"></i> Hapus</button></a></center>
+                      </td>
+                    </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
