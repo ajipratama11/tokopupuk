@@ -96,7 +96,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Admin'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Admin/'); ?>">
               <i class="menu-icon mdi mdi-account-card-details"></i>
               <span class="menu-title">Admin</span>
             </a>

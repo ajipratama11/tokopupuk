@@ -44,6 +44,7 @@ class Laporan extends CI_Controller
         $this->db->select('SUM(stok_barang*harga_beli) as total, barang.*,suplier.*');
         $this->db->join('suplier', 'barang.id_suplier=suplier.id_suplier');
         $this->db->group_by('barang.id_suplier');
+        $this->db->group_by('barang.tgl_masuk_barang');
         $data['hasil'] = $this->db->get('barang')->result();
         $this->load->view('element/Header');
         $this->load->view('Admin/v_pengeluaran', $data);

@@ -16,10 +16,13 @@
                                             #Id Suplier
                                         </th>
                                         <th>
+                                            Tanggal Transaksi
+                                        </th>
+                                        <th>
                                             Nama Suplier
                                         </th>
                                         <th>
-                                            Total Pengeluaran
+                                            Total Pembayaran
                                         </th>
                                         <th>
 
@@ -33,13 +36,16 @@
                                                 <?php echo $a->id_suplier; ?>
                                             </td>
                                             <td class="font-weight-medium">
+                                                <?php echo $a->tgl_masuk_barang; ?>
+                                            </td>
+                                            <td class="font-weight-medium">
                                                 <?php echo $a->nama_suplier; ?>
                                             </td>
                                             <td>
                                                 Rp . <?= number_format($a->total, 0, ',', '.'); ?>
                                             </td>
                                             <td>
-                                                <center><a href="<?php echo base_url('Admin/Laporan/'); ?>"><button type="button" class="btn btn-success"><i class="menu-icon mdi mdi-delete"></i> Lihat</button></a></center>
+                                                <center><a href="<?php echo base_url('Admin/Laporan/'); ?>"><button type="button" class="btn btn-success"><i class="menu-icon mdi mdi-eye"></i> Lihat</button></a></center>
                                             </td>
                                         </tr>
                                     <?php } ?>

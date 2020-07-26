@@ -123,12 +123,13 @@
         <div class="card">
           <div class="card-body">
             <h3 class="card-title">Daftar pesanan pelanggan
-              <div style="float: right;margin-right: 30px;">
-                <form action="<?php echo base_url('Owner_controller/Beranda/cari'); ?>" method="post">
-                  <input style="height: 25px;" type="text" name="cari" placeholder="#Kode pesan" required="required">
-                  <button type="submit" style="height: 25px">Cari</button>
-                </form>
-              </div>
+              <form action="<?php echo base_url('Owner_controller/Beranda/cari'); ?>" method="post">
+                <div class="row mb-3" style="float: right;">
+                  <input class="form-control col-md-6" type="text" name="cari" placeholder="#Kode pesan" required="required">
+                  <button class="btn btn-success" type="submit">Cari</button>
+                </div>
+
+              </form>
             </h3>
             <div class="table-responsive">
               <table class="table table-bordered">
