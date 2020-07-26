@@ -72,11 +72,18 @@ class Beranda extends CI_Controller{
 	public function status(){
 		$idpesan = $this->uri->segment(4);
 		$status = 'Sudah Bayar';
+		$statuspesan='Proses Kirim';
 		$this->M_transaksi->updatestatus($idpesan,$status);
+		$this->M_transaksi->updatestatus2($idpesan,$statuspesan);
 		$this->M_transaksi->updatestok($idpesan);
 		redirect('Admin/Beranda');
 	}
-
+	public function statusterkirim(){
+		$idpesan = $this->uri->segment(4);
+		$statuspesan='Terkirim';
+		$this->M_transaksi->updatestatus2($idpesan,$statuspesan);
+		redirect('Admin/Beranda');
+	}
 	public function detail_transaksi(){
 		$data['status'] = $this->input->post("status");
 		$idkirim = $this->uri->segment(4);

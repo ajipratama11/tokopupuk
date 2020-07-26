@@ -146,10 +146,10 @@
                               if ($a->status_pembayaran=='Belum Bayar') {
                                 echo '<a  data-toggle="modal" data-target="#modalLihat'.$a->id_trans.'"><button type="button" class="btn">'.$a->status_pembayaran.'</button></a>';
                                 
-                              }else if ($a->status_pembayaran=='batal') {
-                                echo '<button type="button" class="btn btn-danger">'.$a->status_pembayaran.'</button>';
-                              }else{
-                                echo '<button type="button" class="btn btn-success">'.$a->status_pembayaran.'</button>';
+                              }else if ($a->status=='Proses Kirim') {
+                                echo '<a  onclick="return confirm_alert(this);" href="'.base_url('Admin/Beranda/statusterkirim/'.$a->id_pemesanan).'"><button type="button" class="btn btn-warning">'.$a->status_pembayaran.'</button></a>';
+                              }else {
+                                echo '<button type="button" class="btn btn-success">'.$a->status.'</button>';
                               }
                               ?>
                           </td>
