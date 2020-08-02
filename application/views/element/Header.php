@@ -126,9 +126,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url(''); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/jurnal'); ?>">
+              <i class="menu-icon mdi mdi-book"></i>
+              <span class="menu-title">Jurnal Umum</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url('Admin/Admin/akun'); ?>">
               <i class="menu-icon mdi mdi-receipt"></i>
-              <span class="menu-title">Laporan</span>
+              <span class="menu-title">Data Akun</span>
             </a>
           </li>
           <li class="nav-item">
@@ -138,9 +144,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/faq'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/neraca_saldo'); ?>">
               <i class="menu-icon mdi mdi-inbox"></i>
-              <span class="menu-title">Faq</span>
+              <span class="menu-title">Neraca Saldo</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/buku_besar'); ?>">
+              <i class="menu-icon mdi mdi-book"></i>
+              <span class="menu-title">Buku Besar</span>
             </a>
           </li>
       </nav>

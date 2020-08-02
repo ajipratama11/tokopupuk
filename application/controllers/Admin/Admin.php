@@ -27,4 +27,27 @@ class Admin extends CI_Controller
 		$this->load->view('Admin/v_admin', $data);
 		$this->load->view('element/Footer');
 	}
+
+	public function akun()
+	{
+
+		$data['akun'] = $this->db->get('akun')->result();
+		$this->load->view('element/Header');
+		$this->load->view('Admin/v_akun', $data);
+		$this->load->view('element/Footer');
+	}
+	public function tambahAkun()
+	{
+
+		$post = $this->input->post();
+		$this->no_reff = $post['no_reff'];
+		$this->nama_reff = $post['nama_reff'];
+		$this->keterangan_reff = $post['keterangan_reff'];
+		$this->id_admin = $this->session->userdata('iduseradmin');
+		$data = $this->db->insert('akun', $this);
+		if ($data) {
+		        $this->no_reff = $post['no_reff'];
+
+		}
+	}
 }
