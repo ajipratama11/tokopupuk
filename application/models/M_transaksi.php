@@ -39,7 +39,14 @@ class M_transaksi extends CI_Model
 	}
 	function updatestatus($idpesan, $status)
 	{
-		$query = $this->db->query("UPDATE `konfirmasi_pemesanan` JOIN pemesanan ON pemesanan.id_trans=konfirmasi_pemesanan.id_trans SET konfirmasi_pemesanan.status_pembayaran='$status' WHERE pemesanan.id_pemesanan='$idpesan'");
+		// $query = $this->db->query("UPDATE `konfirmasi_pemesanan` JOIN pemesanan ON pemesanan.id_trans=konfirmasi_pemesanan.id_trans SET konfirmasi_pemesanan.status_pembayaran='$status' WHERE pemesanan.id_pemesanan='$idpesan'");
+		$this->db->set('status_pembayaran', $status);
+		$this->db->where('id_trans', $idpesan);
+		$this->db->update('konfirmasi_pemesanan');
+
+		$this->db->set('status', $status);
+		$this->db->where('id_trans', $idpesan);
+		$this->db->update('pemesanan');
 	}
 	function updatestatus2($idpesan, $statuspesan)
 	{
@@ -56,7 +63,9 @@ class M_transaksi extends CI_Model
 	// }
 	function totalPemasukan()
 	{
-		$query = $this->db->query("SELECT SUM(sub_total) AS totalMasuk FROM pemesanan");
+		$this->db->select('SUM(sub_total) AS totalMasuk ');
+		$this->db->where('status', 'Sudah Bayar');
+		$query = $this->db->get(' pemesanan ');
 		return $query->result();
 	}
 }

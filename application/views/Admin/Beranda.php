@@ -175,6 +175,8 @@
                           echo '<a  onclick="return confirm_alert(this);" href="' . base_url('Admin/Beranda/status/' . $a->id_pemesanan) . '"><button type="button" class="btn">' . $a->status_pembayaran . '</button></a>';
                         } else if ($a->status == 'Proses Kirim') {
                           echo '<a  onclick="return confirm_alert(this);" href="' . base_url('Admin/Beranda/statusterkirim/' . $a->id_pemesanan) . '"><button type="button" class="btn btn-warning">' . $a->status_pembayaran . '</button></a>';
+                        } else if ($a->status == 'Sudah Checkout') {
+                          echo '<a  onclick="return confirm_alert(this);" href="' . base_url('Admin/Beranda/status/' . $a->id_trans) . '"><button type="button" class="btn btn-warning">' . $a->status . '</button></a>';
                         } else {
                           echo '<button type="button" class="btn btn-success">' . $a->status . '</button>';
                         }

@@ -10,30 +10,26 @@
             <div class="col-lg-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h2 style="color: #1E7BCB;"> Laporan Penjualan Barang</h2><br>
-                        <form action="<?= base_url() ?>Admin/Laporan/laporan_suplier" method="POST">
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <select class="form-control" name="bulan" id="sel_bulan">
-                                        <option value="Januari">Januari</option>
-                                        <option value="Februari">Februari</option>
-                                        <option value="Maret">Maret</option>
-                                        <option value="April">April</option>
-                                        <option value="Mei">Mei</option>
-                                        <option value="Juni">Juni</option>
-                                        <option value="Juli">Juli</option>
-                                        <option value="Agustus">Agustus</option>
-                                        <option value="September">September</option>
-                                        <option value="Oktober">Oktober</option>
-                                        <option value="November">November</option>
-                                        <option value="Desember">Desember</option>
+                        <h2 style="color: #1E7BCB;"> Buku Besar</h2><br>
+                        <?php echo $this->session->flashdata('sukses'); ?>
+                        <div class="col-md-12 row">
+                            <form class="col-md-4" action="<?= base_url() ?>Admin/Laporan/laporan_suplier" method="POST">
+                                <div class="">
+                                    <select class="form-control" name="nama_suplier" id="sel_reff">
+                                        <?php
+                                        $this->db->group_by('akun.no_reff');
+                                        $this->db->join('transaksi', 'transaksi.no_reff=akun.no_reff', 'right');
+                                        $data = $this->db->get('akun')->result();
+                                        foreach ($data as $j) {
+
+                                        ?>
+                                            <option value="<?= $j->no_reff ?>"> <?= $j->nama_reff ?> </option><?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-success" type="submit">Cetak</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
+
+
                         <div class="form-group col-md-12">
                             <!-- Name -->
                             <div class="col-md-2 ">
@@ -46,26 +42,27 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            #Id Barang
+                                            Tanggal
                                         </th>
                                         <th>
-                                            Nama Barang
+                                            Keterangan
                                         </th>
                                         <th>
-                                            Harga
+                                            Debit
                                         </th>
                                         <th>
-                                            Jumlah Beli
+                                            Kredit
                                         </th>
                                         <th>
-                                            Tanggal Beli
+                                            Total Semua
                                         </th>
-
                                     </tr>
                                 </thead>
+
                                 <tbody>
 
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -92,32 +89,34 @@
                 'serverMethod': 'post',
                 //'searching': false, // Remove default Search Control
                 'ajax': {
-                    'url': '<?= base_url() ?>Admin/Laporan/penjualanList',
+                    'url': '<?= base_url() ?>Admin/Laporan/reffList',
                     'data': function(data) {
-                        data.searchBulan = $('#sel_bulan').val();
+                        data.searchReff = $('#sel_reff').val();
+                        // data.searchBulan = $('#sel_bulan').val();
                         console.log(data);
                     }
 
                 },
                 'columns': [{
-                        data: 'id_barang'
+                        data: 'tanggal'
                     },
                     {
-                        data: 'nama_barang'
+                        data: 'keterangan'
                     },
                     {
-                        data: 'harga_beli'
+                        data: 'debit'
                     },
                     {
-                        data: 'stok_barang'
+                        data: 'kredit'
                     },
                     {
-                        data: 'tgl_masuk_barang'
+                        data: 'total'
                     }
+
                 ]
             });
 
-            $('#sel_bulan').change(function() {
+            $('#sel_reff').change(function() {
                 userDataTable.draw();
             });
             $('#searchName').keyup(function() {

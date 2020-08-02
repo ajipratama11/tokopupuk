@@ -10,30 +10,29 @@
             <div class="col-lg-12 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h2 style="color: #1E7BCB;"> Laporan Penjualan Barang</h2><br>
-                        <form action="<?= base_url() ?>Admin/Laporan/laporan_suplier" method="POST">
-                            <div class="row">
-                                <div class="form-group col-md-3">
-                                    <select class="form-control" name="bulan" id="sel_bulan">
-                                        <option value="Januari">Januari</option>
-                                        <option value="Februari">Februari</option>
-                                        <option value="Maret">Maret</option>
-                                        <option value="April">April</option>
-                                        <option value="Mei">Mei</option>
-                                        <option value="Juni">Juni</option>
-                                        <option value="Juli">Juli</option>
-                                        <option value="Agustus">Agustus</option>
-                                        <option value="September">September</option>
-                                        <option value="Oktober">Oktober</option>
-                                        <option value="November">November</option>
-                                        <option value="Desember">Desember</option>
+                        <h2 style="color: #1E7BCB;"> Jurnal Umum</h2><br>
+                        <?php echo $this->session->flashdata('sukses'); ?>
+                        <div class="col-md-12 row">
+                            <form class="col-md-4" action="<?= base_url() ?>Admin/Laporan/laporan_suplier" method="POST">
+                                <div class="">
+                                    <select class="form-control" name="nama_suplier" id="sel_tahun">
+                                        <!--<option value=''>-- Pilih Tahun --</option>-->
+                                        <!-- <option value="0">Semua Suplier</option> -->
+                                        <?php
+                                        foreach ($jurnal as $j) {
+                                            $bulan = date('m', strtotime($j->tgl_transaksi));
+                                            $tahun = date('Y', strtotime($j->tgl_transaksi));
+                                        ?>
+                                            <option value="<?= $tahun ?>"> <?= $tahun ?> </option><?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-success" type="submit">Cetak</button>
-                                </div>
+                            </form>
+                            <div class="col-md-4">
+                                <a class="btn btn-success" href="<?= base_url() ?>Admin/Laporan/tambah_jurnal" type="button">Tambah Jurnal</a>
                             </div>
-                        </form>
+                        </div>
+
+
                         <div class="form-group col-md-12">
                             <!-- Name -->
                             <div class="col-md-2 ">
@@ -46,26 +45,21 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            #Id Barang
+                                            No
                                         </th>
                                         <th>
-                                            Nama Barang
+                                            Bulan dan Tahun
                                         </th>
                                         <th>
-                                            Harga
+                                            Action
                                         </th>
-                                        <th>
-                                            Jumlah Beli
-                                        </th>
-                                        <th>
-                                            Tanggal Beli
-                                        </th>
-
                                     </tr>
                                 </thead>
+
                                 <tbody>
 
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -92,32 +86,27 @@
                 'serverMethod': 'post',
                 //'searching': false, // Remove default Search Control
                 'ajax': {
-                    'url': '<?= base_url() ?>Admin/Laporan/penjualanList',
+                    'url': '<?= base_url() ?>Admin/Laporan/jurnalList',
                     'data': function(data) {
-                        data.searchBulan = $('#sel_bulan').val();
+                        data.searchTahun = $('#sel_tahun').val();
+                        // data.searchBulan = $('#sel_bulan').val();
                         console.log(data);
                     }
 
                 },
                 'columns': [{
-                        data: 'id_barang'
+                        data: 'no'
                     },
                     {
-                        data: 'nama_barang'
+                        data: 'bulan'
                     },
                     {
-                        data: 'harga_beli'
-                    },
-                    {
-                        data: 'stok_barang'
-                    },
-                    {
-                        data: 'tgl_masuk_barang'
+                        data: 'action'
                     }
                 ]
             });
 
-            $('#sel_bulan').change(function() {
+            $('#sel_tahun').change(function() {
                 userDataTable.draw();
             });
             $('#searchName').keyup(function() {

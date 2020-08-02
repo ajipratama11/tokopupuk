@@ -50,6 +50,7 @@
                                                     <div class="media-body">
                                                         <h4 class="media-heading"><a href="#"><?= $t->tanggal_checkout ?></a></h4>
                                                         <span>Alamat: </span><span class="text-success"><?= $t->alamat_pengiriman ?></span>
+
                                                     </div>
                                                 </div>
                                             </td>
@@ -65,6 +66,9 @@
 
                                                 <?php } else if ($t->status_pembayaran == "Belum Dikonfirmasi") { ?>
                                                     <p style="font-size: 12px;" class="price_table"><?= $t->status_pembayaran ?></p>
+                                                <?php } else if ($t->status_pembayaran == "Sudah Bayar") {  ?>
+                                                    <p style="font-size: 12px;" class="price_table"><?= $t->status_pembayaran ?></p>
+                                                    <p style="font-size: 12px;" class="mt-2"><b>Anda akan dihubungi admin kami</b></p>
                                                 <?php } ?>
                                             </td>
 
