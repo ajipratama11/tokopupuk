@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2020 at 09:14 PM
+-- Generation Time: Aug 03, 2020 at 10:37 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -173,6 +173,7 @@ CREATE TABLE `konfirmasi_pemesanan` (
   `bukti_transfer` varchar(200) NOT NULL,
   `alamat_pengiriman` text NOT NULL,
   `bank` varchar(20) NOT NULL,
+  `jurnal` varchar(10) NOT NULL,
   `id_trans` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -180,8 +181,9 @@ CREATE TABLE `konfirmasi_pemesanan` (
 -- Dumping data for table `konfirmasi_pemesanan`
 --
 
-INSERT INTO `konfirmasi_pemesanan` (`id_konfirmasi`, `id_cus`, `tanggal_checkout`, `total_bayar`, `status_pembayaran`, `bukti_transfer`, `alamat_pengiriman`, `bank`, `id_trans`) VALUES
-(22, '10', 'Minggu, 2 Agustus 2020', 135000, 'Sudah Bayar', '0918194620X310.jpg', 'Banyuwangi aja', 'BRI', '2f3b395e88bbf9968dc99abae41aca');
+INSERT INTO `konfirmasi_pemesanan` (`id_konfirmasi`, `id_cus`, `tanggal_checkout`, `total_bayar`, `status_pembayaran`, `bukti_transfer`, `alamat_pengiriman`, `bank`, `jurnal`, `id_trans`) VALUES
+(25, '10', 'Senin, 3 Agustus 2020', 50000, 'Sudah Bayar', '0918194620X310.jpg', 'ASas', 'BRI', 'Ya', '5d5d13e364721e4020bd2239138367'),
+(26, '10', 'Senin, 3 Agustus 2020', 2500, 'Sudah Bayar', '0918194620X310.jpg', 'Asiyap', 'BRI', 'Ya', '54812cfb46e96374e00838d67d64be');
 
 -- --------------------------------------------------------
 
@@ -218,8 +220,8 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id_pemesanan`, `id_cus`, `id_barang`, `jumlah_barang`, `sub_total`, `tgl_pemesanan`, `status`, `id_trans`) VALUES
-(61, '10', 'AP0006', 3, 75000, 'Minggu, 2 Agustus 2020', 'Sudah Bayar', '2f3b395e88bbf9968dc99abae41aca'),
-(62, '10', 'AP0004', 3, 60000, 'Minggu, 2 Agustus 2020', 'Sudah Bayar', '2f3b395e88bbf9968dc99abae41aca');
+(66, '10', 'AP0006', 2, 50000, 'Senin, 3 Agustus 2020', 'Sudah Bayar', '5d5d13e364721e4020bd2239138367'),
+(67, '10', 'AP0007', 1, 2500, 'Senin, 3 Agustus 2020', 'Sudah Bayar', '54812cfb46e96374e00838d67d64be');
 
 -- --------------------------------------------------------
 
@@ -261,11 +263,7 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_admin`, `no_reff`, `tgl_input`, `tgl_transaksi`, `jenis_saldo`, `saldo`) VALUES
-(7, '', 'r2', '02-08-2020 03:22:55', '2019-01-02', 1, 150000),
-(8, '', 'r2', '02-08-2020 03:23:18', '2020-08-02', 1, 50000),
-(9, '', 'r1', '02-08-2020 03:20:22', '2020-08-02', 2, 50000),
-(11, '', 'r2', '02-08-2020 04:37:14', '2020-07-02', 1, 150000),
-(12, '', 'r1', '02-08-2020 04:58:04', '2020-07-02', 2, 120000);
+(22, '', 'r2', '03-08-2020 09:01:21', '2020-08-03', 1, 2500);
 
 --
 -- Indexes for dumped tables
@@ -366,7 +364,7 @@ ALTER TABLE `jenis_saldo`
 -- AUTO_INCREMENT for table `konfirmasi_pemesanan`
 --
 ALTER TABLE `konfirmasi_pemesanan`
-  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `pembelian_barang`
@@ -378,7 +376,7 @@ ALTER TABLE `pembelian_barang`
 -- AUTO_INCREMENT for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `suplier`
@@ -390,7 +388,7 @@ ALTER TABLE `suplier`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
