@@ -179,8 +179,8 @@
                       <td>
 
                         <?php
-                        if ($a->status_pembayaran == 'Belum Bayar') {
-                          echo '<a  data-toggle="modal" data-target="#modalLihat' . $a->id_trans . '"><button type="button" class="btn">' . $a->status_pembayaran . '</button></a>';
+                        if ($a->status_pembayaran == 'Belum Dikonfirmasi') {
+                          echo '<a  onclick="return confirm_alert(this);" href="' . base_url('Admin/Beranda/status/' . $a->id_pemesanan) . '"><button type="button" class="btn">' . $a->status_pembayaran . '</button></a>';
                         } else if ($a->status == 'Proses Kirim') {
                           echo '<a  onclick="return confirm_alert(this);" href="' . base_url('Admin/Beranda/statusterkirim/' . $a->id_pemesanan) . '"><button type="button" class="btn btn-warning">' . $a->status_pembayaran . '</button></a>';
                         } else if ($a->status == 'Sudah Checkout') {
@@ -192,6 +192,7 @@
                       </td>
                       <td>
                         <a href="<?= base_url('Admin/Beranda/detailtransaksi/' . $a->id_trans); ?>" type="button" class="btn btn-warning">Detail Transaksi</a>
+                        <a data-toggle="modal" data-target="#modal-edit<?= $a->id_trans; ?>" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" class="btn btn-info">Bukti Bayar</a>
                       </td>
                     </tr>
                   <?php } ?>
@@ -313,6 +314,64 @@
 
 
   </div>
+  <?php  foreach($pesan2 as $row): ?>
+                    <div class="row">
+                    <div id="modal-edit<?=$row->id_trans;?>" class="modal fade">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalCenterTitle">   </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            
+                                <div class="modal-body">
+                                  
+                                        
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-4  control-label col-form-label">Nama Kategori</label>
+                                            <div class="col-sm-8">
+                                              <h5><?php echo $row->nama  ?></h5>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-4  control-label col-form-label">Harga</label>
+                                            <div class="col-sm-8">
+                                            <?php echo $row->total_bayar  ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-4  control-label col-form-label">Bank</label>
+                                            <div class="col-sm-8">
+                                            <?php echo $row->bank  ?>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-4  control-label col-form-label">Bukti Transfer</label>
+                                            <div class="col-sm-8">
+                                            <?php if($row->bukti_transfer == 'Belum Bayar'){ ?>
+                                              <?php echo $row->bukti_transfer  ?>
+                                            <?php }else { ?>
+
+                                              <img width="200px" height="200px" src="<?= base_url('upload/'.$row->bukti_transfer) ?>">
+                                            <?php } ?>
+                                            </div>
+                                            
+                                            
+                                        </div>
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <?php endforeach; ?>
   <!-- content-wrapper ends -->
   <script type="text/javascript">
     var rupiah = document.getElementById('rupiah');

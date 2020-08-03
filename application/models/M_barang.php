@@ -101,10 +101,7 @@ class M_barang extends CI_Model
 	{
 		$query = $this->db->query("DELETE FROM `barang` WHERE id_barang='$id_barang'");
 	}
-	function update_barang($idbarang, $namabarang, $harga, $tglmasuk, $stok, $gambar, $idkat, $idsup)
-	{
-		$query = $this->db->query("UPDATE `produk` SET `nama_produk`='$nama_produk',`gambar`='$gambar',`keterangan`='$keterangan',`kategori_id_kategori`='$idkat',`stok`='$stok',`harga`='$harga' WHERE id_produk='$id_produk'");
-	}
+	
 	function namakat($kategori)
 	{
 		$query = $this->db->query("SELECT * FROM kategori_barang WHERE nama_kategori_brg='$kategori'");
