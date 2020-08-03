@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 style="color: #1E7BCB;"> Laporan Penjualan Barang</h2><br>
-                        <form action="<?= base_url() ?>Admin/Laporan/laporan_suplier" method="POST">
+                        <form action="<?= base_url() ?>Admin/Laporan/laporan_penjualan" method="POST">
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <select class="form-control" name="bulan" id="sel_bulan">

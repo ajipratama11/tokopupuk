@@ -114,6 +114,7 @@ class Shop extends CI_Controller
         $this->status_pembayaran = "Belum Bayar";
         $this->total_bayar = $post["total_bayar"];
         $this->bukti_transfer = "Belum Bayar";
+        $this->jurnal = "Belum";
         $data = $this->db->insert('konfirmasi_pemesanan', $this);
         if ($data) {
 
