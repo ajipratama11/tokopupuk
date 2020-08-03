@@ -53,10 +53,10 @@
                 <thead>
                   <tr>
                     <th>
-                      #Id kategori
+                      #Id Barang
                     </th>
                     <th>
-                      Nama kategori
+                      Nama Barang
                     </th>
                     <th>
 
@@ -67,10 +67,10 @@
                   <?php foreach ($pesanan as $a) { ?>
                     <tr>
                       <td class="font-weight-medium">
-                        <?php echo $a->id_trans; ?>
+                        <?php echo $a->id_barang; ?>
                       </td>
                       <td>
-                        <?php echo $a->sub_total; ?>
+                        <?php echo $a->nama_barang; ?>
                       </td>
                       <td>
                         <center><a onclick="return confirm_alert(this);" href="<?php echo base_url('Admin/Barang/hapuskategori/' . $a->id_trans); ?>"><button type="button" class="btn btn-danger"><i class="menu-icon mdi mdi-delete"></i> Hapus</button></a></center>
