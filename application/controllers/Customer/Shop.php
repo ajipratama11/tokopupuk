@@ -61,7 +61,7 @@ class Shop extends CI_Controller
     }
     public function tambah_keranjang()
     {
-        $status = $this->session->userdata('status');
+        $status = $this->session->userdata('id_customer');
         if (!$status) {
             $this->session->set_flashdata(
                 'login',
@@ -183,7 +183,8 @@ class Shop extends CI_Controller
         $this->db->update_batch('pemesanan', $result, 'id_pemesanan');
         redirect('Customer/Shop/keranjang');
     }
-    public function nota(){
+    public function nota()
+    {
         $idpesan = $this->uri->segment(4);
         $data['pemesanan'] = $this->M_pemesanan->tampil_pesan($idpesan);
         $this->load->view('Customer/v_nota', $data);

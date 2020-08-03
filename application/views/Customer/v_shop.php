@@ -39,7 +39,7 @@
                         <?php foreach ($pupuk as $p) { ?>
                             <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 margin_bottom_30_all">
                                 <div class="product_list">
-                                    <div class="product_img"> <img class="img-responsive" src="<?= base_url() ?>assets/customer/images/it_service/pupuk.png" alt=""> </div>
+                                    <div class="product_img"> <img class="img-responsive" src="<?= base_url('./assets/images/' . $p->gambar) ?>" alt=""> </div>
                                     <div class="product_detail_btm">
                                         <div class="center">
                                             <h4><a href="<?= base_url('Customer/Produk/detail_produk/' . $p->id_barang) ?>"><?= $p->nama_barang ?></a></h4>
