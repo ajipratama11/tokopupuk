@@ -1,3 +1,8 @@
+<!-- jQuery Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Datatable JS -->
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <!-- partial -->
 <div class="main-panel">
   <div class="content-wrapper">
@@ -13,18 +18,20 @@
                 <p class="mb-0 text-right">Total Pendapatan</p>
                 <div class="fluid-container">
 
-                  <?php foreach ($total as $a) { ?>
-                    <h4 class="font-weight-medium text-right mb-0">Rp <?php
-                                                                      $format_indonesia = number_format($a->totalMasuk, 0, ',', '.');
-                                                                      echo $format_indonesia; ?>
-                    </h4>
-                  <?php } ?>
+
+                  <h4 class="font-weight-medium text-right mb-0">Rp <?php
+                                                                    $format_indonesia = number_format($total->totalMasuk, 0, ',', '.');
+                                                                    echo $format_indonesia; ?>
+                  </h4>
+
+
                 </div>
               </div>
             </div>
+            <a data-toggle="modal" href="" data-target="#modalJurnal<?= $total->totalMasuk ?>" style="float: left; font-size:12px;">Tambah Ke Jurnal</a>
             <a href="<?= base_url() ?>Admin/Laporan/penjualan" style="float: right; font-size:12px;">Lihat</a>
-            <p class="text-muted mt-3 mb-0">
-              <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Total pemasukan
+            <p class="text-muted mt-3 mb-0" style="float: right;">
+              <i class="mdi mdi-alert-octagon mr-1" aria-hidden="true"></i> Total pemasukan sampai <?= formatHariTanggal(date('Y-m-d')) ?>
             </p>
           </div>
         </div>
@@ -80,7 +87,7 @@
               <div class="float-right">
                 <p class="mb-0 text-right">Kas Anda</p>
                 <div class="fluid-container">
-                  <h4 class="font-weight-medium text-right mb-0"> Rp.<?= number_format($adm->kas, 0, ',', '.')  ?></h4>
+                  <h4 class="font-weight-medium text-right mb-0"> Rp.<?= number_format($adm->total, 0, ',', '.')  ?></h4>
                 </div>
               </div>
             </div>
@@ -109,6 +116,7 @@
               </div>
 
             </div>
+            <a data-toggle="modal" href="" data-target="#modalJurnal<?= $pengeluaran->total ?>" style="float: left; font-size:12px;">Tambah Ke Jurnal</a>
             <a href="<?= base_url() ?>Admin/Laporan/pengeluaran" style="float: right; font-size:12px;">Lihat</a>
             <p class="text-muted mt-3 mb-0">
               <i class="mdi mdi-reload mr-1" aria-hidden="true"></i> Total pengeluaran sampai <?= formatHariTanggal(date('Y-m-d')) ?>
@@ -198,69 +206,172 @@
       </div>
 
     </div>
+    <div class="modal fade" id="modalJurnal<?= $total->totalMasuk ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Jurnal Pendapatan</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" action="<?= base_url() ?>Admin/Laporan/tambahJurnal2">
+            <div class="modal-body">
+              <div class="col-md-12 row">
+                <div class="col-md-6 ">
+                  <label>Saldo</label>
+                  <input name="saldo" value="<?= $total->totalMasuk ?>" class="form-control">
+                </div>
+                <div class="col-md-6 ">
+                  <label>Tanggal</label>
+                  <input class="form-control" name="tgl_transaksi" type="date" value="">
+                </div>
+              </div>
+              <div class=" col-md-12 row">
+                <div class="col-md-6 ">
+                  <label>Jenis Saldo</label>
+                  <select class="form-control" name="jenis_saldo" id="akun">
+                    <option>--Jenis Saldo--</option>
+                    <?php
+                    $data =  $this->db->get('jenis_saldo')->result();
+                    foreach ($data as $d) {
+                    ?>
+                      <option value="<?= $d->id_jenis ?>"> <?= $d->nama_saldo ?></option>
+                    <?php } ?>
 
+                  </select>
+                </div>
+                <div class="col-md-6 ">
+                  <label for="no_reff">Nama Akun</label>
+                  <select id="jenis_saldo" class="form-control" name="no_reff">
+
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Simpan</button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modalJurnal<?= $pengeluaran->total ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tambah Jurnal Pengeluaran </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form method="post" action="<?= base_url() ?>Admin/Laporan/tambahJurnal">
+            <div class="modal-body">
+              <div class="col-md-12 row">
+                <div class="col-md-6 ">
+                  <label>Saldo</label>
+                  <input name="saldo" value="<?= $pengeluaran->total ?>" class="form-control">
+                </div>
+                <div class="col-md-6 ">
+                  <label>Tanggal</label>
+                  <input class="form-control" name="tgl_transaksi" type="date" value="">
+                </div>
+              </div>
+              <div class=" col-md-12 row">
+                <div class="col-md-6 ">
+                  <label>Jenis Saldo</label>
+                  <select class="form-control" name="jenis_saldo" id="akun">
+                    <option>--Jenis Saldo--</option>
+                    <?php
+                    $data =  $this->db->get('jenis_saldo')->result();
+                    foreach ($data as $d) {
+                    ?>
+                      <option value="<?= $d->id_jenis ?>"> <?= $d->nama_saldo ?></option>
+                    <?php } ?>
+
+                  </select>
+                </div>
+                <div class="col-md-6 ">
+                  <label for="no_reff">Nama Akun</label>
+                  <select id="jenis_saldo" class="form-control" name="no_reff">
+
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-success">Simpan</button>
+
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
 
 
   </div>
-  <?php  foreach($pesan2 as $row): ?>
-                    <div class="row">
-                    <div id="modal-edit<?=$row->id_trans;?>" class="modal fade">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">   </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            
-                                <div class="modal-body">
-                                  
-                                        
-                                        <div class="form-group row">
-                                            <label for="fname" class="col-sm-4  control-label col-form-label">Nama Kategori</label>
-                                            <div class="col-sm-8">
-                                              <h5><?php echo $row->nama  ?></h5>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="fname" class="col-sm-4  control-label col-form-label">Harga</label>
-                                            <div class="col-sm-8">
-                                            <?php echo $row->total_bayar  ?>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="fname" class="col-sm-4  control-label col-form-label">Bank</label>
-                                            <div class="col-sm-8">
-                                            <?php echo $row->bank  ?>
-                                            </div>
-                                            
-                                            
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="fname" class="col-sm-4  control-label col-form-label">Bukti Transfer</label>
-                                            <div class="col-sm-8">
-                                            <?php if($row->bukti_transfer == 'Belum Bayar'){ ?>
-                                              <?php echo $row->bukti_transfer  ?>
-                                            <?php }else { ?>
+  <?php foreach ($pesan2 as $row) : ?>
+    <div class="row">
+      <div id="modal-edit<?= $row->id_trans; ?>" class="modal fade">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalCenterTitle"> </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
 
-                                              <img width="200px" height="200px" src="<?= base_url('upload/'.$row->bukti_transfer) ?>">
-                                            <?php } ?>
-                                            </div>
-                                            
-                                            
-                                        </div>
-                                    
-                                </div>
-                                <div class="modal-footer">
-                                </div>
-                               
-                            </div>
-                        </div>
-                    </div>
-                    </div>
-                    <?php endforeach; ?>
+            <div class="modal-body">
+
+
+              <div class="form-group row">
+                <label for="fname" class="col-sm-4  control-label col-form-label">Nama Kategori</label>
+                <div class="col-sm-8">
+                  <h5><?php echo $row->nama  ?></h5>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="fname" class="col-sm-4  control-label col-form-label">Harga</label>
+                <div class="col-sm-8">
+                  <?php echo $row->total_bayar  ?>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="fname" class="col-sm-4  control-label col-form-label">Bank</label>
+                <div class="col-sm-8">
+                  <?php echo $row->bank  ?>
+                </div>
+
+
+              </div>
+              <div class="form-group row">
+                <label for="fname" class="col-sm-4  control-label col-form-label">Bukti Transfer</label>
+                <div class="col-sm-8">
+                  <?php if ($row->bukti_transfer == 'Belum Bayar') { ?>
+                    <?php echo $row->bukti_transfer  ?>
+                  <?php } else { ?>
+
+                    <img width="200px" height="200px" src="<?= base_url('upload/' . $row->bukti_transfer) ?>">
+                  <?php } ?>
+                </div>
+
+
+              </div>
+
+            </div>
+            <div class="modal-footer">
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endforeach; ?>
   <!-- content-wrapper ends -->
   <script type="text/javascript">
     var rupiah = document.getElementById('rupiah');
@@ -294,4 +405,33 @@
     function confirm_alert(node) {
       return confirm("Apakah anda yakin ingin mengganti status menjadi terbayar?");
     }
+  </script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+
+      $('#akun').change(function() {
+        var id = $(this).val();
+        $.ajax({
+          url: "<?php echo site_url('Admin/Laporan/getJenis'); ?>",
+          method: "POST",
+          data: {
+            id: id
+          },
+          async: true,
+          dataType: 'json',
+          success: function(data) {
+
+            var html = '';
+            var i;
+            for (i = 0; i < data.length; i++) {
+              html += '<option value=' + data[i].no_reff + '>' + data[i].nama_reff + '</option>';
+            }
+            $('#jenis_saldo').html(html);
+
+          }
+        });
+        return false;
+      });
+
+    });
   </script>

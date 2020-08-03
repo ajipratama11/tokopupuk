@@ -21,8 +21,9 @@ class Beranda extends CI_Controller
 	public function index()
 	{
 		$id_admin = $this->session->userdata('iduseradmin');
-		$this->db->where('id_admin', $id_admin);
-		$data['adm'] = $this->db->get('admin')->row();
+		$this->db->select('SUM(saldo) as total');
+		$this->db->where('no_reff', 'r4');
+		$data['adm'] = $this->db->get('transaksi')->row();
 
 		$data['total'] = $this->M_transaksi->totalPemasukan();
 		$data['pemesanan'] = $this->db->query("SELECT * FROM pemesanan")->num_rows();

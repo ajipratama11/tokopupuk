@@ -121,6 +121,65 @@
                 </div>
             </div>
         <?php } ?>
+        <?php
+        foreach ($jurnal as $j) {
+        ?>
+            <div class="modal fade" id="modalEdit<?= $j->id_transaksi ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ubah Jurnal </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form method="post" action="<?= base_url() ?>Admin/Laporan/ubahJurnal">
+                            <div class="modal-body">
+                                <div class="col-md-12 row">
+                                    <div class="col-md-6 ">
+                                        <label>Id Trans</label>
+                                        <input name="id_transaksi" readonly class="form-control" value="<?= $j->id_transaksi ?>">
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <label>Tanggal</label>
+                                        <input class="form-control" name="tgl_transaksi" type="date" value="<?= $j->tgl_transaksi ?>">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 row">
+                                    <div class="col-md-6 ">
+                                        <label>Jenis Saldo</label>
+                                        <select class="form-control" name="jenis_saldo" id="akun">
+                                            <option>--Jenis Saldo--</option>
+                                            <?php
+                                            $data =  $this->db->get('jenis_saldo')->result();
+                                            foreach ($data as $d) {
+                                            ?>
+                                                <option value="<?= $d->id_jenis ?>"> <?= $d->nama_saldo ?></option>
+                                            <?php } ?>
+
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 ">
+                                        <label for="no_reff">Nama Akun</label>
+                                        <select id="jenis_saldo" class="form-control" name="no_reff">
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>Saldo</label>
+                                    <input name="saldo" value="<?= $j->saldo ?>" class="form-control">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">Ubah</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
 
     </div>
     <!-- content-wrapper ends -->

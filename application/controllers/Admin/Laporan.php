@@ -110,21 +110,21 @@ class Laporan extends CI_Controller
     public function laporan_penjualan()
     {
         $post = $this->input->post();
-        $nama_suplier = $post['nama_suplier'];
-        $bulan = $post['bulan'];
+        // $nama_suplier = $post['nama_suplier'];
+        $data['bulan'] = $post['bulan'];
 
-        $this->db->join('suplier', 'suplier.id_suplier=barang.id_suplier');
-        $this->db->where('nama_suplier', $nama_suplier);
-        $this->db->like('tgl_masuk_barang', $bulan, 'both');
+        $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+        $this->db->like('tgl_masuk_barang', $post['bulan'], 'both');
+        $this->db->where('status', 'Sudah Bayar');
         $data['list'] = $this->db->get('pemesanan')->result();
 
-        $this->db->select('SUM(harga_beli*stok_barang) as total, nama_suplier');
-        $this->db->join('suplier', 'suplier.id_suplier=barang.id_suplier');
-        $this->db->where('nama_suplier', $nama_suplier);
-        $this->db->like('tgl_masuk_barang', $bulan, 'both');
-        $data['total'] = $this->db->get('barang')->row();
+        $this->db->select('SUM(sub_total)  as total');
+        $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+        $this->db->where('status', 'Sudah Bayar');
+        $this->db->like('tgl_masuk_barang', $post['bulan'], 'both');
+        $data['total'] = $this->db->get('pemesanan')->row();
 
-        $this->load->view('Admin/v_lap_suplier', $data);
+        $this->load->view('Admin/v_lap_penjualan', $data);
     }
     public function penjualan()
     {
@@ -164,6 +164,30 @@ class Laporan extends CI_Controller
         $this->tgl_input = date('d-m-Y') . ' ' . date("h:i:s");
         $data = $this->db->insert('transaksi', $this);
         if ($data) {
+            // $this->db->set('jurnal', 'Ya');
+            // $this->db->update('konfirmasi_pemesanan');
+            $this->session->set_flashdata(
+                'sukses',
+                '<div class="alert alert-info" >
+                    <p> Jurnal ditambahkan!!!</p>
+                </div>'
+            );
+            redirect('Admin/Laporan/jurnal');
+        }
+    }
+
+    public function tambahJurnal2()
+    {
+        $post = $this->input->post();
+        $this->tgl_transaksi = $post['tgl_transaksi'];
+        $this->no_reff = $post['no_reff'];
+        $this->saldo = $post['saldo'];
+        $this->jenis_saldo = $post['jenis_saldo'];
+        $this->tgl_input = date('d-m-Y') . ' ' . date("h:i:s");
+        $data = $this->db->insert('transaksi', $this);
+        if ($data) {
+
+            $this->db->query('UPDATE  konfirmasi_pemesanan SET jurnal="Ya" WHERE jurnal="Belum"');
             $this->session->set_flashdata(
                 'sukses',
                 '<div class="alert alert-info" >
