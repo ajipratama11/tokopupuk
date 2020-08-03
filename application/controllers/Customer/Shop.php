@@ -8,6 +8,7 @@ class Shop extends CI_Controller
         parent::__construct();
 
         $this->load->helper('array');
+        $this->load->model('M_pemesanan');
         $this->load->library('form_validation');
         $this->load->helper(array('form', 'url'));
     }
@@ -180,5 +181,10 @@ class Shop extends CI_Controller
         }
         $this->db->update_batch('pemesanan', $result, 'id_pemesanan');
         redirect('Customer/Shop/keranjang');
+    }
+    public function nota(){
+        $idpesan = $this->uri->segment(4);
+        $data['pemesanan'] = $this->M_pemesanan->tampil_pesan($idpesan);
+        $this->load->view('Customer/v_nota', $data);
     }
 }

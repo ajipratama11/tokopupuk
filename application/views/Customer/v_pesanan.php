@@ -72,7 +72,7 @@
                                                 <?php } ?>
                                             </td>
 
-                                            <td class="col-sm-1 col-md-1"><button type="button" data-toggle="modal" data-target="#modalLihat<?= $t->id_trans ?>" class="bt_main"><i class="fa fa-edit"></i> Remove</button></td>
+                                            <td class="col-sm-1 col-md-1"><a target="_blank" href="<?php echo base_url('Customer/Shop/nota/'.$t->id_trans) ?>" class="bt_main"><i class="fa fa-edit"></i> Remove</a></td>
                                         </tr>
 
                                     <?php } ?>
