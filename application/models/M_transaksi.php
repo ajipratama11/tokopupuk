@@ -51,11 +51,11 @@ class M_transaksi extends CI_Model
 	}
 	function updatestatus2($idpesan, $statuspesan)
 	{
-		$query = $this->db->query("UPDATE `pemesanan` JOIN konfirmasi_pemesanan ON pemesanan.id_trans=konfirmasi_pemesanan.id_trans SET pemesanan.status='$statuspesan' WHERE pemesanan.id_pemesanan='$idpesan'");
+		$query = $this->db->query("UPDATE `pemesanan` JOIN konfirmasi_pemesanan ON pemesanan.id_trans=konfirmasi_pemesanan.id_trans SET pemesanan.status='$statuspesan' WHERE pemesanan.id_trans='$idpesan'");
 	}
 	function updatestok($idpesan)
 	{
-		$query = $this->db->query("UPDATE `barang` INNER JOIN pemesanan ON pemesanan.id_barang=pemesanan.id_barang SET barang.stok_barang=barang.stok_barang-pemesanan.jumlah_barang WHERE pemesanan.id_pemesanan='$idpesan'");
+		$query = $this->db->query("UPDATE `barang` INNER JOIN pemesanan ON pemesanan.id_barang=barang.id_barang SET barang.stok_barang=barang.stok_barang-pemesanan.jumlah_barang WHERE pemesanan.id_trans='$idpesan'");
 	}
 
 	// function invoice2($id,$idpesan2,$iduser){

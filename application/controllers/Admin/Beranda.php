@@ -56,6 +56,7 @@ class Beranda extends CI_Controller
 		$this->db->where('id_trans', $idpesan);
 		$data['pesan2'] = $this->db->get('konfirmasi_pemesanan')->row();
 
+		$this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
 		$this->db->where('id_trans', $idpesan);
 		$data['pesanan'] = $this->db->get('pemesanan')->result();
 
