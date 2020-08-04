@@ -28,7 +28,7 @@
 </div>
 <!-- End Model search bar -->
 <!-- footer -->
-<footer class="footer_style_2">
+<!-- <footer class="footer_style_2">
     <div class="container-fuild">
         <div class="row">
             <div class="footer_blog">
@@ -85,4 +85,4 @@
             </div>
         </div>
     </div>
-</footer>
+</footer> -->
