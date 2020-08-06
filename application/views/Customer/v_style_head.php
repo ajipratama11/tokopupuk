@@ -32,5 +32,5 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
-      <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="8fbb1953-2aef-4492-8c60-d7171ef4b155";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script>
+      <!-- <script type="text/javascript">window.$crisp=[];window.CRISP_WEBSITE_ID="8fbb1953-2aef-4492-8c60-d7171ef4b155";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();</script> -->
 </head>
