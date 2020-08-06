@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2020 at 03:35 PM
+-- Generation Time: Aug 06, 2020 at 12:56 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -31,16 +31,15 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `id_admin` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `password` varchar(30) NOT NULL,
-  `kas` int(10) NOT NULL
+  `password` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id_admin`, `username`, `password`, `kas`) VALUES
-(1, 'admin', 'admin', 180000);
+INSERT INTO `admin` (`id_admin`, `username`, `password`) VALUES
+(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -52,19 +51,21 @@ CREATE TABLE `akun` (
   `no_reff` varchar(30) NOT NULL,
   `nama_reff` varchar(30) NOT NULL,
   `keterangan_reff` text NOT NULL,
-  `id_admin` varchar(5) NOT NULL,
-  `id_jenis` varchar(10) NOT NULL
+  `id_admin` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `akun`
 --
 
-INSERT INTO `akun` (`no_reff`, `nama_reff`, `keterangan_reff`, `id_admin`, `id_jenis`) VALUES
-('r1', 'Beban Produk', 'Membeli pupuk ke suplier', '1', '2'),
-('r2', 'Pendapatan', 'Pendapatan dari penjualan pupuk', '1', '1'),
-('r3', 'Piutang', 'Piutang pembelian pupuk', '1', '1'),
-('r4', 'Kas', 'Kas dari pemasukan penjualan pupuk', '1', '1');
+INSERT INTO `akun` (`no_reff`, `nama_reff`, `keterangan_reff`, `id_admin`) VALUES
+('111', 'Kas', 'Kas toko pupuk', '1'),
+('113', 'Persediaan', 'Persedian toko pupuk', '1'),
+('122', 'Peralatan', 'Perlatan toko pupuk', '1'),
+('300', 'Modal', 'Modal', '1'),
+('312', 'Prive', 'Pengambilan Pribadi', '1'),
+('411', 'Penjualan', 'Penjualan', '1'),
+('511', 'Beban Gaji', 'Beban Gaji', '1');
 
 -- --------------------------------------------------------
 
@@ -84,16 +85,6 @@ CREATE TABLE `barang` (
   `id_kategori_barang` varchar(10) NOT NULL,
   `id_suplier` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `barang`
---
-
-INSERT INTO `barang` (`id_barang`, `nama_barang`, `harga_barang`, `harga_beli`, `tgl_masuk_barang`, `stok_barang`, `gambar`, `keterangan`, `id_kategori_barang`, `id_suplier`) VALUES
-('AP0004', 'Pupuk Apalah', 20000, 2000, 'Jumat, 3 Januari 2020', 3, 'cerita-pendek.jpg', 'ASik', 'KG0002', '3'),
-('AP0005', 'Pupuk Sultan', 15000, 2000, 'Kamis, 2 Januari 2020', 3, '0918194620X310.jpg', 'Ahhay', 'KG0001', '2'),
-('AP0006', 'Pupuk Murah', 25000, 10000, 'Kamis, 2 Januari 2020', 9, 'banyuwangi.png', 'AHhay', 'KG0001', '2'),
-('AP0007', 'Pupuk Mungil', 2500, 2000, 'Rabu, 1 Januari 2020', 10, 'book.png', 'Ahasn', 'KG0001', '2');
 
 -- --------------------------------------------------------
 
@@ -182,8 +173,7 @@ CREATE TABLE `konfirmasi_pemesanan` (
 --
 
 INSERT INTO `konfirmasi_pemesanan` (`id_konfirmasi`, `id_cus`, `tanggal_checkout`, `total_bayar`, `status_pembayaran`, `bukti_transfer`, `alamat_pengiriman`, `bank`, `jurnal`, `id_trans`) VALUES
-(25, '10', 'Senin, 3 Agustus 2020', 50000, 'Sudah Bayar', '0918194620X310.jpg', 'ASas', 'BRI', 'Ya', '5d5d13e364721e4020bd2239138367'),
-(26, '10', 'Senin, 3 Agustus 2020', 2500, 'Sudah Bayar', '0918194620X310.jpg', 'Asiyap', 'BRI', 'Ya', '54812cfb46e96374e00838d67d64be');
+(27, '10', 'Kamis, 6 Agustus 2020', 90000, 'Sudah Bayar', '0918194620X310.jpg', 'Jember', 'BRI', 'Ya', 'f7649e5e98d99e0356613e32b283a4');
 
 -- --------------------------------------------------------
 
@@ -195,7 +185,8 @@ CREATE TABLE `pembelian_barang` (
   `id_pembelian` int(11) NOT NULL,
   `id_barang` varchar(10) NOT NULL,
   `tanggal_pembelian` varchar(30) NOT NULL,
-  `jumlah_pembayaran` int(10) NOT NULL
+  `jumlah_pembayaran` int(10) NOT NULL,
+  `id_suplier` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -220,8 +211,8 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id_pemesanan`, `id_cus`, `id_barang`, `jumlah_barang`, `sub_total`, `tgl_pemesanan`, `status`, `id_trans`) VALUES
-(66, '10', 'AP0006', 2, 50000, 'Senin, 3 Agustus 2020', 'Sudah Bayar', '5d5d13e364721e4020bd2239138367'),
-(67, '10', 'AP0007', 1, 2500, 'Senin, 3 Agustus 2020', 'Sudah Bayar', '54812cfb46e96374e00838d67d64be');
+(70, '10', 'AP0006', 2, 50000, 'Kamis, 6 Agustus 2020', 'Proses Kirim', 'f7649e5e98d99e0356613e32b283a4'),
+(71, '10', 'AP0004', 2, 40000, 'Kamis, 6 Agustus 2020', 'Proses Kirim', 'f7649e5e98d99e0356613e32b283a4');
 
 -- --------------------------------------------------------
 
@@ -263,7 +254,13 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_admin`, `no_reff`, `tgl_input`, `tgl_transaksi`, `jenis_saldo`, `saldo`) VALUES
-(22, '', 'r2', '03-08-2020 09:01:21', '2020-08-03', 1, 2500);
+(29, '', '111', '06-08-2020 12:05:30', '2020-08-06', 1, 4800000),
+(30, '', '113', '06-08-2020 12:06:55', '2020-08-06', 1, 5000000),
+(31, '', '122', '06-08-2020 12:07:37', '2020-08-06', 1, 1250000),
+(32, '', '411', '06-08-2020 12:08:06', '2020-08-06', 2, 5800000),
+(33, '', '511', '06-08-2020 12:08:46', '2020-08-06', 1, 500000),
+(34, '', '300', '06-08-2020 12:09:48', '2020-08-06', 2, 5000000),
+(35, '', '312', '06-08-2020 12:13:22', '2020-08-06', 1, 1000000);
 
 --
 -- Indexes for dumped tables
@@ -364,7 +361,7 @@ ALTER TABLE `jenis_saldo`
 -- AUTO_INCREMENT for table `konfirmasi_pemesanan`
 --
 ALTER TABLE `konfirmasi_pemesanan`
-  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `pembelian_barang`
@@ -376,7 +373,7 @@ ALTER TABLE `pembelian_barang`
 -- AUTO_INCREMENT for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `suplier`
@@ -388,7 +385,7 @@ ALTER TABLE `suplier`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
