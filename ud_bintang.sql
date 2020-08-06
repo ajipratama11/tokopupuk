@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2020 at 12:56 PM
+-- Generation Time: Aug 06, 2020 at 08:55 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -86,6 +86,13 @@ CREATE TABLE `barang` (
   `id_suplier` varchar(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `barang`
+--
+
+INSERT INTO `barang` (`id_barang`, `nama_barang`, `harga_barang`, `harga_beli`, `tgl_masuk_barang`, `stok_barang`, `gambar`, `keterangan`, `id_kategori_barang`, `id_suplier`) VALUES
+('AP0001', 'Pupuk ZK', 30000, 22500, 'Jumat, 7 Agustus 2020', 8, 'IMG-20200806-WA0006.jpg', 'Kualitas pupuk sangat bagus', 'KG0003', '2');
+
 -- --------------------------------------------------------
 
 --
@@ -147,7 +154,8 @@ CREATE TABLE `kategori_barang` (
 
 INSERT INTO `kategori_barang` (`id_kategori`, `nama_kategori_brg`) VALUES
 ('KG0001', 'Pupuk Urea'),
-('KG0002', 'Pupuk Kompos');
+('KG0002', 'Pupuk Kompos'),
+('KG0003', 'Pupuk Sulfat');
 
 -- --------------------------------------------------------
 
@@ -173,7 +181,7 @@ CREATE TABLE `konfirmasi_pemesanan` (
 --
 
 INSERT INTO `konfirmasi_pemesanan` (`id_konfirmasi`, `id_cus`, `tanggal_checkout`, `total_bayar`, `status_pembayaran`, `bukti_transfer`, `alamat_pengiriman`, `bank`, `jurnal`, `id_trans`) VALUES
-(27, '10', 'Kamis, 6 Agustus 2020', 90000, 'Sudah Bayar', '0918194620X310.jpg', 'Jember', 'BRI', 'Ya', 'f7649e5e98d99e0356613e32b283a4');
+(28, '10', 'Kamis, 6 Agustus 2020', 60000, 'Sudah Bayar', 'cfp.png', 'Banyuwangi', 'BRI', 'Ya', 'bd92fd5db86dbc37a9e30ac75a89a0');
 
 -- --------------------------------------------------------
 
@@ -211,8 +219,7 @@ CREATE TABLE `pemesanan` (
 --
 
 INSERT INTO `pemesanan` (`id_pemesanan`, `id_cus`, `id_barang`, `jumlah_barang`, `sub_total`, `tgl_pemesanan`, `status`, `id_trans`) VALUES
-(70, '10', 'AP0006', 2, 50000, 'Kamis, 6 Agustus 2020', 'Proses Kirim', 'f7649e5e98d99e0356613e32b283a4'),
-(71, '10', 'AP0004', 2, 40000, 'Kamis, 6 Agustus 2020', 'Proses Kirim', 'f7649e5e98d99e0356613e32b283a4');
+(72, '10', 'AP0001', 2, 60000, 'Kamis, 6 Agustus 2020', 'Proses Kirim', 'bd92fd5db86dbc37a9e30ac75a89a0');
 
 -- --------------------------------------------------------
 
@@ -254,13 +261,15 @@ CREATE TABLE `transaksi` (
 --
 
 INSERT INTO `transaksi` (`id_transaksi`, `id_admin`, `no_reff`, `tgl_input`, `tgl_transaksi`, `jenis_saldo`, `saldo`) VALUES
-(29, '', '111', '06-08-2020 12:05:30', '2020-08-06', 1, 4800000),
+(29, '', '111', '06-08-2020 12:05:30', '2020-08-06', 1, 4575000),
 (30, '', '113', '06-08-2020 12:06:55', '2020-08-06', 1, 5000000),
 (31, '', '122', '06-08-2020 12:07:37', '2020-08-06', 1, 1250000),
 (32, '', '411', '06-08-2020 12:08:06', '2020-08-06', 2, 5800000),
 (33, '', '511', '06-08-2020 12:08:46', '2020-08-06', 1, 500000),
 (34, '', '300', '06-08-2020 12:09:48', '2020-08-06', 2, 5000000),
-(35, '', '312', '06-08-2020 12:13:22', '2020-08-06', 1, 1000000);
+(35, '', '312', '06-08-2020 12:13:22', '2020-08-06', 1, 1000000),
+(36, '', '411', '06-08-2020 08:09:33', '2020-08-07', 2, 60000),
+(37, '', '113', '06-08-2020 08:52:15', '2020-08-07', 2, 180000);
 
 --
 -- Indexes for dumped tables
@@ -361,7 +370,7 @@ ALTER TABLE `jenis_saldo`
 -- AUTO_INCREMENT for table `konfirmasi_pemesanan`
 --
 ALTER TABLE `konfirmasi_pemesanan`
-  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_konfirmasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `pembelian_barang`
@@ -373,7 +382,7 @@ ALTER TABLE `pembelian_barang`
 -- AUTO_INCREMENT for table `pemesanan`
 --
 ALTER TABLE `pemesanan`
-  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id_pemesanan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `suplier`
@@ -385,7 +394,7 @@ ALTER TABLE `suplier`
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
