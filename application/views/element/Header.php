@@ -126,9 +126,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/laporan'); ?>">
               <i class="menu-icon mdi mdi-receipt"></i>
-              <span class="menu-title">Laporan Pengeluaran</span>
+              <span class="menu-title">Laporan </span>
             </a>
           </li>
 

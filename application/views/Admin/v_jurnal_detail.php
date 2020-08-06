@@ -162,6 +162,13 @@
                                     <div class="col-md-6 ">
                                         <label for="no_reff">Nama Akun</label>
                                         <select id="jenis_saldo" class="form-control" name="no_reff">
+                                            <option>--Jenis Akun--</option>
+                                            <?php
+                                            $data =  $this->db->get('akun')->result();
+                                            foreach ($data as $d) {
+                                            ?>
+                                                <option value="<?= $d->no_reff ?>"> <?= $d->nama_reff ?></option>
+                                            <?php } ?>
 
                                         </select>
                                     </div>

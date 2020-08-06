@@ -97,6 +97,8 @@ class Laporan extends CI_Controller
         $this->load->view('element/Footer');
     }
 
+
+
     public function laporan_suplier()
     {
         $post = $this->input->post();
@@ -123,14 +125,16 @@ class Laporan extends CI_Controller
         $data['bulan'] = $post['bulan'];
 
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
-        $this->db->like('tgl_masuk_barang', $post['bulan'], 'both');
-        $this->db->where('status', 'Sudah Bayar');
+        $this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
+        $this->db->like('tanggal_checkout', $post['bulan'], 'both');
+        $this->db->where('status', 'Proses Kirim');
         $data['list'] = $this->db->get('pemesanan')->result();
 
         $this->db->select('SUM(sub_total)  as total');
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
-        $this->db->where('status', 'Sudah Bayar');
-        $this->db->like('tgl_masuk_barang', $post['bulan'], 'both');
+        $this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
+        $this->db->where('status', 'Proses Kirim');
+        $this->db->like('tanggal_checkout', $post['bulan'], 'both');
         $data['total'] = $this->db->get('pemesanan')->row();
 
         $this->load->view('Admin/v_lap_penjualan', $data);
@@ -279,14 +283,16 @@ class Laporan extends CI_Controller
         $bulan = $this->input->post('bulan');
         $tahun = $this->input->post('tahun');
 
+
+        $this->db->select('sum(saldo) as total,transaksi.*,akun.*');
         $this->db->order_by('id_transaksi', 'ASC');
         $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
+        $this->db->group_by('transaksi.no_reff');
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['jurnal'] = $this->db->get('transaksi')->result();
 
         $this->db->select('SUM(saldo) as total');
-
         $this->db->where('jenis_saldo', 1);
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
@@ -297,6 +303,7 @@ class Laporan extends CI_Controller
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['kredit'] = $this->db->get('transaksi')->row();
+
 
         $this->load->view('element/Header');
         $this->load->view('Admin/v_neraca_detail', $data);
@@ -364,19 +371,28 @@ class Laporan extends CI_Controller
         }
     }
 
+
+    public function laporan()
+    {
+        $this->load->view('element/Header');
+        $this->load->view('Admin/v_laporan');
+        $this->load->view('element/Footer');
+    }
+
     public function detail_laba()
     {
         $bulan = $this->input->post('bulan');
         $data['bulan'] = $this->input->post('bulan');
+        $data['tahun'] = $this->input->post('tahun');
         $tahun = $this->input->post('tahun');
+
 
 
         $this->db->select('sum(saldo) as total,transaksi.*,akun.*');
         $this->db->order_by('id_transaksi', 'ASC');
         $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
-        $this->db->group_by('transaksi.no_reff');
-        $this->db->where('transaksi.jenis_saldo', '1');
+        $this->db->where('transaksi.no_reff', '411');
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['jurnal'] = $this->db->get('transaksi')->result();
 
@@ -385,34 +401,36 @@ class Laporan extends CI_Controller
         $this->db->order_by('id_transaksi', 'ASC');
         $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
-        $this->db->group_by('transaksi.no_reff');
-        $this->db->where('transaksi.no_reff !=', 'r5');
-        $this->db->where('transaksi.no_reff !=', 'r4');
-        $this->db->where('transaksi.no_reff !=', 'r7');
-        $this->db->where('transaksi.jenis_saldo', '2');
+        $this->db->where('transaksi.no_reff', '511');
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['biaya'] = $this->db->get('transaksi')->result();
 
 
-        $this->db->select('sum(saldo) as total');
+
+        $this->db->select('SUM(jumlah_barang*sub_total) as total');
+        $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+        $this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
+        $this->db->where('status', 'Proses Kirim');
+        $this->db->like('tanggal_checkout', bulan($data['bulan']), 'both');
+        $this->db->like('tanggal_checkout', bulan($data['tahun']), 'both');
+        $data['penjualan'] = $this->db->get('pemesanan')->row();
+
+
+
+
+        $this->db->select('sum(saldo) as total,transaksi.*,akun.*');
         $this->db->order_by('id_transaksi', 'ASC');
         $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
-        $this->db->where('transaksi.no_reff !=', 'r5');
-        $this->db->where('transaksi.no_reff !=', 'r4');
-        $this->db->where('transaksi.no_reff !=', 'r7');
-        $this->db->where('transaksi.jenis_saldo', '1');
+        $this->db->where('transaksi.no_reff', '411');
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['total1'] = $this->db->get('transaksi')->row();
 
-        $this->db->select('sum(saldo) as total');
+        $this->db->select('sum(saldo) as total,transaksi.*,akun.*');
         $this->db->order_by('id_transaksi', 'ASC');
         $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
-        $this->db->where('transaksi.no_reff !=', 'r5');
-        $this->db->where('transaksi.no_reff !=', 'r4');
-        $this->db->where('transaksi.no_reff !=', 'r7');
-        $this->db->where('transaksi.jenis_saldo', '2');
+        $this->db->where('transaksi.no_reff', '511');
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['total2'] = $this->db->get('transaksi')->row();
 

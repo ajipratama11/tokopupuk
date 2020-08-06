@@ -76,11 +76,11 @@ class Barang extends CI_Controller
 
 		$bayar = $stok * $harga_beli;
 
-		$id_admin = $this->session->userdata('iduseradmin');
-		$this->db->where('id_admin', $id_admin);
-		$adm = $this->db->get('admin')->row_array();
+		$this->db->select('SUM(saldo) as total');
+		$this->db->where('no_reff', '111');
+		$adm = $this->db->get('transaksi')->row_array();
 
-		if ($bayar > $adm['kas']) {
+		if ($bayar > $adm['total']) {
 			$this->session->set_flashdata(
 				'gagal',
 				'<div class="alert alert-danger" >
@@ -90,9 +90,9 @@ class Barang extends CI_Controller
 			redirect('Admin/Barang/tambah_barang');
 		} else {
 
-			$this->db->set('kas', $adm['kas'] - $bayar);
-			$this->db->where('id_admin', $id_admin);
-			$adm = $this->db->update('admin');
+			$this->db->set('saldo', $adm['total'] - $bayar);
+			$this->db->where('no_reff', '111');
+			$adm = $this->db->update('transaksi');
 			$this->M_barang->tambah_barang($idbarang, $namabarang, $harga, $harga_beli, formatHariTanggal($tglmasuk), $stok, $gambar, $idkat, $idsup, $keterangan);
 			echo "<script>
 	                alert('Upload berhasil');

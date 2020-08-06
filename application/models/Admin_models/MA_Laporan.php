@@ -116,6 +116,7 @@ class MA_Laporan extends CI_Model
         // $searchSuplier = $postData['searchSuplier'];
 
         $searchBulan = $postData['searchBulan'];
+        $searchTahun = $postData['searchTahun'];
 
 
         ## Search 
@@ -131,6 +132,9 @@ class MA_Laporan extends CI_Model
         if ($searchBulan != '') {
             $search_arr[] = " tgl_masuk_barang like'%" . $searchBulan . "%' ";
         }
+        if ($searchTahun != '') {
+            $search_arr[] = " tgl_masuk_barang like'%" . $searchTahun . "%' ";
+        }
         if (count($search_arr) > 0) {
             $searchQuery = implode(" and ", $search_arr);
         }
@@ -139,7 +143,7 @@ class MA_Laporan extends CI_Model
         $this->db->select('count(*) as allcount');
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
         $this->db->join('konfirmasi_pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
-        $this->db->where('status_pembayaran', 'Sudah Bayar');
+        $this->db->where('status', 'Proses Kirim');
         $records  = $this->db->get('pemesanan')->result();
         $totalRecords = $records[0]->allcount;
 
@@ -149,7 +153,7 @@ class MA_Laporan extends CI_Model
             $this->db->where($searchQuery);
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
         $this->db->join('konfirmasi_pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
-        $this->db->where('status_pembayaran', 'Sudah Bayar');
+        $this->db->where('status', 'Proses Kirim');
         $records  = $this->db->get('pemesanan')->result();
         $totalRecordwithFilter = $records[0]->allcount;
 
@@ -161,7 +165,7 @@ class MA_Laporan extends CI_Model
         $this->db->limit($rowperpage, $start);
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
         $this->db->join('konfirmasi_pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
-        $this->db->where('status_pembayaran', 'Sudah Bayar');
+        $this->db->where('status', 'Proses Kirim');
         $records  = $this->db->get('pemesanan')->result();
 
         $data = array();
@@ -172,9 +176,9 @@ class MA_Laporan extends CI_Model
             $data[] = array(
                 "id_barang" => $record->id_barang,
                 "nama_barang" => $record->nama_barang,
-                "harga_beli" => $record->harga_beli,
-                "stok_barang" => $record->stok_barang,
-                "tgl_masuk_barang" => $record->tgl_masuk_barang,
+                "harga_beli" => $record->jumlah_barang,
+                "stok_barang" => $record->sub_total,
+                "tgl_masuk_barang" => $record->tanggal_checkout,
 
             );
         }

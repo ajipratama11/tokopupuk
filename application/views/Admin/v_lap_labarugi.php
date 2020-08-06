@@ -58,7 +58,7 @@
                             </tr>
                             <?php foreach ($jurnal as $j) { ?>
                                 <tr>
-                                    <td><?= $j->no_reff ?></td>
+                                    <td></td>
                                     <td><?= $j->nama_reff ?></td>
                                     <td>Rp. <?= number_format($j->total)  ?></td>
                                 </tr>
@@ -76,15 +76,20 @@
                             foreach ($biaya as $j) {
                             ?>
                                 <tr>
-                                    <td><?= $j->no_reff ?></td>
+                                    <td></td>
                                     <td><?= $j->nama_reff ?></td>
                                     <td>Rp. <?= number_format($j->total) ?></td>
                                 </tr>
                             <?php } ?>
                             <tr>
+                                <td></td>
+                                <td>Harga Poko Penjualan</td>
+                                <td>Rp. <?= number_format($penjualan->total) ?></td>
+                            </tr>
+                            <tr>
                                 <td class="total-row text-right"></td>
                                 <td class="total-row text-right"><strong>Total</strong></td>
-                                <td class="total-row text-center">Rp .<?= number_format($total2->total)  ?></td>
+                                <td class="total-row text-center">Rp .<?= number_format($total2->total + $penjualan->total)  ?></td>
                             </tr>
                             <tr>
 

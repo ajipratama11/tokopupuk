@@ -13,6 +13,12 @@
                         <h2 style="color: #1E7BCB;"> Laporan Penjualan Barang</h2><br>
                         <form action="<?= base_url() ?>Admin/Laporan/laporan_penjualan" method="POST">
                             <div class="row">
+                                <div class="col-md-4">
+                                    <select class="form-control" name="tahun" id="sel_tahun" required>
+                                        <option value="2020">2020</option>
+                                        <option value="2021">2021</option>
+                                    </select>
+                                </div>
                                 <div class="form-group col-md-3">
                                     <select class="form-control" name="bulan" id="sel_bulan">
                                         <option value="Januari">Januari</option>
@@ -58,7 +64,7 @@
                                             Jumlah Beli
                                         </th>
                                         <th>
-                                            Tanggal Beli
+                                            Tanggal Checkout
                                         </th>
 
                                     </tr>
@@ -95,6 +101,7 @@
                     'url': '<?= base_url() ?>Admin/Laporan/penjualanList',
                     'data': function(data) {
                         data.searchBulan = $('#sel_bulan').val();
+                        data.searchTahun = $('#sel_tahun').val();
                         console.log(data);
                     }
 
@@ -117,7 +124,7 @@
                 ]
             });
 
-            $('#sel_bulan').change(function() {
+            $('#sel_bulan,#sel_tahun').change(function() {
                 userDataTable.draw();
             });
             $('#searchName').keyup(function() {

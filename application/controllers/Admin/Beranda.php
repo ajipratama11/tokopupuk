@@ -22,7 +22,7 @@ class Beranda extends CI_Controller
 	{
 		$id_admin = $this->session->userdata('iduseradmin');
 		$this->db->select('SUM(saldo) as total');
-		$this->db->where('no_reff', 'r4');
+		$this->db->where('no_reff', '111');
 		$data['adm'] = $this->db->get('transaksi')->row();
 
 		$data['total'] = $this->M_transaksi->totalPemasukan();
