@@ -30,10 +30,8 @@
                         <?php echo $a->username; ?>
                       </td>
                       <td>
-                        <center><a href="<?php echo base_url('Owner_controller/O_user/edituser/' . $a->id_admin); ?>"><button type="button" class="btn btn-warning"><i class="menu-icon mdi mdi-pen"></i> Edit</button></a>
-                          <a onclick="return confirm_alert(this);" href="<?php echo base_url('Owner_controller/O_user/hapus_user/' . $a->id_admin); ?>"><button type="button" class="btn btn-danger"><i class="menu-icon mdi mdi-delete"></i> Hapus</button></a>
+                        <a onclick="return confirm_alert(this);" href="<?php echo base_url('Owner_controller/O_user/hapus_user/' . $a->id_admin); ?>"><button type="button" class="btn btn-danger"><i class="menu-icon mdi mdi-delete"></i> Hapus</button></a>
                         </center>
-
                       </td>
                     </tr>
                   <?php } ?>

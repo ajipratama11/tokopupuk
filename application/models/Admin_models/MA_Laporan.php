@@ -564,4 +564,98 @@ class MA_Laporan extends CI_Model
 
         return $response;
     }
+    function getLaba($postData = null)
+    {
+
+
+        $response = array();
+
+        ## Read value
+        $draw = $postData['draw'];
+        $start = $postData['start'];
+        $rowperpage = $postData['length']; // Rows display per page
+        $columnIndex = $postData['order'][0]['column']; // Column index
+        $columnName = $postData['columns'][$columnIndex]['data']; // Column name
+        $columnSortOrder = $postData['order'][0]['dir']; // asc or desc
+        $searchValue = $postData['search']['value']; // Search value
+
+        // Custom search filter 
+        // $searchSuplier = $postData['searchSuplier'];
+        // $searchNama = $postData['searchNama'];
+        // $searchBulan = $postData['searchBulan'];
+        $searchTahun = $postData['searchTahun'];
+
+
+        ## Search 
+        $search_arr = array();
+        $searchQuery = "";
+        if ($searchValue != '') {
+            $search_arr[] = "(  tgl_transaksi like '%" . $searchValue . "%'  ) ";
+        }
+
+        if ($searchTahun != '') {
+            $search_arr[] = "  tgl_transaksi like '%" . $searchTahun . "%'  ";
+        }
+        // if ($searchBulan != '') {
+        //     $search_arr[] = "  tgl_transaksi like '%" . $searchBulan . "%' ";
+        // }
+
+        if (count($search_arr) > 0) {
+            $searchQuery = implode(" and ", $search_arr);
+        }
+
+        ## Total number of records without filtering
+        $this->db->select('count(*) as allcount');
+        $this->db->group_by('month(tgl_transaksi)');
+        $records  = $this->db->get('transaksi')->result();
+        $totalRecords = $records[0]->allcount;
+
+        ## Total number of record with filtering
+        $this->db->select('count(*) as allcount');
+        if ($searchQuery != '')
+            $this->db->where($searchQuery);
+        $this->db->group_by('month(tgl_transaksi)');
+        $records  = $this->db->get('transaksi')->result();
+        $totalRecordwithFilter = $records[0]->allcount;
+
+        ## Fetch records
+        $this->db->select('*');
+        if ($searchQuery != '')
+            $this->db->where($searchQuery);
+        $this->db->order_by('id_transaksi');
+        $this->db->limit($rowperpage, $start);
+        $this->db->group_by('month(tgl_transaksi)');
+        $records  = $this->db->get('transaksi')->result();
+
+        $data = array();
+
+        $i = 1;
+        foreach ($records as $record) {
+
+            $bulan = date('m', strtotime($record->tgl_transaksi));
+            $tahun = date('Y', strtotime($record->tgl_transaksi));
+
+            $data[] = array(
+                "no" => $i++,
+                "bulan" => bulan($bulan) . ' ' . $tahun,
+                "action" => ' <form action="' . base_url("Admin/Laporan/detail_laba") . '" method="post">
+                <input name="bulan" hidden value="' . $bulan . '">
+                <input name="tahun" hidden value="' . $tahun . '">
+                <td><button class="btn btn-info" type="submit">Lihat Laba Rugi</button></td>
+            </form>',
+
+            );
+        }
+
+
+        ## Response
+        $response = array(
+            "draw" => intval($draw),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordwithFilter,
+            "aaData" => $data
+        );
+
+        return $response;
+    }
 }

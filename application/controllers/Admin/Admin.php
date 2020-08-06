@@ -20,7 +20,9 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
-		$data['admin'] = $this->M_profil->admin();
+		$id = $this->session->userdata('iduseradmin');
+		$this->db->where('id_admin !=', $id);
+		$data['admin'] = $this->db->get('admin')->result();
 
 
 		$this->load->view('element/Header');
@@ -30,6 +32,7 @@ class Admin extends CI_Controller
 
 	public function akun()
 	{
+
 
 		$data['akun'] = $this->db->get('akun')->result();
 		$this->load->view('element/Header');
@@ -46,8 +49,8 @@ class Admin extends CI_Controller
 		$this->id_admin = $this->session->userdata('iduseradmin');
 		$data = $this->db->insert('akun', $this);
 		if ($data) {
-		        $this->no_reff = $post['no_reff'];
-
+			$this->no_reff = $post['no_reff'];
+			redirect('Admin/Laporan/akuntansi');
 		}
 	}
 }

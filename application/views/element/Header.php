@@ -126,33 +126,16 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/jurnal'); ?>">
-              <i class="menu-icon mdi mdi-book"></i>
-              <span class="menu-title">Jurnal Umum</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Admin/akun'); ?>">
-              <i class="menu-icon mdi mdi-receipt"></i>
-              <span class="menu-title">Data Akun</span>
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="<?php echo base_url('Admin/Laporan/'); ?>">
               <i class="menu-icon mdi mdi-receipt"></i>
               <span class="menu-title">Laporan Pengeluaran</span>
             </a>
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/neraca_saldo'); ?>">
+            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/akuntansi'); ?>">
               <i class="menu-icon mdi mdi-inbox"></i>
-              <span class="menu-title">Neraca Saldo</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?php echo base_url('Admin/Laporan/buku_besar'); ?>">
-              <i class="menu-icon mdi mdi-book"></i>
-              <span class="menu-title">Buku Besar</span>
+              <span class="menu-title">Akuntansi </span>
             </a>
           </li>
       </nav>

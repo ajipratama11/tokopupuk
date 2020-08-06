@@ -15,16 +15,31 @@
                             <div class="row">
                                 <div class="form-group col-md-4">
                                     <label>Tanggal </label>
-                                    <input class="form-control" id="datepicker" name="tgl_transaksi" type="date">
+                                    <input class="form-control" id="datepicker" required name="tgl_transaksi" type="date">
                                 </div>
                             </div>
 
                             <div class="row mb-4">
+
+                                <div class="col">
+                                    <label for="no_reff">Nama Akun</label>
+                                    <select id="jenis_saldo" required class="form-control" name="no_reff">
+                                        <option>--Pilih Akun--</option>
+                                        <?php
+
+                                        $data = $this->db->get('akun')->result();
+                                        foreach ($data as $d) {
+
+                                        ?>
+                                            <option value="<?= $d->no_reff ?>"><?= $d->nama_reff ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                                 <div class="col">
                                     <label for="jenis_saldo">Jenis Saldo</label>
 
-                                    <select class="form-control" name="jenis_saldo" id="akun">
-                                        <option>Jenis Saldo</option>
+                                    <select class="form-control" required name="jenis_saldo" id="akun">
+                                        <option>--Pilih Jenis Saldo--</option>
                                         <?php
                                         $data =  $this->db->get('jenis_saldo')->result();
                                         foreach ($data as $d) {
@@ -35,14 +50,8 @@
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <label for="no_reff">Nama Akun</label>
-                                    <select id="jenis_saldo" class="form-control" name="no_reff">
-
-                                    </select>
-                                </div>
-                                <div class="col">
                                     <label for="saldo">Saldo</label>
-                                    <input class="form-control" name="saldo">
+                                    <input required class="form-control" name="saldo">
                                 </div>
 
                             </div>
@@ -64,33 +73,4 @@
         function confirm_alert(node) {
             return confirm("Apakah anda yakin ingin menghapus kategori?");
         }
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-
-            $('#akun').change(function() {
-                var id = $(this).val();
-                $.ajax({
-                    url: "<?php echo site_url('Admin/Laporan/getJenis'); ?>",
-                    method: "POST",
-                    data: {
-                        id: id
-                    },
-                    async: true,
-                    dataType: 'json',
-                    success: function(data) {
-
-                        var html = '';
-                        var i;
-                        for (i = 0; i < data.length; i++) {
-                            html += '<option value=' + data[i].no_reff + '>' + data[i].nama_reff + '</option>';
-                        }
-                        $('#jenis_saldo').html(html);
-
-                    }
-                });
-                return false;
-            });
-
-        });
     </script>

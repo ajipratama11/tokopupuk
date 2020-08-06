@@ -37,9 +37,14 @@ class Beranda extends CI_Controller
 		// $data['pesan'] = $this->M_transaksi->tampil_pesan2();
 
 
+		$this->db->select('COUNT(id_konfirmasi) as total');
+		$this->db->where('status_pembayaran', 'Belum Dikonfirmasi');
+		$data['pemesanan'] = $this->db->get('konfirmasi_pemesanan')->row();
+
 		$this->db->join('pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
 		$this->db->join('customer', 'pemesanan.id_cus=customer.id_cus');
 		$this->db->group_by('konfirmasi_pemesanan.id_trans');
+		$this->db->where('status_pembayaran', 'Belum Dikonfirmasi');
 		$data['pesan2'] = $this->db->get('konfirmasi_pemesanan')->result();
 
 		$this->load->view('element/Header', $data);

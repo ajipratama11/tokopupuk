@@ -46,7 +46,7 @@
               <div class="float-right">
                 <p class="mb-0 text-right">Total pesanan</p>
                 <div class="fluid-container">
-                  <h3 class="font-weight-medium text-right mb-0"><?= $pemesanan ?></h3>
+                  <h3 class="font-weight-medium text-right mb-0"><?= $pemesanan->total ?></h3>
                 </div>
               </div>
             </div>
