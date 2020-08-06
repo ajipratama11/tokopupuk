@@ -23,8 +23,6 @@ class Admin extends CI_Controller
 		$id = $this->session->userdata('iduseradmin');
 		$this->db->where('id_admin !=', $id);
 		$data['admin'] = $this->db->get('admin')->result();
-
-
 		$this->load->view('element/Header');
 		$this->load->view('Admin/v_admin', $data);
 		$this->load->view('element/Footer');

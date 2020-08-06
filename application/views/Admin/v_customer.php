@@ -52,8 +52,8 @@
                             <?php echo $a->email; ?>
                           </td>
                           <td>
-                            <center><a href="<?php echo base_url('Owner_controller/O_user/edituser/'.$a->id_cus); ?>"><button type="button" class="btn btn-warning"><i class="menu-icon mdi mdi-pen"></i> Edit</button></a>
-                              <a onclick="return confirm_alert(this);" href="<?php echo base_url('Owner_controller/O_user/hapus_user/'.$a->id_cus); ?>"><button type="button" class="btn btn-danger"><i class="menu-icon mdi mdi-delete"></i> Hapus</button></a>
+                            <center>
+                              <a onclick="return confirm_alert(this);" href="<?php echo base_url('Admin/Customer/hapusCus/'.$a->id_cus); ?>"><button type="button" class="btn btn-danger"><i class="menu-icon mdi mdi-delete"></i> Hapus</button></a>
                             </center>
 
                           </td>

@@ -29,10 +29,6 @@
                       <td>
                         <?php echo $a->username; ?>
                       </td>
-                      <td>
-                        <a onclick="return confirm_alert(this);" href="<?php echo base_url('Owner_controller/O_user/hapus_user/' . $a->id_admin); ?>"><button type="button" class="btn btn-danger"><i class="menu-icon mdi mdi-delete"></i> Hapus</button></a>
-                        </center>
-                      </td>
                     </tr>
                   <?php } ?>
                 </tbody>

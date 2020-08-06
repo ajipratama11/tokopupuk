@@ -22,4 +22,10 @@ class Customer extends CI_Controller{
 		$this->load->view('Admin/v_customer', $data);
 		$this->load->view('element/Footer');
 	}
+
+	public function hapusCus(){
+		$id = $this->uri->segment(4);
+		$this->M_profil->hapusCus($id);
+		redirect('Admin/Customer');
+	}
 }
