@@ -376,9 +376,6 @@ class Laporan extends CI_Controller
         $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
         $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
         $this->db->group_by('transaksi.no_reff');
-        $this->db->where('transaksi.no_reff !=', 'r5');
-        $this->db->where('transaksi.no_reff !=', 'r4');
-        $this->db->where('transaksi.no_reff !=', 'r7');
         $this->db->where('transaksi.jenis_saldo', '1');
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['jurnal'] = $this->db->get('transaksi')->result();
