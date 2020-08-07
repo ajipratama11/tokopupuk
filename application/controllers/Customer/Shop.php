@@ -57,7 +57,11 @@ class Shop extends CI_Controller
 
         $this->db->where('id_cus', $id_cus);
         $data['user'] = $this->db->get('customer')->row();
-        $this->load->view('Customer/v_konfirmasi', $data);
+        if (!$id_cus) {
+            redirect('Customer/Customer');
+        } else {
+            $this->load->view('Customer/v_konfirmasi', $data);
+        }
     }
     public function tambah_keranjang()
     {

@@ -1,22 +1,3 @@
-<!-- section -->
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="full">
-                    <div class="contact_us_section">
-                        <div class="call_icon"> <img src="<?= base_url() ?>assets/customer/images/it_service/phone_icon.png" alt="#" /> </div>
-                        <div class="inner_cont">
-                            <h2>Ada yang ingin ditanyakan?</h2>
-                            <p>Hubungi beberapa sosial media kami</p>
-                        </div>
-                        <div class="button_Section_cont"> <a class="btn dark_gray_bt" href="it_contact.html">Kontak Kami</a> </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- end section -->
 <!-- section -->
 <div class="section padding_layout_1" style="padding: 50px 0;">

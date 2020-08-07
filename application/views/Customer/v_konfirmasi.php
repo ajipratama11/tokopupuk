@@ -32,9 +32,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="full">
-                        <div class="tab-info login-section">
-                            <p>Returning customer? <a href="#login" class="" data-toggle="collapse">Click here to login</a></p>
-                        </div>
+
                         <div id="login" class="collapse">
                             <div class="login-form-checkout">
                                 <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new customer, please proceed to the Billing &amp; Shipping section.</p>
@@ -58,9 +56,6 @@
                                     </fieldset>
                                 </form>
                             </div>
-                        </div>
-                        <div class="tab-info coupon-section">
-                            <p>Have a coupon? <a href="#cupon" class="" data-toggle="collapse">Click here to enter your code</a></p>
                         </div>
                         <div id="cupon" class="collapse">
                             <div class="coupen-form">
