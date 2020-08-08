@@ -94,7 +94,7 @@
                                         <div class="col-md-12">
                                             <div class="form-field">
                                                 <label>Alamat Pengiriman <span class="red">*</span></label>
-                                                <textarea name="alamat_pengiriman"></textarea>
+                                                <textarea name="alamat_pengiriman" required></textarea>
                                             </div>
                                         </div>
                                         <div class="col-md-12">

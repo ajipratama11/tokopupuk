@@ -43,10 +43,9 @@
                             <div class="product-heading">
                                 <h2><?= $detail->nama_barang ?></h2>
                             </div>
-                            <div class="product-detail-side"><span class="new-price">Rp<?= number_format($detail->harga_barang, 0, ',', '.') ?></span> <span class="review">(5 customer review)</span> </div>
+                            <div class="product-detail-side"><span class="new-price">Rp<?= number_format($detail->harga_barang, 0, ',', '.') ?></span> <span class="review"></span> </div>
                             <div class="detail-contant">
-                                <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
-                                    Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.<br>
+                                <p><?= $detail->keterangan ?><br>
                                     <span class="stock">2 in stock</span> </p>
                                 <form class="cart" method="post" action="<?= base_url() ?>Customer/Shop/tambah_keranjang">
                                     <div class="quantity">
