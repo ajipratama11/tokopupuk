@@ -411,6 +411,7 @@ class Laporan extends CI_Controller
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
         $this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
         $this->db->where('status', 'Proses Kirim');
+        $this->db->where('jurnal', 'Ya');
         $this->db->like('tanggal_checkout', bulan($data['bulan']), 'both');
         $this->db->like('tanggal_checkout', bulan($data['tahun']), 'both');
         $data['penjualan'] = $this->db->get('pemesanan')->row();

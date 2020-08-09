@@ -45,8 +45,8 @@
                             </div>
                             <div class="product-detail-side"><span class="new-price">Rp<?= number_format($detail->harga_barang, 0, ',', '.') ?></span> <span class="review"></span> </div>
                             <div class="detail-contant">
-                                <p><?= $detail->keterangan ?><br>
-                                    <span class="stock">2 in stock</span> </p>
+                                <p><?= $detail->keterangan ?> <br>
+                                    <span class="stock"><?= $detail->stok_barang ?> Pcs</span> </p>
                                 <form class="cart" method="post" action="<?= base_url() ?>Customer/Shop/tambah_keranjang">
                                     <div class="quantity">
                                         <input name="id_barang" value="<?= $detail->id_barang ?>" type="hidden">
