@@ -108,16 +108,16 @@
             <!-- memberikan keterangan untuk yang di proses dan terbayar -->
             <div class="panel-body">
                 <?php
-                if ($total1->total > $total2->total) {
+                if ($total1->total >   ($total2->total + $penjualan->total)) {
                 ?>
                     <p><b> Status : Untung</b></p>
-                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total - $total2->total)  ?></b></p>
-                <?php } else  if ($total1->total == $total2->total) {  ?>
+                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total - ($total2->total + $penjualan->total))  ?></b></p>
+                <?php } else  if ($total1->total == ($total2->total + $penjualan->total)) {  ?>
                     <p><b> Status : Seimbang</b></p>
-                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total - $total2->total)  ?></b></p>
+                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total  - ($total2->total + $penjualan->total))  ?></b></p>
                 <?php } else { ?>
                     <p><b> Status : Rugi</b></p>
-                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total - $total2->total)  ?></b></p>
+                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total  - ($total2->total + $penjualan->total))  ?></b></p>
                 <?php } ?>
             </div>
         </div>

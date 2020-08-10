@@ -361,7 +361,7 @@ class Laporan extends CI_Controller
         $cek = $this->db->get('transaksi')->row();
         if (!$cek) {
             echo "<script>
-            alert('Jurnal masih kosong, buat dulu ya!!');
+            alert('  masih kosong, buat dulu ya!!');
             window.location.href = '" . base_url('Admin/Laporan/tambah_jurnal') . "';
         </script>"; //Url tujuan
         } else {
@@ -407,10 +407,11 @@ class Laporan extends CI_Controller
 
 
 
-        $this->db->select('SUM(jumlah_barang*sub_total) as total');
+        $this->db->select('SUM(jumlah_barang*harga_beli) as total');
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
         $this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
         $this->db->where('status', 'Proses Kirim');
+        $this->db->where('jurnal', 'Ya');
         $this->db->like('tanggal_checkout', bulan($data['bulan']), 'both');
         $this->db->like('tanggal_checkout', bulan($data['tahun']), 'both');
         $data['penjualan'] = $this->db->get('pemesanan')->row();

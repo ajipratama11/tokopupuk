@@ -80,33 +80,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 contant_form">
-                                    <h2 class="text_align_center">SEND MESSAGER</h2>
-                                    <div class="form_section">
-                                        <form class="form_contant" action="index.html">
-                                            <fieldset>
-                                                <div class="row">
-                                                    <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                        <input class="field_custom" placeholder="Websire URL" type="text">
-                                                    </div>
-                                                    <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                        <input class="field_custom" placeholder="Your name" type="text">
-                                                    </div>
-                                                    <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                        <input class="field_custom" placeholder="Email adress" type="email">
-                                                    </div>
-                                                    <div class="field col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                                                        <input class="field_custom" placeholder="Phone number" type="text">
-                                                    </div>
-                                                    <div class="field col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                        <textarea class="field_custom" placeholder="Messager"></textarea>
-                                                    </div>
-                                                    <div class="center"><a class="btn main_bt" href="#">SUBMIT NOW</a></div>
-                                                </div>
-                                            </fieldset>
-                                        </form>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
