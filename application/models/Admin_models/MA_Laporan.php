@@ -177,7 +177,7 @@ class MA_Laporan extends CI_Model
                 "id_barang" => $record->id_barang,
                 "nama_barang" => $record->nama_barang,
                 "harga_beli" => $record->jumlah_barang,
-                "stok_barang" => $record->sub_total,
+                "stok_barang" =>  $record->sub_total,
                 "tgl_masuk_barang" => $record->tanggal_checkout,
 
             );

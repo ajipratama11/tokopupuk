@@ -54,11 +54,11 @@
                                             <?php
                                             if ($j->jenis_saldo == '1') {
                                             ?>
-                                                <td><?= $j->saldo ?></td>
-                                                <td> 0</td>
+                                                <td>Rp. <?= number_format( $j->saldo, 0, ',', '.') ?></td>
+                                                <td>Rp. 0</td>
                                             <?php } else { ?>
-                                                <td> 0</td>
-                                                <td><?= $j->saldo ?></td>
+                                                <td>Rp. 0</td>
+                                                <td>Rp. <?= number_format( $j->saldo, 0, ',', '.') ?></td>
                                             <?php } ?>
                                             <td><button data-toggle="modal" data-target="#modalEdit<?= $j->id_transaksi ?>" class="btn btn-info">Edit</button>
                                                 <button data-toggle="modal" data-target="#modalHapus<?= $j->id_transaksi ?>" class="btn btn-danger">Hapus</button>

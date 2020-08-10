@@ -51,11 +51,11 @@
                                             <?php
                                             if ($j->jenis_saldo == '1') {
                                             ?>
-                                                <td><?= $j->total ?></td>
-                                                <td> 0</td>
+                                                <td>Rp. <?= number_format( $j->total, 0, ',', '.') ?></td>
+                                                <td>Rp. 0</td>
                                             <?php } else { ?>
-                                                <td> 0</td>
-                                                <td><?= $j->total ?></td>
+                                                <td>Rp. 0</td>
+                                                <td>Rp. <?= number_format( $j->saldo, 0, ',', '.') ?></td>
                                             <?php } ?>
                                         </tr>
                                     <?php } ?>

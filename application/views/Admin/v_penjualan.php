@@ -58,13 +58,13 @@
                                             Nama Barang
                                         </th>
                                         <th>
-                                            Harga
+                                            Tanggal Checkout
                                         </th>
                                         <th>
                                             Jumlah Beli
                                         </th>
                                         <th>
-                                            Tanggal Checkout
+                                            Harga
                                         </th>
 
                                     </tr>
@@ -113,13 +113,14 @@
                         data: 'nama_barang'
                     },
                     {
+                        data: 'tgl_masuk_barang'
+                    },
+                    {
                         data: 'harga_beli'
                     },
                     {
+                        
                         data: 'stok_barang'
-                    },
-                    {
-                        data: 'tgl_masuk_barang'
                     }
                 ]
             });

@@ -63,16 +63,16 @@
                                             Nama Barang
                                         </th>
                                         <th>
-                                            Harga
-                                        </th>
-                                        <th>
-                                            Jumlah Beli
+                                            Suplier
                                         </th>
                                         <th>
                                             Tanggal Beli
                                         </th>
                                         <th>
-                                            Suplier
+                                            Jumlah Beli
+                                            </th>
+                                            <th>
+                                                Harga
                                         </th>
                                     </tr>
                                 </thead>
@@ -120,16 +120,16 @@
                         data: 'nama_barang'
                     },
                     {
-                        data: 'harga_beli'
-                    },
-                    {
-                        data: 'stok_barang'
+                        data: 'nama_suplier'
                     },
                     {
                         data: 'tgl_masuk_barang'
                     },
                     {
-                        data: 'nama_suplier'
+                        data: 'stok_barang'
+                    },
+                    {
+                        data: 'harga_beli'
                     }
                 ]
             });
