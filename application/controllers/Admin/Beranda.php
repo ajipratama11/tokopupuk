@@ -9,6 +9,7 @@ class Beranda extends CI_Controller
 		$this->load->model('Owner_models/MO_transaksi');
 		$this->load->model('M_transaksi');
 		$this->load->model('M_faq');
+		$this->load->model('Admin_models/M_grafik');
 		$this->load->helper(array('url'));
 		if ($this->session->userdata('status') != "admin") {
 			echo "<script>
@@ -46,6 +47,9 @@ class Beranda extends CI_Controller
 		$this->db->group_by('konfirmasi_pemesanan.id_trans');
 		$this->db->where('status_pembayaran', 'Belum Dikonfirmasi');
 		$data['pesan2'] = $this->db->get('konfirmasi_pemesanan')->result();
+
+		$data['year_list'] = $this->M_grafik->fetch_year();
+
 
 		$this->load->view('element/Header', $data);
 		$this->load->view('Admin/Beranda', $data);
@@ -162,6 +166,60 @@ class Beranda extends CI_Controller
                 alert('Id produk tidak ditemukan!');
                 window.location.href = '" . base_url('Owner_controller/O_produk') . "';
             </script>";
+		}
+	}
+
+	function fetch_data()
+	{
+		$year = $this->input->post('year');
+
+		if ($year) {
+			$chart_data = $this->M_grafik->fetch_chart_data($year);
+
+			// $this->db->select('SUM(jumlah_barang*harga_beli) as total');
+			// $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+			// $this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
+			// $this->db->where('status', 'Proses Kirim');
+			// $this->db->where('jurnal', 'Ya');
+			// $this->db->like('tanggal_checkout', bulan($data['bulan']), 'both');
+			// $this->db->like('tanggal_checkout', bulan($data['tahun']), 'both');
+			// $data['penjualan'] = $this->db->get('pemesanan')->row();
+
+			// $this->db->select('sum(saldo) as total,transaksi.*,akun.*');
+			// $this->db->order_by('id_transaksi', 'ASC');
+			// $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+			// $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
+			// $this->db->where('transaksi.no_reff', '411');
+			// $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
+			// $data['total1'] = $this->db->get('transaksi')->row();
+
+			// $this->db->select('sum(saldo) as total,transaksi.*,akun.*');
+			// $this->db->order_by('id_transaksi', 'ASC');
+			// $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+			// $this->db->where('month(transaksi.tgl_transaksi)', $bulan);
+			// $this->db->where('transaksi.no_reff', '511');
+			// $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
+			// $data['total2'] = $this->db->get('transaksi')->row();
+
+			foreach ($chart_data->result_array() as $row) {
+				$bln = $row["bulan"];
+				$total1 = $this->db->query("SELECT SUM(saldo) as total FROM transaksi where year(tgl_transaksi)=$year and no_reff='411'  and month(tgl_transaksi)=$bln")->row_array();
+				$total2 = $this->db->query("SELECT SUM(saldo) as total FROM transaksi where year(tgl_transaksi)=$year and no_reff='511'  and month(tgl_transaksi)=$bln")->row_array();
+				$this->db->select('SUM(jumlah_barang*harga_beli) as total');
+				$this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+				$this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
+				$this->db->where('status', 'Proses Kirim');
+				$this->db->where('jurnal', 'Ya');
+				$this->db->like('tanggal_checkout', bulan($bln), 'both');
+				$this->db->like('tanggal_checkout', $year, 'both');
+				$penjualan = $this->db->get('pemesanan')->row_array();
+				$output[] = array(
+					'month'  => bulan($row["bulan"]),
+					'profit'  => $total1["total"] - ($total2["total"] + $penjualan['total']),
+					// 'profit' => floatval($row["saldo"])
+				);
+			}
+			echo json_encode($output);
 		}
 	}
 }

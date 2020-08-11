@@ -406,18 +406,14 @@ class Laporan extends CI_Controller
         $data['biaya'] = $this->db->get('transaksi')->result();
 
 
-
         $this->db->select('SUM(jumlah_barang*harga_beli) as total');
         $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
         $this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
         $this->db->where('status', 'Proses Kirim');
         $this->db->where('jurnal', 'Ya');
-        $this->db->like('tanggal_checkout', bulan($data['bulan']), 'both');
-        $this->db->like('tanggal_checkout', bulan($data['tahun']), 'both');
+        $this->db->like('tanggal_checkout', bulan($bulan), 'both');
+        $this->db->like('tanggal_checkout', $tahun, 'both');
         $data['penjualan'] = $this->db->get('pemesanan')->row();
-
-
-
 
         $this->db->select('sum(saldo) as total,transaksi.*,akun.*');
         $this->db->order_by('id_transaksi', 'ASC');

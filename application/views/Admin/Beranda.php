@@ -200,12 +200,36 @@
               </table>
             </div>
           </div>
-
         </div>
-
       </div>
-
     </div>
+
+    <div class="row grid-margin card ">
+      <div class="card-body">
+        <div class="row col-md-12">
+          <div class="col-md-9">
+            <h3 class="card-title">Grafik Laba Rugi</h3>
+          </div>
+          <div class="col-md-3">
+            <select name="year" id="year" class="form-control">
+              <option value="">Pilih Tahun</option>
+              <?php
+              foreach ($year_list->result_array() as $row) {
+                echo '<option value="' . $row["year"] . '">' . $row["year"] . '</option>';
+              }
+              ?>
+
+            </select>
+          </div>
+        </div>
+        <div class="row col-md-12 mt-3">
+          <div id="chart_area" style="width: 100%; min-height:600px;"></div>
+        </div>
+      </div>
+    </div>
+
+
+
     <div class="modal fade" id="modalJurnal<?= $total->totalMasuk ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -263,8 +287,6 @@
         </div>
       </div>
     </div>
-
-
     <div class="modal fade" id="modalJurnal<?= $pengeluaran->total ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -446,5 +468,71 @@
         return false;
       });
 
+    });
+  </script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {
+      packages: ['corechart', 'bar']
+    });
+    google.charts.setOnLoadCallback();
+
+    function load_monthwise_data(year, title) {
+      var temp_title = title + ' ' + year;
+      $.ajax({
+        url: "<?php echo base_url(); ?>Admin/Beranda/fetch_data",
+        method: "POST",
+        data: {
+          year: year
+        },
+        dataType: "JSON",
+        success: function(data) {
+          drawMonthwiseChart(data, temp_title);
+        }
+      })
+    }
+
+    function drawMonthwiseChart(chart_data, chart_main_title) {
+      var jsonData = chart_data;
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Month');
+      data.addColumn('number', 'Laba');
+
+      $.each(jsonData, function(i, jsonData) {
+        var month = jsonData.month;
+        var profit = parseFloat($.trim(jsonData.profit));
+        data.addRows([
+          [month, profit]
+        ]);
+      });
+
+      var options = {
+        title: chart_main_title,
+        hAxis: {
+          title: "Bulan"
+        },
+        vAxis: {
+          title: 'Penghasilan'
+        },
+        chartArea: {
+          width: '80%',
+          height: '85%'
+        }
+      }
+
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_area'));
+
+      chart.draw(data, options);
+    }
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      $('#year').change(function() {
+        var year = $(this).val();
+        if (year != '') {
+          load_monthwise_data(year, 'Grafik Laba Toko Pupuk ');
+        }
+      });
     });
   </script>
