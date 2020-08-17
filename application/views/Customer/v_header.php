@@ -1,4 +1,4 @@
-<div class="bg_load"> <img class="loader_animation" src="<?= base_url() ?>assets/customer/images/loaders/loader_1.png" alt="#" /> </div>
+<!-- <div class="bg_load"> <img class="loader_animation" src="<?= base_url() ?>assets/customer/images/loaders/loader_1.png" alt="#" /> </div> -->
 <header id="default_header" class="header_style_1">
     <!-- header top -->
     <div class="header_top">

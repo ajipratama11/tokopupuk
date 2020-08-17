@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-Bjo1CY7d8pmYDxbY"></script>
 <?php $this->load->view('Customer/v_style_head') ?>
 
 <body id="default_theme" class="it_serv_shopping_cart shopping-cart">
@@ -31,54 +32,55 @@
             <div class="row">
                 <div class="col-sm-12 col-md-12">
                     <div class="product-table">
-                        <form action="<?= base_url('Customer/Shop/update_cart') ?>" method="post">
-                            <table class="table">
-                                <thead>
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Data Pemesan</th>
+                                    <th class="text-center">Total Bayar</th>
+                                    <th class="text-center">Status</th>
+                                    <th> Lihat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($trans as $t) {
+                                ?>
                                     <tr>
-                                        <th>Data Pemesan</th>
-                                        <th class="text-center">Total Bayar</th>
-                                        <th class="text-center">Status</th>
-                                        <th> Lihat</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($trans as $t) {
-                                    ?>
-                                        <tr>
-                                            <td class="col-sm-8 col-md-6">
-                                                <div class="media"> <a class="thumbnail pull-left" href="#"> </a>
-                                                    <div class="media-body">
-                                                        <h4 class="media-heading"><a href="#"><?= $t->tanggal_checkout ?></a></h4>
-                                                        <span>Alamat: </span><span class="text-success"><?= $t->alamat_pengiriman ?></span>
+                                        <td class="col-sm-8 col-md-6">
+                                            <div class="media"> <a class="thumbnail pull-left" href="#"> </a>
+                                                <div class="media-body">
+                                                    <h4 class="media-heading"><a href="#"><?= $t->tanggal_checkout ?></a></h4>
+                                                    <span>Alamat: </span><span class="text-success"><?= $t->alamat_pengiriman ?></span>
 
-                                                    </div>
                                                 </div>
-                                            </td>
-                                            <td class="col-sm-1 col-md-1" style="text-align: center">
-                                                <p class="price_table">Rp.<?= number_format($t->total_bayar, 0, ',', '.')  ?></p>
-                                            </td>
-                                            <td class="col-sm-1 col-md-1 text-center">
-                                                <?php
-                                                if ($t->status_pembayaran == "Belum Bayar") { ?>
+                                            </div>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1" style="text-align: center">
+                                            <p class="price_table">Rp.<?= number_format($t->total_bayar, 0, ',', '.')  ?></p>
+                                        </td>
+                                        <td class="col-sm-1 col-md-1 text-center">
+                                            <?php
+                                            if ($t->status_pembayaran == "Belum Bayar") { ?>
 
-                                                    <p style="font-size: 12px;" class="price_table">Belum Bayar</p>
-                                                    <a style="font-size: 12px;color: red;" href="" type="button" data-toggle="modal" data-target="#modalBayar<?= $t->id_trans ?>">( Bayar? )</a>
+                                                <p style="font-size: 12px;" class="price_table">Belum Bayar</p>
+                                                <!-- <a style="font-size: 12px;color: red;" href="" type="button" data-toggle="modal" data-target="#modalBayar<?= $t->id_trans ?>">( Bayar? )</a> -->
+                                                <a style="font-size: 12px;color: red;" href="<?= base_url() ?>Customer/Shop/pembayaran/<?= $t->id_trans ?>" type="button">( Bayar? )</a>
 
-                                                <?php } else if ($t->status_pembayaran == "Belum Dikonfirmasi") { ?>
-                                                    <p style="font-size: 12px;" class="price_table"><?= $t->status_pembayaran ?></p>
-                                                <?php } else if ($t->status_pembayaran == "Sudah Bayar") {  ?>
-                                                    <p style="font-size: 12px;" class="price_table"><?= $t->status_pembayaran ?></p>
-                                                    <p style="font-size: 12px;" class="mt-2"><b>Anda akan dihubungi admin kami</b></p>
-                                                <?php } ?>
-                                            </td>
+                                            <?php } else if ($t->status_pembayaran == "Belum Dikonfirmasi") { ?>
+                                                <p style="font-size: 12px;" class="price_table"><?= $t->status_pembayaran ?></p>
+                                            <?php } else if ($t->status_pembayaran == "Sudah Bayar") {  ?>
+                                                <p style="font-size: 12px;" class="price_table"><?= $t->status_pembayaran ?></p>
+                                                <p style="font-size: 12px;" class="mt-2"><b>Anda akan dihubungi admin kami</b></p>
+                                            <?php } ?>
+                                        </td>
 
-                                            <td class="col-sm-1 col-md-1"><a target="_blank" href="<?php echo base_url('Customer/Shop/nota/'.$t->id_trans) ?>" class="bt_main"><i class="fa fa-edit"></i> Remove</a></td>
-                                        </tr>
+                                        <td class="col-sm-1 col-md-1"><a target="_blank" href="<?php echo base_url('Customer/Shop/nota/' . $t->id_trans) ?>" class="bt_main"><i class="fa fa-edit"></i> Remove</a></td>
+                                    </tr>
 
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </form>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+
                     </div>
                 </div>
             </div>
@@ -156,6 +158,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+
                     <form method="post" action="<?= base_url() ?>Customer/Shop/update_pembayaran" enctype="multipart/form-data">
                         <div class="modal-body">
                             <div>
@@ -186,6 +189,7 @@
     <?php $this->load->view('Customer/v_footer') ?>
     <!-- end footer -->
     <?php $this->load->view('Customer/v_style_foot') ?>
+
 </body>
 
 </html>

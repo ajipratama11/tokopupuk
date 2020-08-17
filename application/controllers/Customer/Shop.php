@@ -1,15 +1,18 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-
+header('Access-Control-Allow-Origin:*');
+header('Access-Control-Allow-Methods:GET,OPTIONS');
 class Shop extends CI_Controller
 {
     function __construct()
     {
         parent::__construct();
 
-        $this->load->helper('array');
+        $this->load->library('midtrans');
+        $params = array('server_key' => 'SB-Mid-server-WX1PQxO-YHpSp8XsCPE0co2N', 'production' => false);
+        $this->midtrans->config($params);
         $this->load->model('M_pemesanan');
-        $this->load->library('form_validation');
+        // $this->load->library('form_validation');
         $this->load->helper(array('form', 'url'));
     }
 
@@ -193,4 +196,198 @@ class Shop extends CI_Controller
         $data['pemesanan'] = $this->M_pemesanan->tampil_pesan($idpesan);
         $this->load->view('Customer/v_nota', $data);
     }
+    public function pembayaran()
+    {
+        $id = $this->session->userdata('id_customer');
+
+        $idpesan = $this->uri->segment(4);
+        $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+        $this->db->join('konfirmasi_pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
+        $this->db->where('pemesanan.id_trans', $idpesan);
+        $data['bayar'] = $this->db->get('pemesanan')->result();
+
+
+        $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+        $this->db->join('konfirmasi_pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
+        $this->db->where('pemesanan.id_trans', $idpesan);
+        $this->db->where('pemesanan.id_cus', $id);
+        $data['trans'] = $this->db->get('pemesanan')->result();
+
+
+        $this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
+        $this->db->join('konfirmasi_pemesanan', 'pemesanan.id_trans=konfirmasi_pemesanan.id_trans');
+        $this->db->where('pemesanan.id_trans', $idpesan);
+        $this->db->where('pemesanan.id_cus', $id);
+        $code = $this->db->get('pemesanan')->row();
+
+        $apiKey = 'yFBmaAV7CTBFinWj8d0AwC4TfUVGJmyAn4frdqQo';
+        $privateKey = 'ACOsY-XRNyb-g5dXE-F3u0C-iPRKx';
+        $merchantCode = 'T0592';
+        $merchantRef = 'INV55567';
+        $amount = $code->sub_total;
+
+        $output = [
+            'method'            => 'QRIS',
+            'merchant_ref'      => $merchantRef,
+            'amount'            => $amount,
+            'customer_name'     => 'Nama Pelanggan',
+            'customer_email'    => 'emailpelanggan@domain.com',
+            'customer_phone'    => '081234567890',
+            'order_items'       => [
+                [
+                    'sku'       => 'PRODUK1',
+                    'name'      => 'Nama Produk 1',
+                    'price'     => $amount,
+                    'quantity'  => 1
+                ]
+            ],
+            'callback_url'      => 'http://localhost/gateways/index2.php',
+            'return_url'        => 'http://localhost/gateways/index2.php',
+            'expired_time'      => (time() + (24 * 60 * 60)), // 24 jam
+            'signature'         => hash_hmac('sha256', $merchantCode . $merchantRef . $amount, $privateKey)
+        ];
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_FRESH_CONNECT     => true,
+            CURLOPT_URL               => "https://payment.tripay.co.id/api/transaction/create",
+            CURLOPT_RETURNTRANSFER    => true,
+            CURLOPT_HEADER            => false,
+            CURLOPT_HTTPHEADER        => array(
+                "Authorization: Bearer " . $apiKey
+            ),
+            CURLOPT_FAILONERROR       => false,
+            CURLOPT_POST              => true,
+            CURLOPT_POSTFIELDS        => http_build_query($output)
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+
+        //mengubah data json menjadi data array asosiatif
+        $result = json_decode($response, true);
+
+        $data['qrcode'] = $result['data']['qr_string'];
+
+        $this->db->where('konfirmasi_pemesanan.id_trans', $idpesan);
+        $data['total'] = $this->db->get('konfirmasi_pemesanan', $data)->row();
+        $this->load->view('Customer/v_bayar', $data);
+    }
+    public function qrcode()
+    {
+    }
+
+    // public function token($id_trans = null)
+    // {
+
+    //     $this->db->where('id_trans', $id_trans);
+    //     $row = $this->db->get('konfirmasi_pemesanan')->row();
+
+    //     // Required
+    //     $transaction_details = array(
+    //         'order_id' => rand(),
+    //         'gross_amount' => $row->total_bayar, // no decimal allowed for creditcard
+    //     );
+
+    //     // Optional
+    //     // $item1_details = array(
+    //     //     'id' => 'a1',
+    //     //     'price' => 18000,
+    //     //     'quantity' => 3,
+    //     //     'name' => "Apple"
+    //     // );
+
+    //     // // Optional
+    //     // $item2_details = array(
+    //     //     'id' => 'a2',
+    //     //     'price' => 20000,
+    //     //     'quantity' => 2,
+    //     //     'name' => "Orange"
+    //     // );
+
+    //     // // Optional
+    //     // $item_details = array($item1_details, $item2_details);
+
+    //     // // Optional
+    //     // $billing_address = array(
+    //     //     'first_name'    => "Andri",
+    //     //     'last_name'     => "Litani",
+    //     //     'address'       => "Mangga 20",
+    //     //     'city'          => "Jakarta",
+    //     //     'postal_code'   => "16602",
+    //     //     'phone'         => "081122334455",
+    //     //     'country_code'  => 'IDN'
+    //     // );
+
+    //     // // Optional
+    //     // $shipping_address = array(
+    //     //     'first_name'    => "Obet",
+    //     //     'last_name'     => "Supriadi",
+    //     //     'address'       => "Manggis 90",
+    //     //     'city'          => "Jakarta",
+    //     //     'postal_code'   => "16601",
+    //     //     'phone'         => "08113366345",
+    //     //     'country_code'  => 'IDN'
+    //     // );
+
+    //     // // Optional
+    //     // $customer_details = array(
+    //     //     'first_name'    => "Andri",
+    //     //     'last_name'     => "Litani",
+    //     //     'email'         => "andri@litani.com",
+    //     //     'phone'         => "081122334455",
+    //     //     'billing_address'  => $billing_address,
+    //     //     'shipping_address' => $shipping_address
+    //     // );
+
+    //     // Data yang akan dikirim untuk request redirect_url.
+    //     $credit_card['secure'] = true;
+    //     //ser save_card true to enable oneclick or 2click
+    //     $credit_card['save_card'] = true;
+
+    //     $time = time();
+    //     $custom_expiry = array(
+    //         'start_time' => date("Y-m-d H:i:s O", $time),
+    //         'unit' => 'minute',
+    //         'duration'  => 2
+    //     );
+
+    //     $enabled_payments = array('gopay');
+    //     $gopay = array(
+
+    //         'enable_callback' => true,
+    //         'callback_url' => "http://gopay.com"
+    //     );
+
+
+
+    //     $transaction_data = array(
+    //         'transaction_details' => $transaction_details,
+    //         // 'item_details'       => $item_details,
+    //         // 'customer_details'   => $customer_details,
+    //         'credit_card'        => $credit_card,
+    //         'expiry'             => $custom_expiry,
+    //         'enabled_payments' => $enabled_payments,
+    //         'gopay' => $gopay,
+
+    //     );
+
+    //     error_log(json_encode($transaction_data));
+    //     $snapToken = $this->midtrans->getSnapToken($transaction_data);
+    //     error_log($snapToken);
+    //     echo $snapToken;
+    // }
+
+    // public function finish()
+    // {
+    //     $result = json_decode($this->input->post('result_data'));
+    //     echo 'RESULT <br><pre>';
+    //     var_dump($result);
+    //     echo '</pre>';
+    // }
 }
