@@ -31,6 +31,7 @@ class Produk extends CI_Controller
     }
     public function kategori($id_kategori = null)
     {
+       
         $this->db->where('id_kategori_barang', $id_kategori);
         $data['pupuk'] = $this->db->get('barang')->result();
         $this->db->where('id_kategori', $id_kategori);

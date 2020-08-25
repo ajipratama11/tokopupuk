@@ -63,11 +63,16 @@
                                     <td>Rp. <?= number_format($j->total)  ?></td>
                                 </tr>
                             <?php } ?>
+                            <tr>
+                                <td></td>
+                                <td>Harga Poko Penjualan</td>
+                                <td>Rp. <?= number_format($pengeluaran->total) ?></td>
+                            </tr>
 
                             <tr>
                                 <td class="total-row text-right"></td>
                                 <td class="total-row text-right"><strong>Total</strong></td>
-                                <td class="total-row text-center">Rp .<?= number_format($total1->total)  ?></td>
+                                <td class="total-row text-center">Rp .<?= number_format($total1->total + $penjualan->total + $pengeluaran->total)  ?></td>
                             </tr>
                             <tr>
                                 <td style="background-color: #2980b9; color:aliceblue;" colspan="4">Pengeluaran</td>
@@ -81,15 +86,11 @@
                                     <td>Rp. <?= number_format($j->total) ?></td>
                                 </tr>
                             <?php } ?>
-                            <tr>
-                                <td></td>
-                                <td>Harga Poko Penjualan</td>
-                                <td>Rp. <?= number_format($penjualan->total) ?></td>
-                            </tr>
+
                             <tr>
                                 <td class="total-row text-right"></td>
                                 <td class="total-row text-right"><strong>Total</strong></td>
-                                <td class="total-row text-center">Rp .<?= number_format($total2->total + $penjualan->total)  ?></td>
+                                <td class="total-row text-center">Rp .<?= number_format($total2->total)  ?></td>
                             </tr>
                             <tr>
 
@@ -111,13 +112,13 @@
                 if ($total1->total >   ($total2->total + $penjualan->total)) {
                 ?>
                     <p><b> Status : Untung</b></p>
-                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total - ($total2->total + $penjualan->total))  ?></b></p>
+                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total - ($total2->total + $penjualan->total) - $pengeluaran->total)  ?></b></p>
                 <?php } else  if ($total1->total == ($total2->total + $penjualan->total)) {  ?>
                     <p><b> Status : Seimbang</b></p>
-                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total  - ($total2->total + $penjualan->total))  ?></b></p>
+                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total  - ($total2->total + $penjualan->total) - $pengeluaran->total)  ?></b></p>
                 <?php } else { ?>
                     <p><b> Status : Rugi</b></p>
-                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total  - ($total2->total + $penjualan->total))  ?></b></p>
+                    <p style=" float:right"><b>Laba bersih : Rp.<?= number_format($total1->total  - ($total2->total + $penjualan->total) - $pengeluaran->total)  ?></b></p>
                 <?php } ?>
             </div>
         </div>

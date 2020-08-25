@@ -178,7 +178,118 @@ class Laporan extends CI_Controller
             window.location.href = '" . base_url('Admin/Laporan/tambah_jurnal') . "';
         </script>"; //Url tujuan
         } else {
-            $this->load->view('Admin/v_buku_besar');
+            $this->db->order_by('id_transaksi', 'ASC');
+            $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+            $this->db->where('transaksi.no_reff', '111');
+            $data['jurnal'] = $this->db->get('transaksi')->result();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 1);
+            $this->db->where(' transaksi.no_reff', '111');
+            $data['debit'] = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 2);
+            $this->db->where('transaksi.no_reff', '111');
+            $data['kredit'] = $this->db->get('transaksi')->row();
+
+            // -------------------------------
+            $this->db->order_by('id_transaksi', 'ASC');
+            $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+            $this->db->where('transaksi.no_reff', '113');
+            $data['persediaan'] = $this->db->get('transaksi')->result();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 1);
+            $this->db->where(' transaksi.no_reff', '113');
+            $data['debit_p'] = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 2);
+            $this->db->where('transaksi.no_reff', '113');
+            $data['kredit_p'] = $this->db->get('transaksi')->row();
+
+
+            // -------------------------------
+            $this->db->order_by('id_transaksi', 'ASC');
+            $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+            $this->db->where('transaksi.no_reff', '411');
+            $data['penjualan'] = $this->db->get('transaksi')->result();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 1);
+            $this->db->where(' transaksi.no_reff', '411');
+            $data['debit_pen'] = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 2);
+            $this->db->where('transaksi.no_reff', '411');
+            $data['kredit_pen'] = $this->db->get('transaksi')->row();
+
+            // -------------------------------
+            $this->db->order_by('id_transaksi', 'ASC');
+            $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+            $this->db->where('transaksi.no_reff', '122');
+            $data['peralatan'] = $this->db->get('transaksi')->result();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 1);
+            $this->db->where(' transaksi.no_reff', '122');
+            $data['debit_per'] = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 2);
+            $this->db->where('transaksi.no_reff', '122');
+            $data['kredit_per'] = $this->db->get('transaksi')->row();
+
+            // -------------------------------
+            $this->db->order_by('id_transaksi', 'ASC');
+            $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+            $this->db->where('transaksi.no_reff', '511');
+            $data['beban'] = $this->db->get('transaksi')->result();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 1);
+            $this->db->where(' transaksi.no_reff', '511');
+            $data['debit_beban'] = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 2);
+            $this->db->where('transaksi.no_reff', '511');
+            $data['kredit_beban'] = $this->db->get('transaksi')->row();
+
+            // -------------------------------
+            $this->db->order_by('id_transaksi', 'ASC');
+            $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+            $this->db->where('transaksi.no_reff', '312');
+            $data['prive'] = $this->db->get('transaksi')->result();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 1);
+            $this->db->where(' transaksi.no_reff', '312');
+            $data['debit_prive'] = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 2);
+            $this->db->where('transaksi.no_reff', '312');
+            $data['kredit_prive'] = $this->db->get('transaksi')->row();
+
+            // -------------------------------
+            $this->db->order_by('id_transaksi', 'ASC');
+            $this->db->join('akun', 'akun.no_reff=transaksi.no_reff');
+            $this->db->where('transaksi.no_reff', '300  ');
+            $data['modal'] = $this->db->get('transaksi')->result();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 1);
+            $this->db->where(' transaksi.no_reff', '300 ');
+            $data['debit_modal'] = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', 2);
+            $this->db->where('transaksi.no_reff', '300  ');
+            $data['kredit_modal'] = $this->db->get('transaksi')->row();
+            $this->load->view('Admin/v_buku_besar', $data);
         }
         $this->load->view('element/Footer');
     }
@@ -431,6 +542,8 @@ class Laporan extends CI_Controller
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['total2'] = $this->db->get('transaksi')->row();
 
+        $this->db->select('SUM(harga_beli*stok_barang) as total');
+        $data['pengeluaran'] = $this->db->get('barang')->row();
 
 
         // $this->db->select('SUM(saldo) as total');
