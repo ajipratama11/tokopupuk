@@ -205,6 +205,8 @@ class Beranda extends CI_Controller
 				$bln = $row["bulan"];
 				$total1 = $this->db->query("SELECT SUM(saldo) as total FROM transaksi where year(tgl_transaksi)=$year and no_reff='411'  and month(tgl_transaksi)=$bln")->row_array();
 				$total2 = $this->db->query("SELECT SUM(saldo) as total FROM transaksi where year(tgl_transaksi)=$year and no_reff='511'  and month(tgl_transaksi)=$bln")->row_array();
+				$this->db->select('SUM(harga_beli*stok_barang) as total');
+				$pengeluaran = $this->db->get('barang')->row();
 				$this->db->select('SUM(jumlah_barang*harga_beli) as total');
 				$this->db->join('barang', 'barang.id_barang=pemesanan.id_barang');
 				$this->db->join('konfirmasi_pemesanan', 'konfirmasi_pemesanan.id_trans=pemesanan.id_trans');
@@ -215,7 +217,7 @@ class Beranda extends CI_Controller
 				$penjualan = $this->db->get('pemesanan')->row_array();
 				$output[] = array(
 					'month'  => bulan($row["bulan"]),
-					'profit'  => $total1["total"] - ($total2["total"] + $penjualan['total']),
+					'profit'  => $total1["total"] - ($total2["total"] + $penjualan['total']) - $pengeluaran->total,
 					// 'profit' => floatval($row["saldo"])
 				);
 			}

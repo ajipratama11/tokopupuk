@@ -24,7 +24,7 @@
                             </div>
                         </div><br><br>
                         <div class="table-responsive">
-                            <table class="table table-bordered" id='userTable'>
+                            <table class="table table-bordered" id='nilai'>
                                 <thead>
                                     <tr>
                                         <th>
@@ -49,39 +49,57 @@
                                             <td><?= $j->no_reff ?></td>
                                             <td><?= $j->nama_reff ?></td>
                                             <?php
-                                            if ($j->jenis_saldo == '1') {
+                                            $this->db->select('SUM(saldo) as total');
+                                            $this->db->where('jenis_saldo', '1');
+                                            $this->db->where('no_reff', $j->no_reff);
+                                            $debit = $this->db->get('transaksi')->row();
+
+                                            $this->db->select('SUM(saldo) as total');
+                                            $this->db->where('jenis_saldo', '2');
+                                            $this->db->where('no_reff', $j->no_reff);
+                                            $kredit = $this->db->get('transaksi')->row();
+
+                                            $total = $debit->total - $kredit->total;
+                                            $total2 = $kredit->total;
+                                            if ($debit->total > $kredit->total) {
                                             ?>
-                                                <td>Rp. <?= number_format( $j->total, 0, ',', '.') ?></td>
-                                                <td>Rp. 0</td>
+                                                <td><?= $total ?></td>
+                                                <td>0</td>
                                             <?php } else { ?>
-                                                <td>Rp. 0</td>
-                                                <td>Rp. <?= number_format( $j->saldo, 0, ',', '.') ?></td>
+                                                <td>0</td>
+                                                <td><?= $total2 ?></td>
                                             <?php } ?>
                                         </tr>
                                     <?php } ?>
 
-                                    <tr>
-                                        <td colspan="2" class="text-center"><b>Jumlah Total</b></td>
-                                        <td><b>
-                                                Rp. <?= number_format($debit->total)  ?>
-                                        </td> </b>
 
-                                        <td><b>
-                                                Rp. <?= number_format($kredit->total)  ?>
-                                        </td> </b>
-                                    </tr>
-                                    <tr>
-                                        <?php
-                                        if ($debit->total != $kredit->total) {
-                                        ?>
-                                            <td colspan="4" style="background-color: red; color:aliceblue" class="text-center"><b>TIDAK SEIMBANG</b></td>
-                                        <?php } else { ?>
-                                            <td colspan="4" style="background-color: #1E7BCB;color:aliceblue" class="text-center"><b>SEIMBANG</b></td>
-                                        <?php } ?>
-                                    </tr>
+
+
                                 </tbody>
 
                             </table>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3" class="text-center"><b>Jumlah Total</b></td>
+                                        <td><b>
+                                                <span id="hasil"></span>
+                                        </td> </b>
+                                        <td><b>
+                                                <span id="hasil2"></span>
+                                        </td> </b>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <td style="background-color: #1E7BCB;"><b>
+                                            <p style="text-align: center; color:aliceblue" id="hasil3"></p>
+                                    </td> </b>
+                                </tbody>
+                            </table>
+
                         </div>
                     </div>
                 </div>
@@ -93,6 +111,34 @@
     <!-- content-wrapper ends -->
 
     <!-- Pop up -->
+
+    <script>
+        var table = document.getElementById("nilai"),
+            sumHsl = 0,
+            sumHs2 = 0;
+        for (var t = 1; t < table.rows.length; t++) {
+            sumHsl = sumHsl + parseInt(table.rows[t].cells[2].innerHTML);
+            sumHs2 = sumHs2 + parseInt(table.rows[t].cells[3].innerHTML);
+
+        }
+        if (sumHsl = sumHs2) {
+            document.getElementById("hasil3").innerHTML = "SEIMBANG";
+        } else {
+            document.getElementById("hasil3").innerHTML = "TIDAK SEIMBANG";
+        }
+        document.getElementById("hasil").innerHTML = "Rp. " + sumHsl;
+        document.getElementById("hasil2").innerHTML = "Rp. " + sumHs2;
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            // Format mata uang.
+            $('.uang').mask('000.000.000', {
+                reverse: true
+            });
+
+        })
+    </script>
     <script type="text/javascript">
         function confirm_alert(node) {
             return confirm("Apakah anda yakin ingin menghapus kategori?");

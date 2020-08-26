@@ -548,12 +548,31 @@ class MA_Laporan extends CI_Model
             }
             $tes = $this->db->query('SELECT SUM(saldo) as total FROM transaksi WHERE no_reff="' . $record->no_reff . '"')->row();
 
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', '1');
+            $this->db->where('no_reff', $record->no_reff);
+            $a = $this->db->get('transaksi')->row();
+
+            $this->db->select('SUM(saldo) as total');
+            $this->db->where('jenis_saldo', '2');
+            $this->db->where('no_reff', $record->no_reff);
+            $b = $this->db->get('transaksi')->row();
+
+            $total = $a->total - $b->total;
+
+
+            if ($a->total > $b->total) {
+                $total = $a->total - $b->total;
+            } else {
+                $total = $b->total;
+            }
+
             $data[] = array(
                 "no" => $i++,
                 "keterangan" => $record->nama_reff,
                 "debit" => 'Rp.' . number_format($debit),
                 "kredit" => 'Rp.' . number_format($kredit),
-                "total" => '<b style="color:red">Rp.' . number_format($tes->total) . '</b>'
+                "total" => '<b style="color:red">Rp.' . number_format($total) . '</b>'
             );
         }
 

@@ -416,7 +416,6 @@ class Laporan extends CI_Controller
         $this->db->where('year(transaksi.tgl_transaksi)', $tahun);
         $data['kredit'] = $this->db->get('transaksi')->row();
 
-
         $this->load->view('element/Header');
         $this->load->view('Admin/v_neraca_detail', $data);
         $this->load->view('element/Footer');
