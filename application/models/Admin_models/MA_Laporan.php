@@ -549,7 +549,7 @@ class MA_Laporan extends CI_Model
             $tes = $this->db->query('SELECT SUM(saldo) as total FROM transaksi WHERE no_reff="' . $record->no_reff . '"')->row();
 
             $data[] = array(
-                "tanggal" => formatHariTanggal($record->tgl_transaksi),
+                "no" => $i++,
                 "keterangan" => $record->nama_reff,
                 "debit" => 'Rp.' . number_format($debit),
                 "kredit" => 'Rp.' . number_format($kredit),

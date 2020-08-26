@@ -72,7 +72,7 @@
                             <tr>
                                 <td class="total-row text-right"></td>
                                 <td class="total-row text-right"><strong>Total</strong></td>
-                                <td class="total-row text-center">Rp .<?= number_format($total1->total + $penjualan->total + $pengeluaran->total)  ?></td>
+                                <td class="total-row text-center">Rp .<?= number_format($total1->total + $penjualan->total - $pengeluaran->total)  ?></td>
                             </tr>
                             <tr>
                                 <td style="background-color: #2980b9; color:aliceblue;" colspan="4">Pengeluaran</td>
